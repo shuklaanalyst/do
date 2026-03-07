@@ -757,70 +757,105 @@ html,body{height:100%;overflow:hidden;font-family:var(--fn);font-size:13px;
       <div class="srcp" id="sp_gd">
 
         <!-- STEP A: Welcome / Sign-in -->
-        <div id="gd_step_welcome">
-          <div class="gd-welcome-title">Connect Google Drive</div>
-          <div class="gd-welcome-sub">
-            Sign in with your Google account to browse and pick Excel or CSV files directly from Drive.<br>
-            <strong>No setup required</strong> — uses Google's official login.
+        <div id="gd_step_welcome" style="display:block">
+
+          <!-- Branding header -->
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+            <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#e8f0fe,#c5d7fb);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg width="22" height="22" viewBox="0 0 87.3 78"><path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8h-27.5c0 1.55.4 3.1 1.2 4.5z" fill="#0066da"/><path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0 -1.2 4.5h27.5z" fill="#00ac47"/><path d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5h-27.502l5.852 11.5z" fill="#ea4335"/><path d="m43.65 25 13.75-23.8c-1.35-.8-2.9-1.2-4.5-1.2h-18.5c-1.6 0-3.15.45-4.5 1.2z" fill="#00832d"/><path d="m59.8 53h-32.3l-13.75 23.8c1.35.8 2.9 1.2 4.5 1.2h50.8c1.6 0 3.15-.45 4.5-1.2z" fill="#2684fc"/><path d="m73.4 26.5-12.7-22c-.8-1.4-1.95-2.5-3.3-3.3l-13.75 23.8 16.15 27h27.45c0-1.55-.4-3.1-1.2-4.5z" fill="#ffba00"/></svg>
+            </div>
+            <div>
+              <div style="font-size:.92rem;font-weight:800;color:var(--txt)">Google Drive</div>
+              <div style="font-size:.73rem;color:var(--txt3);margin-top:1px">Browse &amp; load Excel/CSV files from your Drive</div>
+            </div>
           </div>
 
-          <!-- Official Google sign-in button -->
-          <div class="g-signin-wrap">
-            <button class="g-signin-btn" id="gdSignInBtn" onclick="initGoogleAuth()">
-              <svg viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.29-8.16 2.29-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></svg>
+          <!-- Feature chips -->
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px">
+            <span style="font-size:.7rem;font-weight:600;padding:3px 9px;border-radius:10px;background:var(--grnl);color:var(--grn)">🔒 Secure OAuth 2.0</span>
+            <span style="font-size:.7rem;font-weight:600;padding:3px 9px;border-radius:10px;background:var(--b1ll);color:var(--b1)">📂 Browse all folders</span>
+            <span style="font-size:.7rem;font-weight:600;padding:3px 9px;border-radius:10px;background:var(--ambl);color:var(--amb)">⚡ No setup needed</span>
+          </div>
+
+          <!-- Google sign-in button — styled per Google brand guidelines -->
+          <div style="margin-bottom:12px">
+            <button id="gdSignInBtn" onclick="initGoogleAuth()" style="
+              display:flex;align-items:center;gap:10px;
+              background:#fff;color:#3c4043;
+              border:1.5px solid #dadce0;border-radius:8px;
+              padding:9px 18px 9px 12px;width:100%;
+              font-family:var(--fn);font-size:.84rem;font-weight:600;
+              cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.08);
+              transition:box-shadow .15s,border-color .15s;
+              justify-content:center;
+            " onmouseover="this.style.boxShadow='0 2px 8px rgba(0,0,0,.14)';this.style.borderColor='#bbb'"
+               onmouseout="this.style.boxShadow='0 1px 3px rgba(0,0,0,.08)';this.style.borderColor='#dadce0'">
+              <svg viewBox="0 0 48 48" width="20" height="20" style="flex-shrink:0">
+                <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.29-8.16 2.29-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+              </svg>
               Sign in with Google
             </button>
           </div>
 
-          <!-- Advanced: manual Client ID -->
-          <span class="gd-adv-toggle" onclick="toggleAdv()">⚙️ Advanced: use my own Google Cloud Client ID</span>
-          <div id="gd_adv_panel">
-            <span class="adv-label">OAuth Client ID <span style="color:var(--red)">*</span></span>
-            <input class="adv-inp" id="gd_client_id" type="text" placeholder="123456789-abc.apps.googleusercontent.com" autocomplete="off" spellcheck="false"/>
-            <div class="adv-help">
-              From: Google Cloud Console → APIs &amp; Services → Credentials → OAuth 2.0 Client IDs<br>
-              Add redirect URI: <code id="gd_redirect_display" style="background:var(--b1l);padding:1px 5px;border-radius:4px;font-family:var(--mono);font-size:.65rem;color:var(--b1)"></code>
-            </div>
-            <button onclick="startManualOAuth()" style="margin-top:8px;width:100%;padding:8px;border-radius:8px;border:none;background:var(--b1);color:#fff;font-family:var(--fn);font-size:.8rem;font-weight:700;cursor:pointer">Connect with my Client ID</button>
+          <!-- How it works note -->
+          <div style="font-size:.68rem;color:var(--txt3);line-height:1.6;background:var(--b1ll);border:1px solid var(--b1l);border-radius:8px;padding:8px 10px;margin-top:2px">
+            <strong style="color:var(--b1)">How it works:</strong> A Google account-picker window will open. Choose your account and approve Drive read access. Your files never leave your browser.
           </div>
+
+          <!-- Hidden stubs so JS doesn't error -->
+          <input id="gd_client_id" type="hidden" value=""/>
+          <span id="gd_redirect_display" style="display:none"></span>
+          <div id="gd_adv_panel" style="display:none"></div>
         </div>
 
         <!-- STEP B: Connected — show user + file browser -->
-        <div id="gd_step_connected">
+        <div id="gd_step_connected" style="display:none">
+
           <!-- User card -->
-          <div class="gd-user-card" id="gdUserCard">
-            <img class="gd-user-avatar" id="gdModalAvatar" src="" alt=""/>
-            <div class="gd-user-info">
-              <div class="gd-user-name" id="gdModalName">Google User</div>
-              <div class="gd-user-email" id="gdModalEmail"></div>
+          <div class="gd-user-card" id="gdUserCard" style="
+            display:flex;align-items:center;gap:10px;
+            background:linear-gradient(135deg,var(--grnl),#d1fae5);
+            border:1.5px solid #a7f3d0;border-radius:12px;
+            padding:10px 14px;margin-bottom:12px;
+          ">
+            <img class="gd-user-avatar" id="gdModalAvatar" src="" alt=""
+              style="width:38px;height:38px;border-radius:50%;border:2px solid #6ee7b7;object-fit:cover;flex-shrink:0"/>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:.83rem;font-weight:800;color:#065f46;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="gdModalName">Google User</div>
+              <div style="font-size:.7rem;color:#047857;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="gdModalEmail"></div>
             </div>
-            <div class="gd-user-badge">✓ Drive</div>
+            <div style="font-size:.68rem;font-weight:700;background:#059669;color:#fff;padding:3px 8px;border-radius:8px;flex-shrink:0">
+              ✓ Connected
+            </div>
           </div>
 
-          <!-- Action row -->
-          <div class="gd-actions">
-            <button class="gd-action-btn" onclick="openDrivePicker()">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-              Pick File (Picker)
+          <!-- Action buttons -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:10px">
+            <button class="gd-action-btn" onclick="openDrivePicker()" style="display:flex;align-items:center;justify-content:center;gap:5px;padding:8px;font-size:.78rem;font-weight:700;border-radius:8px;border:1.5px solid var(--b1l);background:var(--b1ll);color:var(--b1);cursor:pointer">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+              Picker
             </button>
-            <button class="gd-action-btn" onclick="gdBrowseFiles()">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-              Browse Drive
-            </button>
-            <button class="gd-action-btn danger" onclick="gdSignOut()">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-              Sign Out
+            <button class="gd-action-btn" onclick="gdBrowseFiles()" style="display:flex;align-items:center;justify-content:center;gap:5px;padding:8px;font-size:.78rem;font-weight:700;border-radius:8px;border:1.5px solid var(--border);background:var(--surf2);color:var(--txt);cursor:pointer">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+              Browse
             </button>
           </div>
+          <button onclick="gdSignOut()" style="width:100%;padding:7px;font-size:.74rem;font-weight:700;border-radius:8px;border:1.5px solid var(--redl);background:var(--redl);color:var(--red);cursor:pointer;margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:5px">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            Sign Out
+          </button>
 
-          <!-- Selected file indicator -->
-          <div id="gdPickedFile" style="display:none;background:var(--grnl);border:1px solid #a7f3d0;border-radius:9px;padding:8px 12px;font-size:.79rem;color:#065f46;font-weight:600;margin-bottom:10px;display:none;align-items:center;gap:7px">
+          <!-- Selected file pill -->
+          <div id="gdPickedFile" style="display:none;background:var(--grnl);border:1px solid #a7f3d0;border-radius:9px;padding:7px 12px;font-size:.78rem;color:#065f46;font-weight:600;margin-bottom:10px;align-items:center;gap:7px">
             <span>📄</span><span id="gdPickedName"></span>
           </div>
 
-          <!-- Drive file browser (inline list) -->
-          <div class="gd-file-label" id="gdFileLabel" style="display:none">
-            Files in Drive:
+          <!-- File list label + container -->
+          <div class="gd-file-label" id="gdFileLabel" style="display:none;font-size:.72rem;font-weight:700;color:var(--txt2);margin-bottom:5px">
+            Files in your Drive:
           </div>
           <div class="gd-file-list" id="gdFileList"></div>
         </div>
@@ -863,13 +898,16 @@ function setChartDefaults(){
 const PAL  = ['#1E40AF','#0369A1','#059669','#D97706','#DC2626','#7C3AED','#0891B2','#EC4899','#84CC16','#F97316','#6366F1','#14B8A6'];
 const PAL2 = ['#3B82F6','#06B6D4','#10B981','#F59E0B','#EF4444','#8B5CF6','#22D3EE','#F472B6','#A3E635','#FB923C','#818CF8','#2DD4BF'];
 
-/* ── Google API config ──
-   Using a published Google Picker demo client-id that works on any origin
-   Users can override with their own in the Advanced panel                 */
-const GD_DEFAULT_CLIENT = '1058906483222-j0sqk0cjh0kkokfr3o7oqj8a5hpq1j3g.apps.googleusercontent.com';
-const GD_SCOPE    = 'https://www.googleapis.com/auth/drive.readonly';
-const GD_API_BASE = 'https://www.googleapis.com/drive/v3';
-const GD_PICK_APP = '1058906483222';   // picker app id = project number
+/* ── Google API config — dodashboard project ──
+   GSI Token Client flow: no redirect_uri, no implicit grant,
+   works from any origin (file://, localhost, GitHub Pages, etc.)  */
+const GD_CLIENT_ID   = '1055209199184-p5rlcvegcoeq33mf6grlstgnl7mph9h8.apps.googleusercontent.com';
+const GD_PROJECT_NUM = '1055209199184';          // = Picker app-id
+const GD_SCOPE       = 'https://www.googleapis.com/auth/drive.readonly';
+const GD_API_BASE    = 'https://www.googleapis.com/drive/v3';
+// Legacy aliases
+const GD_DEFAULT_CLIENT = GD_CLIENT_ID;
+const GD_PICK_APP       = GD_PROJECT_NUM;
 
 let RAW=[], FLT=[], CH={}, uplWB=null, curSrc=null, curTab='ov', activeSrc='xl';
 let gdToken=null, gdUser=null, gdPickedFile=null, gdSelectedFile=null;
@@ -906,46 +944,67 @@ function waitAPIs(cb, tries=0){
 let tokenClient = null;
 
 function getClientId(){
-  const custom = (ge('gd_client_id')||{}).value?.trim();
-  return (custom && custom.includes('.apps.googleusercontent.com')) ? custom : GD_DEFAULT_CLIENT;
+  return GD_CLIENT_ID;
 }
 
 function initGoogleAuth(){
   const btn = ge('gdSignInBtn');
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinning">⏳</span> Connecting to Google…';
+  if(btn){ btn.disabled=true; btn.innerHTML='<span class="spinning">⏳</span> Connecting…'; }
 
+  /* ── GSI Token Client ──────────────────────────────────────────
+     google.accounts.oauth2.initTokenClient uses a secure credential
+     picker overlay — no redirect_uri required, no implicit grant,
+     fully compliant with Google's current OAuth 2.0 policy.
+     Works from file://, localhost, and any deployed origin.
+  ──────────────────────────────────────────────────────────────── */
   waitAPIs(()=>{
-    if(typeof google === 'undefined' || !google.accounts){
-      showGdErr('Google Identity Services failed to load. Check your internet connection and try again.');
-      btn.disabled=false; btn.innerHTML=origSignInHTML(); return;
+    if(typeof google === 'undefined' || !google?.accounts?.oauth2){
+      if(btn){ btn.disabled=false; btn.innerHTML=origSignInHTML(); }
+      showGdErr('Google Identity Services did not load. Check your internet connection and refresh.');
+      return;
     }
     try{
       tokenClient = google.accounts.oauth2.initTokenClient({
-        client_id: getClientId(),
-        scope: GD_SCOPE,
-        callback: (resp)=>{
-          btn.disabled=false; btn.innerHTML=origSignInHTML();
-          if(resp.error){ showGdErr('Google sign-in error: '+resp.error+(resp.error_description?' — '+resp.error_description:'')); return; }
-          gdToken = { token: resp.access_token, expiresAt: Date.now()+(parseInt(resp.expires_in||3600)-60)*1000 };
-          console.log('[GD] Token obtained, expires:', new Date(gdToken.expiresAt).toLocaleTimeString());
+        client_id : GD_CLIENT_ID,
+        scope     : GD_SCOPE,
+        /* No redirect_uri — GSI handles auth internally via overlay */
+        callback  : (resp)=>{
+          if(btn){ btn.disabled=false; btn.innerHTML=origSignInHTML(); }
+          if(resp.error){
+            let msg = resp.error_description || resp.error;
+            /* Translate common error codes into plain English */
+            if(resp.error === 'access_denied')
+              msg = 'Access was denied. Please allow Drive access when prompted.';
+            else if(resp.error === 'popup_blocked_by_browser')
+              msg = 'Popup blocked — allow popups for this page and try again.';
+            else if(resp.error === 'popup_closed_by_user')
+              msg = 'Sign-in cancelled. Click the button to try again.';
+            showGdErr('Sign-in error: ' + msg);
+            return;
+          }
+          gdToken = {
+            token    : resp.access_token,
+            expiresAt: Date.now() + (parseInt(resp.expires_in || 3600) - 60) * 1000
+          };
+          console.log('[GD] Token obtained via GSI, expires:', new Date(gdToken.expiresAt).toLocaleTimeString());
           fetchUserProfile();
         },
         error_callback: (err)=>{
-          btn.disabled=false; btn.innerHTML=origSignInHTML();
-          showGdErr('Sign-in failed: '+(err.message||err.type||JSON.stringify(err)));
+          if(btn){ btn.disabled=false; btn.innerHTML=origSignInHTML(); }
+          const msg = err?.message || err?.type || JSON.stringify(err);
+          showGdErr('Sign-in failed: ' + msg);
         }
       });
-      tokenClient.requestAccessToken({prompt:'consent'});
+      tokenClient.requestAccessToken({ prompt: 'select_account' });
     }catch(e){
-      btn.disabled=false; btn.innerHTML=origSignInHTML();
-      showGdErr('Could not start Google sign-in: '+e.message);
+      if(btn){ btn.disabled=false; btn.innerHTML=origSignInHTML(); }
+      showGdErr('Could not initialise Google sign-in: ' + e.message);
     }
   });
 }
 
 function origSignInHTML(){
-  return `<svg viewBox="0 0 48 48" width="20" height="20"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.29-8.16 2.29-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg> Sign in with Google`;
+  return `<svg viewBox="0 0 48 48" width="20" height="20" style="flex-shrink:0"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.29-8.16 2.29-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg> Sign in with Google`;
 }
 
 async function fetchUserProfile(){
@@ -964,6 +1023,7 @@ async function fetchUserProfile(){
 function showGdConnected(){
   ge('gd_step_welcome').style.display = 'none';
   ge('gd_step_connected').style.display = 'block';
+  const btn=ge('gdSignInBtn'); if(btn){btn.disabled=false;btn.innerHTML=origSignInHTML();}
   clearGdErr();
 
   /* Modal user card */
@@ -1021,7 +1081,7 @@ function openDrivePicker(){
         .addView(view)
         .addView(new google.picker.DocsView().setIncludeFolders(true))
         .setOAuthToken(gdToken.token)
-        .setAppId(GD_PICK_APP)
+        .setAppId(GD_PROJECT_NUM)
         .setCallback(pickerCallback)
         .setTitle('Select Excel, CSV or Google Sheet')
         .build();
@@ -1127,71 +1187,16 @@ function gdPickInline(id,name,mime){
    MANUAL / ADVANCED OAUTH (Custom Client ID)
 ════════════════════════════════════════════════════════════ */
 function toggleAdv(){
-  const p=ge('gd_adv_panel'); p.classList.toggle('show');
-  if(p.classList.contains('show')){
-    const loc=window.location;
-    const uri = loc.protocol==='file:' ? 'http://localhost' : loc.origin+loc.pathname;
-    ge('gd_redirect_display').textContent = uri;
-  }
+  const p=ge('gd_adv_panel');
+  if(p) p.classList.toggle('show');
 }
 
+/* ── Stub legacy functions — no-op since we use GSI-only now ── */
+function handleOAuthCallback(){ /* unused — GSI handles auth internally */ }
+function handleManualCallback(){ /* unused */ }
 function startManualOAuth(){
-  const clientId=(ge('gd_client_id').value||'').trim();
-  if(!clientId){ showGdErr('Enter your Client ID first.'); return; }
-  if(!clientId.match(/\.apps\.googleusercontent\.com$/)){showGdErr('Invalid Client ID format.');return;}
-
-  const stateArr=new Uint8Array(16);
-  crypto.getRandomValues(stateArr);
-  const state=Array.from(stateArr).map(b=>b.toString(16).padStart(2,'0')).join('');
-  sessionStorage.setItem('scm_gd_state',state);
-
-  const loc=window.location;
-  const redirectUri= loc.protocol==='file:'?'http://localhost':loc.origin+loc.pathname;
-  const p=new URLSearchParams({client_id:clientId,redirect_uri:redirectUri,response_type:'token',scope:GD_SCOPE,state,prompt:'consent',access_type:'online'});
-  const authUrl=`https://accounts.google.com/o/oauth2/v2/auth?${p}`;
-
-  const w=520,h=640,left=Math.round((screen.width-w)/2),top=Math.round((screen.height-h)/2);
-  const popup=window.open(authUrl,'gd_auth',`width=${w},height=${h},top=${top},left=${left},scrollbars=yes`);
-  if(!popup){showGdErr('Popup blocked — allow popups for this site.');return;}
-
-  let polls=0;
-  const t=setInterval(()=>{
-    polls++;
-    try{
-      if(!popup||popup.closed){clearInterval(t);if(!gdToken)showGdErr('Sign-in window closed.');return;}
-      if(polls>600){clearInterval(t);popup.close();showGdErr('Timed out.');return;}
-      const hash=popup.location.hash, search=popup.location.search;
-      if(hash&&hash.includes('access_token')){
-        clearInterval(t); popup.close();
-        handleManualCallback(hash);
-      } else if(search&&search.includes('error')){
-        clearInterval(t); popup.close();
-        const ep=new URLSearchParams(search.slice(1));
-        showGdErr('OAuth error: '+(ep.get('error_description')||ep.get('error')||'Unknown'));
-      }
-    }catch(e){ /* cross-origin */ }
-  },300);
+  showGdErr('Manual OAuth not needed — click "Sign in with Google" above.');
 }
-
-function handleManualCallback(hash){
-  const p=new URLSearchParams(hash.startsWith('#')?hash.slice(1):hash);
-  const token=p.get('access_token'), expires=p.get('expires_in'), state=p.get('state');
-  if(!token){showGdErr('No token received.');return;}
-  const saved=sessionStorage.getItem('scm_gd_state');
-  if(state&&saved&&state!==saved){showGdErr('Security error: state mismatch.');return;}
-  sessionStorage.removeItem('scm_gd_state');
-  gdToken={token,expiresAt:Date.now()+(parseInt(expires||3600)-60)*1000};
-  fetchUserProfile();
-}
-
-/* Check if page loaded with hash token (redirect flow) */
-(function checkHash(){
-  const h=window.location.hash;
-  if(h&&h.includes('access_token')){
-    handleManualCallback(h);
-    history.replaceState(null,'',window.location.pathname+window.location.search);
-  }
-})();
 
 /* ════════════════════════════════════════════════════════════
    DRIVE API FETCH
