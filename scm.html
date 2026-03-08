@@ -624,6 +624,92 @@ html,body{height:100%;overflow:hidden;font-family:var(--fn);font-size:13px;
 .gd-saved-link-item .gsli-del{font-size:11px;color:var(--txt3);cursor:pointer;padding:2px 5px;border-radius:4px;flex-shrink:0;}
 .gd-saved-link-item .gsli-del:hover{background:var(--redl);color:var(--red);}
 
+
+/* ══════════════════════════════════════════════
+   SAVED DATASETS
+══════════════════════════════════════════════ */
+.saved-ds-section{
+  border-top:1.5px solid var(--border);margin-top:10px;padding-top:10px;
+}
+.saved-ds-header{
+  display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;
+}
+.saved-ds-title{
+  font-size:.74rem;font-weight:800;color:var(--txt2);
+  display:flex;align-items:center;gap:5px;
+}
+.saved-ds-count{
+  font-size:.6rem;font-weight:700;background:var(--b1l);color:var(--b1);
+  padding:1px 7px;border-radius:8px;font-family:var(--mono);
+}
+.ds-list{max-height:200px;overflow-y:auto;display:flex;flex-direction:column;gap:5px;}
+.ds-item{
+  display:flex;align-items:center;gap:9px;
+  background:var(--surf2);border:1.5px solid var(--border);
+  border-radius:9px;padding:8px 10px;cursor:pointer;
+  transition:all .14s;position:relative;
+}
+.ds-item:hover{border-color:var(--b1);background:var(--b1ll);box-shadow:0 2px 8px rgba(26,63,173,.1);}
+.ds-item.active-ds{border-color:var(--grn);background:var(--grnl);}
+.ds-ico{
+  width:32px;height:32px;border-radius:8px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:16px;
+  background:linear-gradient(135deg,#dbeafe,#bfdbfe);
+}
+.ds-info{flex:1;min-width:0;}
+.ds-name{font-size:.8rem;font-weight:700;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ds-meta{font-size:.63rem;color:var(--txt3);margin-top:1px;display:flex;gap:8px;}
+.ds-meta span{display:flex;align-items:center;gap:2px;}
+.ds-actions{display:flex;gap:4px;flex-shrink:0;}
+.ds-action-btn{
+  font-size:.64rem;font-weight:700;padding:3px 8px;border-radius:6px;
+  border:1px solid var(--border);background:#fff;color:var(--txt2);
+  cursor:pointer;transition:.12s;white-space:nowrap;
+}
+.ds-action-btn:hover{background:var(--b1);color:#fff;border-color:var(--b1);}
+.ds-action-btn.del:hover{background:var(--red);color:#fff;border-color:var(--red);}
+.ds-empty{
+  font-size:.74rem;color:var(--txt3);text-align:center;padding:16px 12px;
+  background:var(--surf2);border:1.5px dashed var(--border);border-radius:9px;
+  line-height:1.6;
+}
+
+/* Save-after-load prompt */
+.save-prompt{
+  background:linear-gradient(135deg,#f0fdf4,#dcfce7);
+  border:1.5px solid #86efac;border-radius:10px;
+  padding:10px 12px;margin-top:8px;
+  display:none;
+}
+.save-prompt.show{display:block;}
+.save-prompt-title{font-size:.74rem;font-weight:800;color:#166534;margin-bottom:7px;display:flex;align-items:center;gap:5px;}
+.save-prompt input{
+  width:100%;padding:7px 10px;border:1.5px solid #86efac;border-radius:7px;
+  font-family:var(--fn);font-size:.82rem;background:#fff;color:var(--txt);
+  outline:none;margin-bottom:8px;
+}
+.save-prompt input:focus{border-color:var(--grn);}
+.save-prompt-btns{display:flex;gap:7px;}
+.sp-btn-save{
+  flex:1;padding:7px;font-size:.76rem;font-weight:700;border-radius:7px;
+  background:var(--grn);color:#fff;border:none;cursor:pointer;transition:.14s;
+}
+.sp-btn-save:hover{background:#036b47;}
+.sp-btn-skip{
+  padding:7px 12px;font-size:.76rem;font-weight:700;border-radius:7px;
+  background:none;color:var(--txt3);border:1px solid var(--border);cursor:pointer;
+}
+
+/* Splash card for saved datasets */
+.spl-src.has-data{
+  border-color:var(--grn);background:linear-gradient(135deg,#f0fdf4,#dcfce7);
+}
+.spl-src.has-data:hover{border-color:#059669;background:linear-gradient(135deg,#dcfce7,#bbf7d0);}
+.ds-badge{
+  font-size:.58rem;font-weight:700;background:var(--grn);color:#fff;
+  padding:2px 7px;border-radius:8px;margin-top:2px;
+}
+
 </style>
 </head>
 <body>
@@ -649,23 +735,61 @@ html,body{height:100%;overflow:hidden;font-family:var(--fn);font-size:13px;
     <img id="gdUserAvatar" src="" alt=""/>
     <span id="gdUserName">Google</span>
   </div>
-  <button class="hbtn btn-snap" onclick="doSnapshot()">
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-    Snapshot
-  </button>
+
   <button class="hbtn" id="adminBtn" onclick="openAdmin()" style="display:none;background:#7C3AED;color:#fff">
     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/></svg>
     Admin
   </button>
   <span id="hdrUserPill" style="display:none;font-size:.7rem;font-weight:700;color:rgba(255,255,255,.8);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:14px;padding:3px 10px;white-space:nowrap"></span>
   <button class="hbtn" onclick="doLogout()" style="background:rgba(239,68,68,.22);color:#fca5a5;border:1px solid rgba(239,68,68,.3);font-size:10px;padding:5px 10px" title="Sign Out">🔓</button>
-  <button class="hbtn btn-pdf" onclick="doPDF()">
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-    PDF
-  </button>
-  <button class="hbtn btn-src" onclick="openModal()">
+  <div style="position:relative;display:inline-block" id="exportDropWrap">
+    <button class="hbtn btn-pdf" id="exportMainBtn" onclick="toggleExportMenu(event)">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Export
+      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="margin-left:1px"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div id="exportMenu" style="
+      display:none;position:absolute;top:calc(100% + 5px);right:0;z-index:2000;
+      background:#fff;border:1.5px solid var(--border);border-radius:11px;
+      box-shadow:0 8px 28px rgba(13,27,46,.18);min-width:200px;overflow:hidden;
+    ">
+      <div style="padding:8px 12px 6px;font-size:.65rem;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border)">Export Options</div>
+      <button onclick="closeExportMenu();doPDF('all')" style="width:100%;padding:10px 14px;text-align:left;border:none;background:none;cursor:pointer;display:flex;align-items:center;gap:10px;font-family:var(--fn);font-size:.8rem;font-weight:600;color:var(--txt);transition:.12s" onmouseover="this.style.background='#FEF2F2'" onmouseout="this.style.background='none'">
+        <span style="width:26px;height:26px;background:#FEE2E2;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </span>
+        <div>
+          <div style="font-weight:700">Full Report PDF</div>
+          <div style="font-size:.65rem;color:var(--txt3);margin-top:1px">All 7 tabs · A3 landscape</div>
+        </div>
+      </button>
+      <button onclick="closeExportMenu();doPDF('current')" style="width:100%;padding:10px 14px;text-align:left;border:none;background:none;cursor:pointer;display:flex;align-items:center;gap:10px;font-family:var(--fn);font-size:.8rem;font-weight:600;color:var(--txt);transition:.12s" onmouseover="this.style.background='#FFF7ED'" onmouseout="this.style.background='none'">
+        <span style="width:26px;height:26px;background:#FED7AA;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#EA580C" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        </span>
+        <div>
+          <div style="font-weight:700">Current Tab PDF</div>
+          <div style="font-size:.65rem;color:var(--txt3);margin-top:1px">Active tab only</div>
+        </div>
+      </button>
+      <div style="border-top:1px solid var(--border);margin:2px 0"></div>
+      <button onclick="closeExportMenu();doSnapshot()" style="width:100%;padding:10px 14px;text-align:left;border:none;background:none;cursor:pointer;display:flex;align-items:center;gap:10px;font-family:var(--fn);font-size:.8rem;font-weight:600;color:var(--txt);transition:.12s" onmouseover="this.style.background='#F5F3FF'" onmouseout="this.style.background='none'">
+        <span style="width:26px;height:26px;background:#EDE9FE;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        </span>
+        <div>
+          <div style="font-weight:700">PNG Snapshot</div>
+          <div style="font-size:.65rem;color:var(--txt3);margin-top:1px">Current tab · high-res image</div>
+        </div>
+      </button>
+    </div>
+  </div>
+  <button class="hbtn btn-src" onclick="openModal();sSrc('xl')">
     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
     Data Source
+  </button>
+  <button class="hbtn" id="hdrSavedBtn" onclick="openModal();sSrc('xl')" style="display:none;background:rgba(16,185,129,.22);color:#6ee7b7;border:1px solid rgba(16,185,129,.35);font-size:10px;padding:5px 10px" title="Load a saved dataset">
+    💾 <span id="hdrSavedCount">0</span> Saved
   </button>
 </header>
 
@@ -985,6 +1109,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--fn);font-size:13px;
       <button class="adm-nav-item on" onclick="admNav('dashboard')" id="adm_n_dashboard"><span class="adm-ico">📊</span> Dashboard</button>
       <button class="adm-nav-item" onclick="admNav('users')" id="adm_n_users"><span class="adm-ico">👥</span> User Management</button>
       <button class="adm-nav-item" onclick="admNav('links')" id="adm_n_links"><span class="adm-ico">🔗</span> Drive Links</button>
+      <button class="adm-nav-item" onclick="admNav('datasets')" id="adm_n_datasets"><span class="adm-ico">💾</span> Saved Data <span id="admDatasetCount" style="font-size:.6rem;background:var(--b1l);color:var(--b1);padding:1px 5px;border-radius:6px;margin-left:auto">0</span></button>
       <div class="adm-nav-sep"></div>
       <div style="font-size:.65rem;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.5px;padding:4px 12px 8px">Account</div>
       <button class="adm-nav-item" onclick="admNav('settings')" id="adm_n_settings"><span class="adm-ico">🔧</span> Settings</button>
@@ -1059,6 +1184,18 @@ html,body{height:100%;overflow:hidden;font-family:var(--fn);font-size:13px;
         </div>
       </div>
 
+      <!-- Panel: Saved Datasets -->
+      <div class="adm-panel" id="adm_p_datasets">
+        <div class="adm-section-hdr">
+          <div>
+            <div class="adm-section-title">💾 Saved Datasets</div>
+            <div class="adm-section-sub">Manage all portal-saved Excel/CSV datasets</div>
+          </div>
+          <button class="adm-btn adm-btn-danger" onclick="clearAllDatasets();renderAdmDatasets()">🗑️ Clear All</button>
+        </div>
+        <div id="admDatasetsList"></div>
+      </div>
+
       <!-- Panel: Settings -->
       <div class="adm-panel" id="adm_p_settings">
         <div class="adm-section-hdr">
@@ -1081,7 +1218,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--fn);font-size:13px;
             <div style="font-size:.85rem;font-weight:700;color:var(--txt);margin-bottom:14px">Default Credentials (Demo)</div>
             <div style="font-size:.75rem;color:var(--txt2);line-height:2;background:var(--surf2);padding:10px 14px;border-radius:8px;font-family:var(--mono)">
               Admin / Dermis@12345678 → Admin role<br>
-              manager / mgr456 → User role (full access)<br>
+              SCM / password → User role (full access)<br>
               viewer / view789 → Viewer role (read-only)<br>
             </div>
             <div style="font-size:.68rem;color:var(--txt3);margin-top:8px">⚠️ Change these in production via the User Management panel.</div>
@@ -1137,6 +1274,12 @@ html,body{height:100%;overflow:hidden;font-family:var(--fn);font-size:13px;
     <div class="spl-h">SCM Analytics Dashboard</div>
     <div class="spl-p">Choose a data source to visualise party, state &amp; trend analytics across your supply chain.</div>
     <div class="spl-sources">
+      <div class="spl-src" id="splSavedCard" onclick="openModal();sSrc('xl')" style="display:none">
+        <div class="sico">💾</div>
+        <div class="stit">Saved Datasets</div>
+        <div class="sdesc">Load a previously saved dataset instantly</div>
+        <div class="ds-badge" id="splSavedBadge">0 saved</div>
+      </div>
       <div class="spl-src" onclick="openModal();sSrc('xl')">
         <div class="sico">📁</div>
         <div class="stit">Excel / CSV Upload</div>
@@ -1177,14 +1320,44 @@ html,body{height:100%;overflow:hidden;font-family:var(--fn);font-size:13px;
 
       <!-- ── TAB: FILE UPLOAD ── -->
       <div class="srcp on" id="sp_xl">
-        <div class="upz" id="upz" ondragover="onDg(event,1)" ondragleave="onDg(event,0)" ondrop="onDp(event)">
-          <input type="file" id="fi" accept=".xlsx,.xls,.csv" onchange="onFs(event)"/>
-          <div class="upz-ico">⬆️</div>
-          <div class="upz-t">Drop file here or click to browse</div>
-          <div class="upz-s">.xlsx · .xls · .csv — processed in your browser, never uploaded</div>
+
+        <!-- Saved datasets (shown first for quick access) -->
+        <div class="saved-ds-section" id="savedDsSection">
+          <div class="saved-ds-header">
+            <div class="saved-ds-title">
+              💾 Saved Datasets
+              <span class="saved-ds-count" id="dsBadgeCount">0</span>
+            </div>
+            <button onclick="clearAllDatasets()" style="font-size:.62rem;color:var(--txt3);background:none;border:none;cursor:pointer;padding:2px 4px" title="Clear all saved datasets">🗑️ Clear all</button>
+          </div>
+          <div class="ds-list" id="dsList">
+            <div class="ds-empty">No saved datasets yet.<br>Upload a file below and click <strong>💾 Save to Portal</strong>.</div>
+          </div>
         </div>
-        <div class="fc" id="fc"><span>📄</span><span id="fcn"></span></div>
-        <div class="shw" id="shw"><label>Select Sheet Tab</label><select id="shsel"></select></div>
+
+        <!-- Upload zone -->
+        <div style="margin-top:10px;border-top:1.5px solid var(--border);padding-top:10px">
+          <div style="font-size:.72rem;font-weight:700;color:var(--txt2);margin-bottom:7px;display:flex;align-items:center;gap:5px">⬆️ Upload New File</div>
+          <div class="upz" id="upz" ondragover="onDg(event,1)" ondragleave="onDg(event,0)" ondrop="onDp(event)">
+            <input type="file" id="fi" accept=".xlsx,.xls,.csv" onchange="onFs(event)"/>
+            <div class="upz-ico">⬆️</div>
+            <div class="upz-t">Drop file here or click to browse</div>
+            <div class="upz-s">.xlsx · .xls · .csv — processed in your browser, never uploaded</div>
+          </div>
+          <div class="fc" id="fc"><span>📄</span><span id="fcn"></span></div>
+          <div class="shw" id="shw"><label>Select Sheet Tab</label><select id="shsel"></select></div>
+        </div>
+
+        <!-- Save-after-upload prompt -->
+        <div class="save-prompt" id="savePrompt">
+          <div class="save-prompt-title">💾 Save this dataset to portal?</div>
+          <input type="text" id="savePromptName" placeholder="Dataset name (e.g. Sales Q1 2024)"/>
+          <div class="save-prompt-btns">
+            <button class="sp-btn-save" onclick="confirmSaveDataset()">💾 Save &amp; Load Dashboard</button>
+            <button class="sp-btn-skip" onclick="skipSaveDataset()">Load without saving</button>
+          </div>
+        </div>
+
       </div>
 
       <!-- ── TAB: DRIVE PICKER ── -->
@@ -1302,7 +1475,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--fn);font-size:13px;
 ════════════════════════════════════════════════════════════ */
 
 /* ── User database (localStorage-backed, seeded with defaults) ── */
-const AUTH_KEY   = 'scm_users_v2';
+const AUTH_KEY   = 'scm_users_v3';
 const SESS_KEY   = 'scm_session_v1';
 const LINKS_KEY  = 'scm_gdlinks_v1';
 const SETT_KEY   = 'scm_settings_v1';
@@ -1310,7 +1483,7 @@ const SETT_KEY   = 'scm_settings_v1';
 function defaultUsers(){
   return [
     {id:'u1',fname:'Admin',lname:'',username:'Admin',password:'Dermis@12345678',role:'admin',status:'active',lastLogin:null,created:new Date().toISOString()},
-    {id:'u2',fname:'Manager',lname:'Singh',username:'manager',password:'mgr456',role:'user',status:'active',lastLogin:null,created:new Date().toISOString()},
+    {id:'u2',fname:'SCM',lname:'',username:'SCM',password:'password',role:'user',status:'active',lastLogin:null,created:new Date().toISOString()},
     {id:'u3',fname:'Viewer',lname:'Kumar',username:'viewer',password:'view789',role:'viewer',status:'active',lastLogin:null,created:new Date().toISOString()},
   ];
 }
@@ -1456,11 +1629,9 @@ function applyRoleUI(role){
   // Admin gets admin button
   if(role==='admin') ge('adminBtn').style.display='flex';
   else ge('adminBtn').style.display='none';
-  // Viewer: hide PDF/Snapshot
+  // Viewer: hide export button
   if(role==='viewer'){
-    ['hdr .btn-snap','hdr .btn-pdf'].forEach(sel=>{
-      document.querySelectorAll(sel).forEach(el=>el.style.display='none');
-    });
+    const ew=ge('exportDropWrap'); if(ew) ew.style.display='none';
   }
 }
 
@@ -1498,6 +1669,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
     showAuthWall();
   }
   renderSavedLinks();
+  renderDatasetList();  // populate saved datasets on boot
 });
 
 /* ════════════════════════════════════════════════════════════
@@ -1512,24 +1684,30 @@ function openAdmin(){
   renderAdmUsers();
   renderAdmLinks();
   renderAdmActivity();
+  renderAdmDatasets();
 }
 
 function closeAdmin(){ ge('adminPortal').classList.remove('show'); }
 
 function admNav(panel){
-  ['dashboard','users','links','settings'].forEach(p=>{
-    ge('adm_n_'+p).classList.toggle('on', p===panel);
-    ge('adm_p_'+p).classList.toggle('on', p===panel);
+  ['dashboard','users','links','datasets','settings'].forEach(p=>{
+    const navEl = ge('adm_n_'+p);
+    const panEl = ge('adm_p_'+p);
+    if(navEl) navEl.classList.toggle('on', p===panel);
+    if(panEl) panEl.classList.toggle('on', p===panel);
   });
+  if(panel==='datasets') renderAdmDatasets();
 }
 
-function renderAdmStats(){
+async function renderAdmStats(){
   const users = getUsers();
   const links = getLinks();
+  const datasets = await idbGetAll().catch(()=>[]);
+  const cnt = ge('admDatasetCount'); if(cnt) cnt.textContent = datasets.length;
   ge('admStats').innerHTML = [
     {ico:'👥',bg:'#ede9fe',col:'#6d28d9',lbl:'Total Users',val:users.length},
     {ico:'✅',bg:'#d1fae5',col:'#065f46',lbl:'Active',val:users.filter(u=>u.status==='active').length},
-    {ico:'🔗',bg:'#dbeafe',col:'#1e40af',lbl:'Drive Links',val:links.length},
+    {ico:'💾',bg:'#dbeafe',col:'#1e40af',lbl:'Saved Datasets',val:datasets.length},
     {ico:'📋',bg:'#fef3c7',col:'#92400e',lbl:'Activity Logs',val:getActivity().length},
   ].map(s=>`
     <div class="adm-stat-card">
@@ -1806,6 +1984,241 @@ async function loadLnkNow(){
 }
 
 let activeLnkUrl='', activeLnkName='';
+
+
+/* ════════════════════════════════════════════════════════════
+   💾 INDEXEDDB — SAVED DATASETS
+   Stores full parsed RAW arrays so re-upload is never needed.
+   IndexedDB handles 50MB+ vs localStorage's ~5MB.
+════════════════════════════════════════════════════════════ */
+const IDB_NAME    = 'scm_portal_v1';
+const IDB_STORE   = 'datasets';
+let   idb         = null;
+
+function openIDB(){
+  return new Promise((res,rej)=>{
+    if(idb){ res(idb); return; }
+    const req = indexedDB.open(IDB_NAME, 1);
+    req.onupgradeneeded = e => {
+      const db = e.target.result;
+      if(!db.objectStoreNames.contains(IDB_STORE)){
+        const store = db.createObjectStore(IDB_STORE, {keyPath:'id'});
+        store.createIndex('savedAt','savedAt',{unique:false});
+      }
+    };
+    req.onsuccess = e => { idb = e.target.result; res(idb); };
+    req.onerror   = e => rej(e.target.error);
+  });
+}
+
+async function idbGetAll(){
+  const db = await openIDB();
+  return new Promise((res,rej)=>{
+    const tx  = db.transaction(IDB_STORE,'readonly');
+    const req = tx.objectStore(IDB_STORE).getAll();
+    req.onsuccess = ()=> res(req.result||[]);
+    req.onerror   = ()=> rej(req.error);
+  });
+}
+
+async function idbPut(record){
+  const db = await openIDB();
+  return new Promise((res,rej)=>{
+    const tx  = db.transaction(IDB_STORE,'readwrite');
+    const req = tx.objectStore(IDB_STORE).put(record);
+    req.onsuccess = ()=> res(req.result);
+    req.onerror   = ()=> rej(req.error);
+  });
+}
+
+async function idbDelete(id){
+  const db = await openIDB();
+  return new Promise((res,rej)=>{
+    const tx  = db.transaction(IDB_STORE,'readwrite');
+    const req = tx.objectStore(IDB_STORE).delete(id);
+    req.onsuccess = ()=> res();
+    req.onerror   = ()=> rej(req.error);
+  });
+}
+
+async function idbClear(){
+  const db = await openIDB();
+  return new Promise((res,rej)=>{
+    const tx  = db.transaction(IDB_STORE,'readwrite');
+    const req = tx.objectStore(IDB_STORE).clear();
+    req.onsuccess = ()=> res();
+    req.onerror   = ()=> rej(req.error);
+  });
+}
+
+/* ── Pending save state (set after file is parsed, before user names it) ── */
+let pendingSaveData  = null;   // { rows:[], filename:'', sheetName:'' }
+let activeDatasetId  = null;   // id of currently loaded saved dataset
+
+/* ── Render saved datasets list in upload tab ── */
+async function renderDatasetList(){
+  const list = await idbGetAll().catch(()=>[]);
+  list.sort((a,b)=> new Date(b.savedAt)-new Date(a.savedAt));
+
+  const el      = ge('dsList');
+  const badge   = ge('dsBadgeCount');
+  const splCard = ge('splSavedCard');
+  const splBadge= ge('splSavedBadge');
+
+  if(badge)   badge.textContent   = list.length;
+  if(splCard) splCard.style.display = list.length ? 'flex' : 'none';
+  if(splBadge)splBadge.textContent = list.length+' saved';
+  // Update header pill
+  const hdrBtn = ge('hdrSavedBtn');
+  const hdrCnt = ge('hdrSavedCount');
+  if(hdrBtn) hdrBtn.style.display = list.length ? 'flex' : 'none';
+  if(hdrCnt) hdrCnt.textContent   = list.length;
+
+  if(!list.length){
+    el.innerHTML='<div class="ds-empty">No saved datasets yet.<br>Upload a file below and click <strong>💾 Save to Portal</strong>.</div>';
+    return;
+  }
+
+  el.innerHTML = list.map(ds=>{
+    const isActive = ds.id === activeDatasetId;
+    const rows  = (ds.rows||[]).length;
+    const saved = new Date(ds.savedAt).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'2-digit'});
+    const size  = rows > 1000 ? (rows/1000).toFixed(1)+'K rows' : rows+' rows';
+    const ext   = (ds.filename||'').split('.').pop().toUpperCase()||'XLS';
+    return `
+    <div class="ds-item ${isActive?'active-ds':''}" id="dsi_${ds.id}">
+      <div class="ds-ico">${ext==='CSV'?'📄':'📊'}</div>
+      <div class="ds-info">
+        <div class="ds-name" title="${escH(ds.name)}">${escH(ds.name)}</div>
+        <div class="ds-meta">
+          <span>📁 ${escH(ds.filename)}</span>
+          <span>📋 ${size}</span>
+          <span>🕐 ${saved}</span>
+          ${ds.savedBy?`<span>👤 ${escH(ds.savedBy)}</span>`:''}
+        </div>
+      </div>
+      <div class="ds-actions">
+        <button class="ds-action-btn" onclick="event.stopPropagation();loadDataset('${ds.id}')">
+          ${isActive?'✅ Loaded':'▶ Load'}
+        </button>
+        <button class="ds-action-btn del" onclick="event.stopPropagation();deleteDataset('${ds.id}')">🗑️</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ── Load a saved dataset ── */
+async function loadDataset(id){
+  const list = await idbGetAll().catch(()=>[]);
+  const ds   = list.find(d=>d.id===id);
+  if(!ds){ alert('Dataset not found.'); return; }
+  if(!ds.rows||!ds.rows.length){ alert('Dataset appears empty.'); return; }
+
+  setP(30,'Restoring dataset…');
+  RAW = ds.rows;
+  activeDatasetId = id;
+  setP(100,'Done!');
+
+  logActivity(`Loaded saved dataset: ${ds.name} (${ds.rows.length} rows)`);
+  onLoaded('xl','💾 '+ds.name.slice(0,22));
+  renderDatasetList();
+}
+
+/* ── Called right after local file is parsed successfully ── */
+function promptSaveDataset(rows, filename, sheetName){
+  pendingSaveData = { rows, filename, sheetName };
+  // Suggest name: filename without extension
+  const suggestedName = filename.replace(/\.[^/.]+$/,'') + (sheetName && sheetName!==filename ? ' – '+sheetName : '');
+  const inp = ge('savePromptName');
+  if(inp) inp.value = suggestedName;
+  ge('savePrompt').classList.add('show');
+}
+
+async function confirmSaveDataset(){
+  if(!pendingSaveData){ skipSaveDataset(); return; }
+  const nameInp = ge('savePromptName');
+  const name    = (nameInp?nameInp.value:'').trim() || pendingSaveData.filename;
+
+  const record = {
+    id      : 'ds_'+ Date.now(),
+    name,
+    filename: pendingSaveData.filename,
+    rows    : pendingSaveData.rows,
+    savedAt : new Date().toISOString(),
+    savedBy : SESSION ? SESSION.name : 'Unknown',
+    rowCount: pendingSaveData.rows.length,
+  };
+
+  try{
+    setP(50,'Saving to portal…');
+    await idbPut(record);
+    activeDatasetId = record.id;
+    setP(100,'Saved!');
+    logActivity(`Dataset saved: ${name} (${record.rowCount} rows)`);
+    ge('savePrompt').classList.remove('show');
+    pendingSaveData = null;
+    await renderDatasetList();
+    // Now load the dashboard
+    onLoaded('xl','💾 '+name.slice(0,22));
+  }catch(e){
+    console.error('[IDB] Save failed:', e);
+    // Still load dashboard even if save fails
+    ge('savePrompt').classList.remove('show');
+    pendingSaveData = null;
+    onLoaded('xl','📁 '+record.filename.slice(0,22));
+  }
+}
+
+function skipSaveDataset(){
+  const rows = pendingSaveData ? pendingSaveData.rows : RAW;
+  const name = pendingSaveData ? pendingSaveData.filename : (ge('fcn')?ge('fcn').textContent:'File');
+  ge('savePrompt').classList.remove('show');
+  pendingSaveData = null;
+  onLoaded('xl','📁 '+name.slice(0,22));
+}
+
+async function deleteDataset(id){
+  if(!confirm('Remove this saved dataset from the portal?')) return;
+  await idbDelete(id).catch(()=>{});
+  if(activeDatasetId===id) activeDatasetId=null;
+  logActivity(`Dataset deleted`);
+  await renderDatasetList();
+}
+
+async function clearAllDatasets(){
+  if(!confirm('Clear ALL saved datasets? This cannot be undone.')) return;
+  await idbClear().catch(()=>{});
+  activeDatasetId = null;
+  logActivity('All saved datasets cleared');
+  await renderDatasetList();
+}
+
+/* ── Render datasets panel in Admin Portal ── */
+async function renderAdmDatasets(){
+  const list = await idbGetAll().catch(()=>[]);
+  const el = ge('admDatasetsList');
+  if(!el) return;
+  list.sort((a,b)=>new Date(b.savedAt)-new Date(a.savedAt));
+  el.innerHTML = list.length
+    ? list.map(ds=>`
+      <div class="gd-link-card">
+        <div class="gd-link-ico" style="background:linear-gradient(135deg,#dbeafe,#bfdbfe)">📊</div>
+        <div class="gd-link-info">
+          <div class="gd-link-name">${escH(ds.name)}</div>
+          <div class="gd-link-url">📁 ${escH(ds.filename)} · ${(ds.rows||[]).length} rows</div>
+          <div class="gd-link-meta">Saved ${new Date(ds.savedAt).toLocaleString()} by ${escH(ds.savedBy||'—')}</div>
+        </div>
+        <div style="display:flex;gap:6px;flex-shrink:0">
+          <button class="adm-btn adm-btn-ghost" style="padding:4px 9px;font-size:.68rem" onclick="loadDataset('${ds.id}');closeAdmin()">▶ Load</button>
+          <button class="adm-btn adm-btn-danger" style="padding:4px 9px;font-size:.68rem" onclick="deleteDataset('${ds.id}');renderAdmDatasets()">🗑️</button>
+        </div>
+      </div>`).join('')
+    : '<div style="color:var(--txt3);font-size:.8rem;padding:16px;text-align:center">No saved datasets yet.</div>';
+  const cnt = ge('admDatasetCount');
+  if(cnt) cnt.textContent = list.length;
+}
+
+/* ── Init: render list when modal opens on xl tab ── */
 
 /* ════════════════════════════════════════════════════════════
    CHART.JS GLOBAL DEFAULTS  (set after DOM ready)
@@ -2209,9 +2622,11 @@ const openModal = () => {
   if(!SESSION){ alert('Please sign in first.'); return; }
   ge('modalOvl').style.display='flex';
   clrErr(); hideP();
+  ge('savePrompt').classList.remove('show');
   /* Restore sign-in state */
   if(gdToken && gdUser){ showGdConnected(); }
   renderSavedLinks();
+  renderDatasetList();
 };
 const closeModal = () => { ge('modalOvl').style.display='none'; };
 
@@ -2338,8 +2753,12 @@ async function loadLocalFile(){
   if(!RAW.length) throw new Error('No data rows found in file.');
   console.log('[Load] ✅', RAW.length, 'rows | Columns:', Object.keys(RAW[0]).slice(0,12).join(' | '));
   curSrc = {type:'xl', label: ge('fcn').textContent.slice(0,28)};
-  setP(100,'Done!');
-  onLoaded('xl','📁 '+ge('fcn').textContent.slice(0,22));
+  setP(100,'Parsed!');
+
+  /* ── Show save-to-portal prompt instead of loading immediately ── */
+  const fname = ge('fcn').textContent || 'Uploaded File';
+  const sheetName = ge('shsel') ? (ge('shsel').options[ge('shsel').selectedIndex]||{}).text||'' : '';
+  promptSaveDataset([...RAW], fname, sheetName);
 }
 
 const flatDates=r=>{const o={};for(const k in r){const v=r[k];o[k.trim()]=v instanceof Date?v.toISOString().slice(0,10):String(v??'');}return o;};
@@ -2678,51 +3097,302 @@ function goTab(n){
 /* ════════════════════════════════════════════════════════════
    PDF EXPORT — all 4 tabs
 ════════════════════════════════════════════════════════════ */
-async function doPDF(){
-  const{jsPDF}=window.jspdf;
-  const now=new Date().toLocaleString(),src=ge('srcPill').textContent;
-  const tabs=['ov','st','pa','tr','dl','zn','tb'];
-  const names={ov:'Overview',st:'State Analysis',pa:'Party Analysis',tr:'Trend Analysis',dl:'Delivery Analysis',zn:'Zone Report',tb:'Top 20 Report'};
-  const savedTab=curTab;
-  const pdf=new jsPDF({orientation:'landscape',unit:'mm',format:'a3'});
-  const PW=pdf.internal.pageSize.getWidth(),PH=pdf.internal.pageSize.getHeight();
-  let first=true;
-  document.body.style.overflow='auto';document.documentElement.style.overflow='auto';
-  const cvs=ge('canvas');const origCss=cvs.style.cssText;
-  cvs.style.cssText='position:static;display:block;overflow:visible;padding:10px;height:auto;';
-  ['hdr','tabFilterBar'].forEach(id=>{const el=ge(id);if(el)el.style.position='static';});
-  try{
-    for(const tab of tabs){
-      tabs.forEach(t=>ge('pg_'+t).classList.toggle('on',t===tab));
-      const ttl=document.createElement('div');
-      ttl.style.cssText='background:linear-gradient(135deg,#1e3a8a,#1E40AF);color:#fff;padding:13px 18px;display:flex;justify-content:space-between;align-items:center;font-family:Inter,sans-serif;border-radius:10px 10px 0 0';
-      ttl.innerHTML=`<div><div style="font-size:16px;font-weight:800">SCM Analytics — ${names[tab]}</div><div style="font-size:10px;opacity:.75;margin-top:2px">Source: ${src} | ${now} | ${fmt(FLT.length)} records</div></div><span style="font-size:22px">📊</span>`;
-      cvs.insertBefore(ttl,cvs.firstChild);
-      await new Promise(r=>setTimeout(r,320));
-      const cap=await html2canvas(cvs,{scale:1.6,useCORS:true,allowTaint:true,backgroundColor:'#F1F4F9',windowWidth:1400});
-      cvs.removeChild(ttl);
-      const img=cap.toDataURL('image/jpeg',.92);
-      const ih=PW*(cap.height/cap.width);
-      if(!first)pdf.addPage();
-      if(ih<=PH){pdf.addImage(img,'JPEG',0,0,PW,ih);}
-      else{let sy=0;const phPx=Math.floor(cap.width*(PH/PW));while(sy<cap.height){const slH=Math.min(phPx,cap.height-sy);const sc=document.createElement('canvas');sc.width=cap.width;sc.height=slH;sc.getContext('2d').drawImage(cap,0,sy,cap.width,slH,0,0,cap.width,slH);if(sy>0)pdf.addPage();pdf.addImage(sc.toDataURL('image/jpeg',.9),'JPEG',0,0,PW,slH*(PW/cap.width));sy+=slH;}}
-      first=false;
+/* ════════════════════════════════════════════════════════════
+   UNIFIED EXPORT ENGINE  (PDF full / PDF current tab / PNG)
+   ─────────────────────────────────────────────────────────
+   Strategy: For each tab we CLONE the live .tpage node into
+   a temporary off-screen container that is:
+     • position:absolute; left:-9999px  (invisible)
+     • width:1380px (matches design target)
+     • overflow:visible; height:auto
+   We then rebuild Chart.js instances inside the clone at the
+   correct fixed heights, wait for them to paint, capture with
+   html2canvas at scale:2, then destroy the clone.
+   This means the live dashboard is NEVER disturbed — no layout
+   shifts, no scroll jumps, no chart resize artifacts.
+════════════════════════════════════════════════════════════ */
+
+/* ── dropdown helpers ── */
+function toggleExportMenu(e){
+  e.stopPropagation();
+  const m=ge('exportMenu');
+  m.style.display = m.style.display==='block' ? 'none' : 'block';
+}
+function closeExportMenu(){ const m=ge('exportMenu'); if(m) m.style.display='none'; }
+document.addEventListener('click', ()=>closeExportMenu());
+
+/* ── main entry point ── */
+async function doPDF(mode='all'){
+  if(!RAW||!RAW.length){ alert('Please load a data source first.'); return; }
+
+  const btn = ge('exportMainBtn');
+  const origHTML = btn ? btn.innerHTML : '';
+  if(btn){ btn.disabled=true; btn.innerHTML='<span class="spinning">⏳</span> Preparing…'; }
+
+  const RENDER_W = 1380;   // px — matches the dashboard design width
+  const SCALE    = 2;      // retina scale for crisp text & charts
+  const TAB_WAIT = 420;    // ms for Chart.js to finish painting
+
+  const allTabs = ['ov','st','pa','tr','dl','zn','tb'];
+  const tabNames = {
+    ov:'Overview', st:'State Analysis', pa:'Party Analysis',
+    tr:'Trend Analysis', dl:'Delivery Analysis', zn:'Zone Report', tb:'Top 20 Report'
+  };
+  const tabs = mode==='current' ? [curTab] : allTabs;
+
+  /* Hide overlays */
+  const OVERLAYS = ['authWall','adminPortal','modalOvl','userModalOvl'];
+  const ovPrev = {};
+  OVERLAYS.forEach(id=>{ const el=ge(id); if(el){ ovPrev[id]=el.style.display; el.style.display='none'; }});
+
+  /* ── Build a fresh jsPDF ── */
+  const {jsPDF} = window.jspdf;
+  const pdf  = new jsPDF({orientation:'landscape', unit:'mm', format:'a3'});
+  const PW   = pdf.internal.pageSize.getWidth();
+  const PH   = pdf.internal.pageSize.getHeight();
+  const src  = ge('srcPill') ? ge('srcPill').textContent : 'SCM Data';
+  const now  = new Date().toLocaleString('en-IN');
+  let   first= true;
+
+  /* ── off-screen host: all captures happen in here ── */
+  const host = document.createElement('div');
+  host.style.cssText = [
+    'position:fixed','left:-9999px','top:0',
+    `width:${RENDER_W}px`,'overflow:visible',
+    'background:#EEF2F7',
+    'background-image:radial-gradient(circle,rgba(30,64,175,.06) 1px,transparent 1px)',
+    'background-size:22px 22px',
+    'font-family:Inter,sans-serif',
+    'box-sizing:border-box',
+    'z-index:-1'
+  ].join(';');
+  document.body.appendChild(host);
+
+  /* ── collect the CSS that defines the dashboard look ── */
+  // We inject a <style> clone into host so charts/cards render correctly
+  const styleTag = document.createElement('style');
+  styleTag.textContent = `
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#EEF2F7;--surf:#FFFFFF;--surf2:#F5F7FB;--surf3:#EBF4FF;
+      --card-a:#FFFDF7;--card-b:#F6FBF4;--card-c:#FDF6FF;--card-d:#FFF8F2;
+      --border:#DDE3EE;--border2:#BEC8DC;
+      --txt:#0D1B2E;--txt2:#3D5068;--txt3:#8A9BB5;
+      --b1:#1A3FAD;--b1d:#1535A0;--b1l:#D5E3FF;--b1ll:#EBF1FF;
+      --grn:#047857;--grnl:#C9F5E7;--amb:#B45309;--ambl:#FEF0C2;
+      --red:#C81E1E;--redl:#FDDFDF;--pur:#6D28D9;--purl:#EDE9FE;
+      --r:11px;--sha-card:0 2px 8px rgba(13,27,46,.07),0 0 0 1px rgba(13,27,46,.04);
+      --fn:'Inter',sans-serif;--mono:'IBM Plex Mono',monospace;
     }
-    pdf.save(`SCM_Report_${new Date().toISOString().slice(0,10)}.pdf`);
-  }finally{
-    cvs.style.cssText=origCss;
-    ['hdr','tabFilterBar'].forEach(id=>{const el=ge(id);if(el)el.style.position='fixed';});
-    document.body.style.overflow='hidden';document.documentElement.style.overflow='hidden';
-    goTab(savedTab);
+    .tpage{display:flex;flex-direction:column;gap:8px;width:100%;padding:8px 10px 14px}
+    .row-h1{height:260px;flex-shrink:0;display:grid;gap:8px}
+    .row-h2{height:220px;flex-shrink:0;display:grid;gap:8px}
+    .row-h3{height:300px;flex-shrink:0;display:grid;gap:8px}
+    .row-h4{height:280px;flex-shrink:0;display:grid;gap:8px}
+    .row-tbl{min-height:220px;flex-shrink:0;display:grid;gap:8px}
+    .ggr{grid-template-columns:1fr 1.618fr}
+    .ggrr{grid-template-columns:1.618fr 1fr}
+    .g3{grid-template-columns:repeat(3,1fr)}
+    .g4{grid-template-columns:repeat(4,1fr)}
+    .card{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);
+          box-shadow:var(--sha-card);display:flex;flex-direction:column;overflow:hidden;min-height:0}
+    .card-a{background:var(--card-a)}.card-b{background:var(--card-b)}
+    .card-c{background:var(--card-c)}.card-d{background:var(--card-d)}
+    .chdr{display:flex;align-items:center;justify-content:space-between;
+          padding:7px 11px 6px;border-bottom:1px solid var(--border);flex-shrink:0;background:inherit}
+    .card-a .chdr{border-left:3px solid #D97706}.card-b .chdr{border-left:3px solid #059669}
+    .card-c .chdr{border-left:3px solid #7C3AED}.card-d .chdr{border-left:3px solid #DC2626}
+    .cico{display:inline-flex;align-items:center;justify-content:center;
+          width:26px;height:26px;border-radius:8px;font-size:14px;flex-shrink:0}
+    .ctitle{font-size:10px;font-weight:800;color:var(--txt);text-transform:uppercase;
+            letter-spacing:.5px;display:flex;align-items:center;gap:6px}
+    .cbadge{font-size:9px;font-weight:700;padding:2px 8px;border-radius:10px;
+            background:var(--b1l);color:var(--b1);font-family:monospace;letter-spacing:.2px}
+    .cbody{flex:1;min-height:0;padding:6px 8px;display:flex;flex-direction:column;overflow:hidden;height:100%}
+    .cw{flex:1;min-height:0;position:relative;width:100%;height:100%}
+    .tscroll{overflow-y:auto;flex:1;min-height:0;border-radius:0 0 11px 11px}
+    .dt{width:100%;border-collapse:collapse;font-size:10px}
+    .dt th{background:#F5F7FB;color:var(--txt2);font-size:9px;font-weight:700;padding:6px 8px;
+           text-align:left;border-bottom:1.5px solid var(--border);white-space:nowrap;
+           text-transform:uppercase;letter-spacing:.4px}
+    .dt td{padding:5px 8px;border-bottom:1px solid rgba(220,227,238,.4);color:var(--txt);vertical-align:middle}
+    .dt tr:nth-child(even) td{background:#F8FAFC}
+    .rk{color:var(--txt3);font-size:9px;font-weight:700;width:22px;text-align:center}
+    .vv{font-weight:700;font-family:monospace;color:var(--txt)}
+    .schip{font-size:9px;font-weight:700;padding:2px 6px;border-radius:6px}
+    .bmini{height:5px;border-radius:3px;max-width:70px}
+    .kpi{display:flex;align-items:center;gap:9px;padding:10px 12px;border-radius:9px;
+         background:var(--surf);border:1px solid var(--border)}
+    .kico{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;
+          justify-content:center;font-size:18px;flex-shrink:0}
+    .kinf{flex:1;min-width:0}
+    .klbl{font-size:9px;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.4px}
+    .kval{font-size:1.1rem;font-weight:800;color:var(--txt);line-height:1.1}
+    .ksub{font-size:9px;color:var(--txt3);margin-top:1px}
+    canvas{max-width:100%;max-height:100%}
+  `;
+  host.appendChild(styleTag);
+
+  /* ── Per-tab capture ── */
+  try {
+    for(let ti=0; ti<tabs.length; ti++){
+      const tabId = tabs[ti];
+      if(btn) btn.innerHTML=`<span class="spinning">⏳</span> ${ti+1}/${tabs.length} ${tabNames[tabId]}…`;
+
+      /* --- 1. Deep-clone the live tab page --- */
+      const livePage = ge('pg_'+tabId);
+      if(!livePage) continue;
+      const clone = livePage.cloneNode(true);
+      clone.style.cssText = '';   // strip any inline display:none
+      clone.classList.add('tpage');
+      clone.classList.remove('on'); // we set display via CSS above
+
+      /* --- 2. Place into host and get natural height --- */
+      host.innerHTML = '';
+      host.appendChild(styleTag);
+      host.appendChild(clone);
+      document.body.offsetHeight; // force layout
+
+      /* --- 3. Rebuild Chart.js instances in clone --- */
+      // Find all <canvas> in clone, pair them with live CH entries by id
+      const cloneCanvases = clone.querySelectorAll('canvas');
+      const cloneCharts   = [];
+      cloneCanvases.forEach(cvs=>{
+        const id = cvs.id;
+        const liveChart = CH[id];
+        if(!liveChart) return;
+        // Resize canvas element to match its container
+        const parentH = cvs.closest('.cw') || cvs.parentElement;
+        const h = parentH ? parentH.getBoundingClientRect().height : 200;
+        cvs.style.width='100%'; cvs.style.height='100%';
+        // Clone the live chart config (no reference to live data)
+        const cfg = JSON.parse(JSON.stringify(liveChart.config));
+        // Rebuild with same data
+        try{
+          const c = new Chart(cvs, {
+            type: cfg.type,
+            data: JSON.parse(JSON.stringify(liveChart.data)),
+            options: {
+              ...cfg.options,
+              responsive: false,
+              maintainAspectRatio: false,
+              animation: false,
+              plugins: {
+                ...(cfg.options?.plugins||{}),
+                tooltip: {enabled:false},
+              }
+            }
+          });
+          cloneCharts.push(c);
+        }catch(e){ console.warn('[PDF] Chart clone failed:',id,e); }
+      });
+
+      /* --- 4. Wait for paint --- */
+      await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(()=>setTimeout(r, TAB_WAIT))));
+
+      /* --- 5. Build page header banner --- */
+      const banner = document.createElement('div');
+      banner.style.cssText = [
+        'background:linear-gradient(135deg,#1e3a8a 0%,#1E40AF 55%,#0369A1 100%)',
+        'color:#fff','padding:12px 16px',
+        'display:flex','align-items:center','justify-content:space-between',
+        'font-family:Inter,sans-serif','flex-shrink:0',
+        'margin:-8px -10px 8px'  // bleed to edges
+      ].join(';');
+      banner.innerHTML = `
+        <div>
+          <div style="font-size:15px;font-weight:800;letter-spacing:-.3px">
+            📦 SCM Analytics — ${tabNames[tabId]}
+          </div>
+          <div style="font-size:9.5px;opacity:.68;margin-top:3px;letter-spacing:.1px">
+            ${src} &nbsp;·&nbsp; ${now} &nbsp;·&nbsp; ${fmt(FLT.length)} records
+            &nbsp;·&nbsp; Page ${ti+1} of ${tabs.length}
+          </div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:9px;opacity:.55;font-weight:600">SCM ANALYTICS PORTAL</div>
+          <div style="font-size:18px;margin-top:2px">📊</div>
+        </div>`;
+      clone.insertBefore(banner, clone.firstChild);
+
+      /* --- 6. Capture --- */
+      const cap = await html2canvas(host, {
+        scale         : SCALE,
+        useCORS       : true,
+        allowTaint    : true,
+        backgroundColor: '#EEF2F7',
+        windowWidth   : RENDER_W,
+        width         : RENDER_W,
+        logging       : false,
+        onclone       : (doc) => {
+          // ensure fonts are loaded in the clone document
+          doc.querySelectorAll('canvas').forEach(c=>{
+            c.style.imageRendering='pixelated';
+          });
+        }
+      });
+
+      /* --- 7. Destroy temp charts --- */
+      cloneCharts.forEach(c=>{ try{c.destroy();}catch(e){} });
+
+      /* --- 8. Add to PDF --- */
+      const imgData = cap.toDataURL('image/jpeg', 0.94);
+      const ih      = PW * (cap.height / cap.width);
+
+      if(!first) pdf.addPage();
+
+      if(ih <= PH){
+        /* Fits on one page — vertically center it */
+        const yOffset = Math.max(0, (PH - ih) / 2);
+        pdf.addImage(imgData, 'JPEG', 0, yOffset, PW, ih);
+      } else {
+        /* Tall page — slice into A3 page strips */
+        const phPx = Math.floor(cap.width * (PH / PW));
+        let sy = 0;
+        while(sy < cap.height){
+          const slH = Math.min(phPx, cap.height - sy);
+          const sc  = document.createElement('canvas');
+          sc.width  = cap.width; sc.height = slH;
+          sc.getContext('2d').drawImage(cap, 0, sy, cap.width, slH, 0, 0, cap.width, slH);
+          if(sy > 0) pdf.addPage();
+          pdf.addImage(sc.toDataURL('image/jpeg', 0.93), 'JPEG', 0, 0, PW, slH*(PW/cap.width));
+          sy += slH;
+        }
+      }
+      first = false;
+    }
+
+    /* ── Save ── */
+    const suffix = mode==='current' ? `_${tabNames[curTab].replace(/ /g,'_')}` : '_All_Tabs';
+    pdf.save(`SCM_Report${suffix}_${new Date().toISOString().slice(0,10)}.pdf`);
+
+  } finally {
+    /* Clean up */
+    if(host.parentNode) host.parentNode.removeChild(host);
+    OVERLAYS.forEach(id=>{ const el=ge(id); if(el) el.style.display=ovPrev[id]||''; });
+    if(btn){ btn.disabled=false; btn.innerHTML=origHTML; }
   }
 }
 
-/* ════════════════════════════════════════════════════════════
-   SNAPSHOT
-════════════════════════════════════════════════════════════ */
+/* ── PNG Snapshot (current tab, full quality) ── */
 async function doSnapshot(){
-  const c=await html2canvas(ge('canvas'),{scale:2,useCORS:true,backgroundColor:'#F1F4F9'});
-  const a=document.createElement('a');a.download=`SCM_Snap_${new Date().toISOString().slice(0,10)}.png`;a.href=c.toDataURL('image/png');a.click();
+  if(!RAW||!RAW.length){ alert('Please load a data source first.'); return; }
+  const btn = ge('exportMainBtn');
+  const origHTML = btn ? btn.innerHTML : '';
+  if(btn){ btn.disabled=true; btn.innerHTML='<span class="spinning">⏳</span> Capturing…'; }
+  const _names={ov:'Overview',st:'State_Analysis',pa:'Party_Analysis',
+                tr:'Trend_Analysis',dl:'Delivery_Analysis',zn:'Zone_Report',tb:'Top_20'};
+  try{
+    const cap = await html2canvas(ge('canvas'),{
+      scale:2.5, useCORS:true, allowTaint:true, backgroundColor:'#EEF2F7', logging:false
+    });
+    const a = document.createElement('a');
+    a.download = `SCM_Snap_${_names[curTab]||curTab}_${new Date().toISOString().slice(0,10)}.png`;
+    a.href = cap.toDataURL('image/png');
+    a.click();
+  }finally{
+    if(btn){ btn.disabled=false; btn.innerHTML=origHTML; }
+  }
 }
 
 /* ════════════════════════════════════════════════════════════
