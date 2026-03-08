@@ -13,8 +13,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <!-- Google Identity Services & Picker -->
-<script src="https://accounts.google.com/gsi/client" async defer></script>
-<script src="https://apis.google.com/js/api.js" async defer></script>
 
 <style>
 /* ════════════════════════════════════
@@ -84,10 +82,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--fn);font-size:13px;
 .btn-pdf{background:#DC2626;color:#fff}
 .btn-pdf:hover{background:#B91C1C}
 /* Google user badge in header */
-#gdUserBadge{display:none;align-items:center;gap:7px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:20px;padding:3px 10px 3px 3px;cursor:pointer}
-#gdUserBadge.show{display:flex}
-#gdUserBadge img{width:22px;height:22px;border-radius:50%;border:2px solid rgba(255,255,255,.4)}
-#gdUserBadge span{font-size:10px;color:#fff;font-weight:600;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
 @keyframes spin{to{transform:rotate(360deg)}}
 .spinning{animation:spin .7s linear infinite;display:inline-block}
 
@@ -311,7 +306,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--fn);font-size:13px;
 
 /* ── GOOGLE DRIVE PANEL ── */
 /* Step: choose account method */
-#gd_step_welcome{text-align:center;padding:8px 0}
+
 .gd-welcome-title{font-size:.95rem;font-weight:800;color:var(--txt);margin-bottom:6px}
 .gd-welcome-sub{font-size:.77rem;color:var(--txt2);line-height:1.6;margin-bottom:18px}
 
@@ -338,7 +333,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--fn);font-size:13px;
 .adv-help{font-size:.67rem;color:var(--txt3);margin-top:3px;line-height:1.5}
 
 /* Connected state */
-#gd_step_connected{display:none}
+
 .gd-user-card{display:flex;align-items:center;gap:12px;background:var(--grnl);border:1px solid #a7f3d0;border-radius:12px;padding:11px 14px;margin-bottom:12px}
 .gd-user-avatar{width:38px;height:38px;border-radius:50%;border:2px solid rgba(16,185,129,.4);flex-shrink:0;background:var(--border)}
 .gd-user-info{flex:1;min-width:0}
@@ -731,10 +726,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--fn);font-size:13px;
     <div class="hkpi"><span class="hkpi-ico-wrap">📋</span><div><div class="hkpi-lbl">Records</div><div class="hkpi-val" id="hk_recs">—</div></div></div>
   </div>
   <div class="hgap"></div>
-  <div id="gdUserBadge" onclick="openModal();sSrc('gd')" title="Google Drive connected">
-    <img id="gdUserAvatar" src="" alt=""/>
-    <span id="gdUserName">Google</span>
-  </div>
+
 
   <button class="hbtn" id="adminBtn" onclick="openAdmin()" style="display:none;background:#7C3AED;color:#fff">
     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/></svg>
@@ -1285,16 +1277,9 @@ html,body{height:100%;overflow:hidden;font-family:var(--fn);font-size:13px;
         <div class="stit">Excel / CSV Upload</div>
         <div class="sdesc">Upload .xlsx, .xls or .csv file directly from your device</div>
       </div>
-      <div class="spl-src" onclick="openModal();sSrc('gd')">
-        <div class="sico">
-          <svg width="32" height="32" viewBox="0 0 87.3 78"><path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8h-27.5c0 1.55.4 3.1 1.2 4.5z" fill="#0066da"/><path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0 -1.2 4.5h27.5z" fill="#00ac47"/><path d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5h-27.502l5.852 11.5z" fill="#ea4335"/><path d="m43.65 25 13.75-23.8c-1.35-.8-2.9-1.2-4.5-1.2h-18.5c-1.6 0-3.15.45-4.5 1.2z" fill="#00832d"/><path d="m59.8 53h-32.3l-13.75 23.8c1.35.8 2.9 1.2 4.5 1.2h50.8c1.6 0 3.15-.45 4.5-1.2z" fill="#2684fc"/><path d="m73.4 26.5-12.7-22c-.8-1.4-1.95-2.5-3.3-3.3l-13.75 23.8 16.15 27h27.45c0-1.55-.4-3.1-1.2-4.5z" fill="#ffba00"/></svg>
-        </div>
-        <div class="stit">Google Drive</div>
-        <div class="sdesc">Sign in with Google &amp; pick any Excel/CSV from Drive</div>
-      </div>
       <div class="spl-src" onclick="openModal();sSrc('lnk')">
-        <div class="sico">🔗</div>
-        <div class="stit">Drive Link</div>
+        <div class="sico">📊</div>
+        <div class="stit">Google Sheet Link</div>
         <div class="sdesc">Paste a public Google Sheets link to load data instantly</div>
       </div>
     </div>
@@ -1306,7 +1291,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--fn);font-size:13px;
   <div class="modal">
     <div class="mhd">
       <h3>📂 Data Source</h3>
-      <p>Upload a file or connect from Google Drive</p>
+      <p>Upload an Excel/CSV file or load from a Google Sheet link</p>
       <button class="mclose" onclick="closeModal()">✕</button>
     </div>
     <div class="mbd">
@@ -1314,8 +1299,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--fn);font-size:13px;
       <!-- Source type tabs -->
       <div class="src-tabs">
         <div class="stab on" id="stab_xl" onclick="sSrc('xl')"><span class="si">📁</span>File Upload</div>
-        <div class="stab" id="stab_gd" onclick="sSrc('gd')"><span class="si">☁️</span>Drive Picker</div>
-        <div class="stab" id="stab_lnk" onclick="sSrc('lnk')"><span class="si">🔗</span>Drive Link</div>
+        <div class="stab" id="stab_lnk" onclick="sSrc('lnk')"><span class="si">📊</span>Google Sheet</div>
       </div>
 
       <!-- ── TAB: FILE UPLOAD ── -->
@@ -1360,99 +1344,67 @@ html,body{height:100%;overflow:hidden;font-family:var(--fn);font-size:13px;
 
       </div>
 
-      <!-- ── TAB: DRIVE PICKER ── -->
-      <div class="srcp" id="sp_gd">
 
-        <div id="gd_step_welcome" style="display:block">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-            <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#e8f0fe,#c5d7fb);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-              <svg width="22" height="22" viewBox="0 0 87.3 78"><path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8h-27.5c0 1.55.4 3.1 1.2 4.5z" fill="#0066da"/><path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0 -1.2 4.5h27.5z" fill="#00ac47"/><path d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5h-27.502l5.852 11.5z" fill="#ea4335"/><path d="m43.65 25 13.75-23.8c-1.35-.8-2.9-1.2-4.5-1.2h-18.5c-1.6 0-3.15.45-4.5 1.2z" fill="#00832d"/><path d="m59.8 53h-32.3l-13.75 23.8c1.35.8 2.9 1.2 4.5 1.2h50.8c1.6 0 3.15-.45 4.5-1.2z" fill="#2684fc"/><path d="m73.4 26.5-12.7-22c-.8-1.4-1.95-2.5-3.3-3.3l-13.75 23.8 16.15 27h27.45c0-1.55-.4-3.1-1.2-4.5z" fill="#ffba00"/></svg>
-            </div>
-            <div>
-              <div style="font-size:.92rem;font-weight:800;color:var(--txt)">Google Drive</div>
-              <div style="font-size:.73rem;color:var(--txt3);margin-top:1px">Sign in to browse and pick files</div>
-            </div>
-          </div>
-          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px">
-            <span style="font-size:.7rem;font-weight:600;padding:3px 9px;border-radius:10px;background:var(--grnl);color:var(--grn)">🔒 Secure OAuth 2.0</span>
-            <span style="font-size:.7rem;font-weight:600;padding:3px 9px;border-radius:10px;background:var(--b1ll);color:var(--b1)">📂 Browse all folders</span>
-          </div>
-          <div style="margin-bottom:12px">
-            <button id="gdSignInBtn" onclick="initGoogleAuth()" style="display:flex;align-items:center;gap:10px;background:#fff;color:#3c4043;border:1.5px solid #dadce0;border-radius:8px;padding:9px 18px 9px 12px;width:100%;font-family:var(--fn);font-size:.84rem;font-weight:600;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.08);transition:box-shadow .15s;justify-content:center;" onmouseover="this.style.boxShadow='0 2px 8px rgba(0,0,0,.14)'" onmouseout="this.style.boxShadow='0 1px 3px rgba(0,0,0,.08)'">
-              <svg viewBox="0 0 48 48" width="20" height="20" style="flex-shrink:0"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.29-8.16 2.29-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
-              Sign in with Google
-            </button>
-          </div>
-          <div style="font-size:.68rem;color:var(--txt3);line-height:1.6;background:var(--b1ll);border:1px solid var(--b1l);border-radius:8px;padding:8px 10px">
-            <strong style="color:var(--b1)">How it works:</strong> A Google account-picker will open. Choose your account, approve Drive read access, then pick your file.
-          </div>
-          <input id="gd_client_id" type="hidden" value=""/>
-          <span id="gd_redirect_display" style="display:none"></span>
-          <div id="gd_adv_panel" style="display:none"></div>
-        </div>
 
-        <div id="gd_step_connected" style="display:none">
-          <div style="display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--grnl),#d1fae5);border:1.5px solid #a7f3d0;border-radius:12px;padding:10px 14px;margin-bottom:12px;">
-            <img id="gdModalAvatar" src="" alt="" style="width:38px;height:38px;border-radius:50%;border:2px solid #6ee7b7;object-fit:cover;flex-shrink:0"/>
-            <div style="flex:1;min-width:0">
-              <div style="font-size:.83rem;font-weight:800;color:#065f46;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="gdModalName">Google User</div>
-              <div style="font-size:.7rem;color:#047857;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="gdModalEmail"></div>
-            </div>
-            <div style="font-size:.68rem;font-weight:700;background:#059669;color:#fff;padding:3px 8px;border-radius:8px;flex-shrink:0">✓ Connected</div>
-          </div>
-          <!-- Step 2 prompt -->
-          <div style="font-size:.76rem;font-weight:600;color:var(--txt2);margin-bottom:8px;display:flex;align-items:center;gap:5px">
-            <span style="font-size:16px">2️⃣</span> Now pick your file:
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:10px">
-            <button onclick="openDrivePicker()" style="display:flex;align-items:center;justify-content:center;gap:5px;padding:9px;font-size:.78rem;font-weight:700;border-radius:8px;border:1.5px solid var(--b1l);background:var(--b1ll);color:var(--b1);cursor:pointer">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-              Open Picker
-            </button>
-            <button onclick="gdBrowseFiles()" style="display:flex;align-items:center;justify-content:center;gap:5px;padding:9px;font-size:.78rem;font-weight:700;border-radius:8px;border:1.5px solid var(--border);background:var(--surf2);color:var(--txt);cursor:pointer">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-              Browse Drive
-            </button>
-          </div>
-          <div id="gdPickedFile" style="display:none;background:var(--grnl);border:1px solid #a7f3d0;border-radius:9px;padding:8px 12px;font-size:.78rem;color:#065f46;font-weight:600;margin-bottom:8px;align-items:center;gap:7px">
-            <span>✅</span><span id="gdPickedName"></span>
-            <span style="font-size:.66rem;color:#047857;margin-left:auto">Ready to load</span>
-          </div>
-          <div class="gd-file-label" id="gdFileLabel" style="display:none;font-size:.72rem;font-weight:700;color:var(--txt2);margin-bottom:5px">Files in your Drive:</div>
-          <div class="gd-file-list" id="gdFileList"></div>
-          <button onclick="gdSignOut()" style="width:100%;padding:6px;font-size:.72rem;font-weight:700;border-radius:7px;border:1px solid var(--border);background:none;color:var(--txt3);cursor:pointer;margin-top:8px">Sign out of Google</button>
-        </div>
-
-        <div class="gd-err" id="gdErr"></div>
-      </div><!-- /sp_gd -->
-
-      <!-- ── TAB: DRIVE LINK ── -->
+      <!-- ── TAB: GOOGLE SHEET LINK ── -->
       <div class="srcp" id="sp_lnk">
-        <div style="margin-bottom:12px">
-          <div style="font-size:.8rem;font-weight:700;color:var(--txt);margin-bottom:4px;display:flex;align-items:center;gap:6px">
-            🔗 Paste a Google Sheets Link
-          </div>
-          <div class="gd-link-note">
-            Paste a <strong>public</strong> Google Sheets or Drive CSV link. The sheet must be shared as "Anyone with the link can view". The link will be saved to your portal for future use.
-          </div>
-          <div class="gd-link-input-wrap">
-            <span style="font-size:15px;flex-shrink:0">🔗</span>
-            <input type="url" id="lnkUrl" placeholder="https://docs.google.com/spreadsheets/d/..." oninput="validateLnkUrl()"/>
-          </div>
-          <div id="lnkUrlMsg" style="font-size:.69rem;margin-bottom:8px"></div>
-          <div class="adm-form-field">
-            <label style="font-size:.7rem;font-weight:700;color:var(--txt2);text-transform:uppercase;letter-spacing:.4px;display:block;margin-bottom:5px">Display Name (optional)</label>
-            <input type="text" id="lnkName" placeholder="e.g. Monthly Sales Report" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:var(--fn);font-size:.84rem;color:var(--txt);background:var(--surf2);outline:none;"/>
-          </div>
-          <div style="display:flex;gap:8px">
-            <button onclick="saveLnkAndLoad()" style="flex:1;padding:9px;font-size:.8rem;font-weight:700;border-radius:8px;background:var(--b1);color:#fff;border:none;cursor:pointer">💾 Save &amp; Load</button>
-            <button onclick="loadLnkNow()" style="flex:1;padding:9px;font-size:.8rem;font-weight:700;border-radius:8px;background:var(--surf2);color:var(--txt);border:1px solid var(--border);cursor:pointer">⚡ Load Only</button>
+
+        <!-- How-to info banner -->
+        <div style="background:linear-gradient(135deg,#EBF1FF,#dbeafe);border:1.5px solid var(--b1l);border-radius:10px;padding:10px 13px;margin-bottom:12px;display:flex;gap:10px;align-items:flex-start">
+          <div style="font-size:20px;flex-shrink:0;margin-top:1px">📊</div>
+          <div>
+            <div style="font-size:.78rem;font-weight:800;color:var(--b1);margin-bottom:4px">Load from Google Sheets</div>
+            <div style="font-size:.69rem;color:var(--txt2);line-height:1.6">
+              1. Open your Google Sheet → <strong>File → Share → Publish to web</strong> (or share as "Anyone with link can view")<br>
+              2. Copy the sheet URL from the address bar<br>
+              3. Paste it below — no sign-in required
+            </div>
           </div>
         </div>
+
+        <!-- URL input -->
+        <div style="margin-bottom:8px">
+          <label style="font-size:.7rem;font-weight:700;color:var(--txt2);text-transform:uppercase;letter-spacing:.4px;display:block;margin-bottom:5px">Google Sheets URL <span style="color:var(--red)">*</span></label>
+          <div style="display:flex;align-items:center;gap:8px;background:var(--surf2);border:1.5px solid var(--border);border-radius:9px;padding:8px 12px;transition:.14s" id="lnkInputWrap">
+            <span style="font-size:16px;flex-shrink:0">🔗</span>
+            <input type="url" id="lnkUrl"
+              placeholder="https://docs.google.com/spreadsheets/d/..."
+              oninput="validateLnkUrl()"
+              onfocus="ge('lnkInputWrap').style.borderColor='var(--b1)'"
+              onblur="ge('lnkInputWrap').style.borderColor='var(--border)'"
+              style="flex:1;border:none;background:transparent;font-family:var(--fn);font-size:.84rem;color:var(--txt);outline:none;min-width:0"/>
+            <button onclick="ge('lnkUrl').value='';validateLnkUrl()" title="Clear" style="font-size:12px;background:none;border:none;cursor:pointer;color:var(--txt3);padding:0;line-height:1">✕</button>
+          </div>
+          <div id="lnkUrlMsg" style="font-size:.69rem;margin-top:5px;min-height:16px"></div>
+        </div>
+
+        <!-- Display name -->
+        <div style="margin-bottom:10px">
+          <label style="font-size:.7rem;font-weight:700;color:var(--txt2);text-transform:uppercase;letter-spacing:.4px;display:block;margin-bottom:5px">Display Name <span style="color:var(--txt3);font-weight:500;text-transform:none">(optional)</span></label>
+          <input type="text" id="lnkName" placeholder="e.g. Monthly Sales Q1 2025"
+            style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:var(--fn);font-size:.84rem;color:var(--txt);background:var(--surf2);outline:none;transition:.14s"
+            onfocus="this.style.borderColor='var(--b1)'" onblur="this.style.borderColor='var(--border)'"/>
+        </div>
+
+        <!-- Action buttons -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+          <button onclick="saveLnkAndLoad()"
+            style="padding:9px 6px;font-size:.78rem;font-weight:700;border-radius:8px;background:var(--b1);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;transition:.14s"
+            onmouseover="this.style.background='var(--b1d)'" onmouseout="this.style.background='var(--b1)'">
+            💾 Save &amp; Load
+          </button>
+          <button onclick="loadLnkNow()"
+            style="padding:9px 6px;font-size:.78rem;font-weight:700;border-radius:8px;background:var(--surf2);color:var(--txt);border:1.5px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;transition:.14s"
+            onmouseover="this.style.background='var(--b1ll)'" onmouseout="this.style.background='var(--surf2)'">
+            ⚡ Load Once
+          </button>
+        </div>
+
         <!-- Saved links -->
-        <div style="border-top:1px solid var(--border);padding-top:12px;margin-top:4px">
-          <div style="font-size:.72rem;font-weight:700;color:var(--txt2);margin-bottom:8px;display:flex;align-items:center;justify-content:space-between">
-            Saved Links <span id="savedLinkCount" style="font-family:var(--mono);background:var(--b1l);color:var(--b1);padding:1px 6px;border-radius:6px;font-size:.62rem">0</span>
+        <div style="border-top:1.5px solid var(--border);padding-top:10px">
+          <div style="font-size:.7rem;font-weight:700;color:var(--txt2);margin-bottom:7px;display:flex;align-items:center;justify-content:space-between;text-transform:uppercase;letter-spacing:.4px">
+            <span>Saved Sheet Links</span>
+            <span id="savedLinkCount" style="font-family:var(--mono);background:var(--b1l);color:var(--b1);padding:1px 7px;border-radius:6px;font-size:.62rem;text-transform:none">0</span>
           </div>
           <div class="gd-saved-links" id="savedLinkList"></div>
         </div>
@@ -1607,8 +1559,9 @@ function doLogin(){
       applyRoleUI(user.role);
       ge('hdrUserPill').textContent = '👤 '+user.fname+' · '+user.role;
       ge('hdrUserPill').style.display = 'block';
-      ge('splash').style.display = 'block'; // show splash to pick data source
       btn.disabled=false; btn.textContent='Sign In';
+      // Auto-load most recent IDB dataset, or show splash if none
+      autoLoadLatestDataset();
     }, 600);
   }, 300);
 }
@@ -1648,6 +1601,115 @@ function getActivity(){
   try{return JSON.parse(localStorage.getItem(ACTIVITY_KEY)||'[]');}catch{return[];}
 }
 
+
+/* ════════════════════════════════════════════════════════════
+   INDEXEDDB AUTO-LOAD ON LOGIN
+   ─────────────────────────────────────────────────────────
+   After every successful login (or session restore), we check
+   IndexedDB for the most recently saved dataset. If found, it
+   is loaded silently. If not, the splash screen is shown so
+   the user can upload or paste a link.
+════════════════════════════════════════════════════════════ */
+
+/* Auto-load overlay — shown while silently loading from IDB */
+function showAutoLoadOverlay(name) {
+  let el = ge('autoLoadOverlay');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'autoLoadOverlay';
+    el.style.cssText = [
+      'position:fixed','inset:0','z-index:4000',
+      'background:rgba(13,27,46,.82)',
+      'display:flex','align-items:center','justify-content:center',
+      'font-family:var(--fn)'
+    ].join(';');
+    el.innerHTML = `
+      <div style="background:#fff;border-radius:16px;padding:28px 32px;
+                  text-align:center;max-width:340px;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+        <div style="font-size:2.2rem;margin-bottom:12px">💾</div>
+        <div style="font-size:1rem;font-weight:800;color:var(--txt);margin-bottom:6px">
+          Loading your data…
+        </div>
+        <div style="font-size:.78rem;color:var(--txt2);margin-bottom:16px" id="autoLoadMsg">
+          Restoring <strong id="autoLoadName"></strong>
+        </div>
+        <div style="height:5px;background:#EEF2F7;border-radius:3px;overflow:hidden">
+          <div id="autoLoadBar" style="height:100%;width:0%;background:linear-gradient(90deg,var(--b1),#0369A1);
+               border-radius:3px;transition:width .4s ease"></div>
+        </div>
+        <div style="font-size:.68rem;color:var(--txt3);margin-top:10px">
+          This is automatic — you won't need to re-upload
+        </div>
+      </div>`;
+    document.body.appendChild(el);
+  }
+  ge('autoLoadName').textContent = name || 'last dataset';
+  ge('autoLoadBar').style.width  = '0%';
+  el.style.display = 'flex';
+}
+
+function setAutoLoadProgress(pct) {
+  const bar = ge('autoLoadBar'); if(bar) bar.style.width = pct + '%';
+}
+
+function hideAutoLoadOverlay() {
+  const el = ge('autoLoadOverlay'); if(el) el.style.display = 'none';
+}
+
+/**
+ * Called after every successful auth event (login or session restore).
+ * Loads the most recently saved IDB dataset silently.
+ * Falls back to showing the splash if no data found.
+ */
+async function autoLoadLatestDataset() {
+  try {
+    const list = await idbGetAll();
+    if (!list || !list.length) {
+      // No saved data — show splash so user can upload/paste a link
+      ge('splash').style.display = 'block';
+      return;
+    }
+
+    // Sort descending by savedAt, pick most recent
+    list.sort((a, b) => new Date(b.savedAt) - new Date(a.savedAt));
+    const ds = list[0];
+
+    if (!ds.rows || !ds.rows.length) {
+      ge('splash').style.display = 'block';
+      return;
+    }
+
+    // Show silent load overlay
+    showAutoLoadOverlay(ds.name);
+    setAutoLoadProgress(20);
+
+    await new Promise(r => setTimeout(r, 80));
+    setAutoLoadProgress(55);
+
+    RAW             = ds.rows;
+    activeDatasetId = ds.id;
+
+    setAutoLoadProgress(85);
+    await new Promise(r => setTimeout(r, 60));
+    setAutoLoadProgress(100);
+
+    logActivity(`Auto-loaded dataset on login: ${ds.name} (${ds.rows.length} rows)`);
+
+    // Small pause so progress bar reaches 100% visually
+    await new Promise(r => setTimeout(r, 350));
+    hideAutoLoadOverlay();
+
+    // Load the dashboard directly — no splash needed
+    onLoaded('xl', '💾 ' + ds.name.slice(0, 22));
+
+  } catch(e) {
+    console.error('[AutoLoad] IDB error:', e);
+    hideAutoLoadOverlay();
+    // Fail gracefully — show splash
+    ge('splash').style.display = 'block';
+  }
+}
+
 /* ── Boot: check existing session ── */
 window.addEventListener('DOMContentLoaded', ()=>{
   SESSION = loadSession();
@@ -1658,9 +1720,10 @@ window.addEventListener('DOMContentLoaded', ()=>{
       applyRoleUI(SESSION.role);
       ge('hdrUserPill').textContent = '👤 '+SESSION.name+' · '+SESSION.role;
       ge('hdrUserPill').style.display = 'block';
-      ge('splash').style.display = 'block';
       const remaining = SESSION.expiresAt - Date.now();
       startSessionTimer(Math.max(remaining, 0));
+      // Auto-load most recent IDB dataset, or show splash if none
+      autoLoadLatestDataset();
     } else {
       clearSession();
       showAuthWall();
@@ -1669,7 +1732,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
     showAuthWall();
   }
   renderSavedLinks();
-  renderDatasetList();  // populate saved datasets on boot
+  renderDatasetList();
 });
 
 /* ════════════════════════════════════════════════════════════
@@ -1960,30 +2023,7 @@ async function loadFromGDLink(url){
   setP(100,'Done!');
 }
 
-async function saveLnkAndLoad(){
-  const url=(ge('lnkUrl').value||'').trim();
-  const name=(ge('lnkName').value||'').trim()||'Saved Link '+(getLinks().length+1);
-  if(!url){showErr('Paste a Google Sheets URL first.');return;}
-  if(!isValidGDUrl(url)){showErr('Must be a valid Google Sheets URL.');return;}
-  // Save
-  const links=getLinks();
-  if(!links.find(l=>l.url===url)) links.push({name,url,added:new Date().toISOString()});
-  saveLinks(links);
-  renderSavedLinks();
-  // Load
-  activeSrc='lnk'; activeLnkUrl=url; activeLnkName=name;
-  await triggerLoad();
-}
 
-async function loadLnkNow(){
-  const url=(ge('lnkUrl').value||'').trim();
-  if(!url){showErr('Paste a Google Sheets URL first.');return;}
-  if(!isValidGDUrl(url)){showErr('Must be a valid Google Sheets URL.');return;}
-  activeSrc='lnk'; activeLnkUrl=url; activeLnkName='🔗 '+url.slice(0,30)+'…';
-  await triggerLoad();
-}
-
-let activeLnkUrl='', activeLnkName='';
 
 
 /* ════════════════════════════════════════════════════════════
@@ -2242,376 +2282,245 @@ function setChartDefaults(){
 const PAL  = ['#1E40AF','#0369A1','#059669','#D97706','#DC2626','#7C3AED','#0891B2','#EC4899','#84CC16','#F97316','#6366F1','#14B8A6'];
 const PAL2 = ['#3B82F6','#06B6D4','#10B981','#F59E0B','#EF4444','#8B5CF6','#22D3EE','#F472B6','#A3E635','#FB923C','#818CF8','#2DD4BF'];
 
-/* ── Google API config — dodashboard project ──
-   GSI Token Client flow: no redirect_uri, no implicit grant,
-   works from any origin (file://, localhost, GitHub Pages, etc.)  */
-const GD_CLIENT_ID   = '1055209199184-p5rlcvegcoeq33mf6grlstgnl7mph9h8.apps.googleusercontent.com';
-const GD_PROJECT_NUM = '1055209199184';          // = Picker app-id
-const GD_SCOPE       = 'https://www.googleapis.com/auth/drive.readonly';
-const GD_API_BASE    = 'https://www.googleapis.com/drive/v3';
-// Legacy aliases
-const GD_DEFAULT_CLIENT = GD_CLIENT_ID;
-const GD_PICK_APP       = GD_PROJECT_NUM;
-
+/* ════════════════════════════════════════════════════════════
+   CORE GLOBALS
+════════════════════════════════════════════════════════════ */
 let RAW=[], FLT=[], CH={}, uplWB=null, curSrc=null, curTab='ov', activeSrc='xl';
-let gdToken=null, gdUser=null, gdPickedFile=null, gdSelectedFile=null;
-let gdFolderStack=[], gdCurrentFolder='root', gdSearchQ='';
-let gapiReady=false, gsiReady=false;
 const ge = id => document.getElementById(id);
 
 /* ════════════════════════════════════════════════════════════
-   GOOGLE API INITIALISATION
+   GOOGLE SHEETS PUBLIC LINK LOADER
+   ─────────────────────────────────────────────────────────
+   No OAuth, no sign-in. Works with any sheet shared as
+   "Anyone with the link can view" or published to web.
+   Converts sheet URL → CSV export URL, then fetches + parses.
 ════════════════════════════════════════════════════════════ */
-window.gapiLoaded = function(){
-  gapi.load('client:picker', ()=>{
-    gapi.client.init({}).then(()=>{ gapiReady=true; console.log('[GD] gapi ready'); });
-  });
-};
-window.gsiLoaded = function(){ gsiReady=true; console.log('[GD] GSI ready'); };
 
-/* Poll for script load */
-function waitAPIs(cb, tries=0){
-  if(typeof gapi!=='undefined' && gapiReady && typeof google!=='undefined'){
-    cb(); return;
+/**
+ * Validates that a URL is a Google Sheets / Docs link
+ */
+function isValidGDUrl(url) {
+  if (!url) return false;
+  try {
+    const u = new URL(url.trim());
+    return (u.hostname === 'docs.google.com' || u.hostname === 'drive.google.com') &&
+           (url.includes('/spreadsheets/') || url.includes('/d/'));
+  } catch { return false; }
+}
+
+/**
+ * Converts any Google Sheets share/edit/view URL into a CSV export URL.
+ * Supports:
+ *   • /spreadsheets/d/{id}/edit#gid={gid}
+ *   • /spreadsheets/d/{id}/pub?gid={gid}&...
+ *   • drive.google.com/file/d/{id}/view
+ */
+function extractCSVUrl(rawUrl) {
+  const url = (rawUrl || '').trim();
+
+  // Already a CSV export URL — return as-is
+  if (url.includes('/export?') && url.includes('format=csv')) return url;
+
+  // Extract spreadsheet ID
+  const idMatch = url.match(/\/spreadsheets\/d\/([a-zA-Z0-9_-]+)/);
+  if (!idMatch) {
+    // Try drive.google.com/file/d/{id}/ — may be a CSV file directly
+    const driveMatch = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+    if (driveMatch) {
+      return `https://drive.google.com/uc?export=download&id=${driveMatch[1]}`;
+    }
+    return null;
   }
-  if(typeof gapi!=='undefined' && !gapiReady && tries===0){
-    gapi.load('client:picker', ()=>{ gapi.client.init({}).then(()=>{ gapiReady=true; cb(); }); });
+  const sheetId = idMatch[1];
+
+  // Extract gid (sheet tab)
+  const gidMatch = url.match(/[?&#]gid=(\d+)/);
+  const gid = gidMatch ? gidMatch[1] : '0';
+
+  return `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`;
+}
+
+/**
+ * Validates URL live and updates the input message
+ */
+function validateLnkUrl() {
+  const url = (ge('lnkUrl').value || '').trim();
+  const msg = ge('lnkUrlMsg');
+  if (!url) { msg.textContent = ''; return; }
+  if (isValidGDUrl(url)) {
+    const csvUrl = extractCSVUrl(url);
+    if (csvUrl) {
+      msg.style.color = 'var(--grn)';
+      msg.textContent = '✅ Valid Google Sheets link — ready to load';
+    } else {
+      msg.style.color = 'var(--amb)';
+      msg.textContent = '⚠️ Recognised as Google link but could not extract sheet ID';
+    }
+  } else {
+    msg.style.color = 'var(--red)';
+    msg.textContent = '❌ Must be a Google Sheets URL (docs.google.com/spreadsheets/...)';
+  }
+}
+
+/**
+ * Fetches CSV from a public Google Sheets URL and parses it into RAW[]
+ */
+async function loadFromGDLink(url) {
+  const csvUrl = extractCSVUrl(url);
+  if (!csvUrl) throw new Error('Could not extract CSV export URL from the provided link.');
+
+  setP(20, 'Fetching sheet…');
+  let response;
+  try {
+    response = await fetch(csvUrl, { mode: 'cors' });
+  } catch (e) {
+    throw new Error('Network error fetching sheet. Ensure the sheet is publicly shared and your connection is active.');
+  }
+
+  if (!response.ok) {
+    if (response.status === 401 || response.status === 403) {
+      throw new Error('Access denied (403). Please share the sheet as "Anyone with the link can view" before loading.');
+    }
+    if (response.status === 404) {
+      throw new Error('Sheet not found (404). Check the URL is correct.');
+    }
+    throw new Error(`Server returned ${response.status}. Check the sheet is publicly shared.`);
+  }
+
+  const text = await response.text();
+  if (!text || text.trim().length < 10) {
+    throw new Error('Sheet appears to be empty or returned no data.');
+  }
+
+  setP(60, 'Parsing data…');
+  return new Promise((res, rej) => {
+    Papa.parse(text, {
+      header: true,
+      skipEmptyLines: 'greedy',
+      dynamicTyping: false,
+      transformHeader: h => (h ? h.trim() : h),
+      complete: r => {
+        if (!r.data || !r.data.length) { rej(new Error('CSV parsed but no rows found in sheet.')); return; }
+        RAW = r.data
+          .map(row => {
+            const o = {};
+            for (const k in row) {
+              const key = k.trim();
+              const v = row[k];
+              o[key] = (v === null || v === undefined) ? '' : String(v).trim();
+            }
+            return o;
+          })
+          .filter(row => Object.values(row).some(v => v !== ''));
+        if (!RAW.length) { rej(new Error('All rows were empty after parsing.')); return; }
+        console.log('[GSheet] ✅', RAW.length, 'rows | Cols:', Object.keys(RAW[0]).slice(0, 8).join(', '));
+        res();
+      },
+      error: err => rej(new Error('CSV parse error: ' + err.message))
+    });
+  });
+}
+
+/** Save link to localStorage and immediately load */
+async function saveLnkAndLoad() {
+  const url  = (ge('lnkUrl').value || '').trim();
+  const name = (ge('lnkName').value || '').trim() || ('Sheet ' + new Date().toLocaleDateString('en-IN'));
+  const msg  = ge('lnkUrlMsg');
+
+  if (!url) { msg.style.color='var(--red)'; msg.textContent='❌ Please paste a Google Sheets URL first.'; return; }
+  if (!isValidGDUrl(url)) { msg.style.color='var(--red)'; msg.textContent='❌ Not a valid Google Sheets link.'; return; }
+
+  // Save to localStorage
+  const links = getLinks();
+  const existing = links.findIndex(l => l.url === url);
+  if (existing >= 0) {
+    links[existing].name = name; links[existing].savedAt = new Date().toISOString();
+  } else {
+    links.unshift({ url, name, savedAt: new Date().toISOString() });
+  }
+  saveLinks(links.slice(0, 20));
+  renderSavedLinks();
+  renderAdmLinks();
+  renderAdmStats();
+
+  activeLnkUrl  = url;
+  activeLnkName = name;
+  activeSrc     = 'lnk';
+  await _doLoadLnk(url, name);
+}
+
+/** Load without saving */
+async function loadLnkNow() {
+  const url  = (ge('lnkUrl').value || '').trim();
+  const name = (ge('lnkName').value || '').trim() || 'Google Sheet';
+  if (!url) { const msg=ge('lnkUrlMsg'); msg.style.color='var(--red)'; msg.textContent='❌ Please paste a Google Sheets URL first.'; return; }
+  if (!isValidGDUrl(url)) { const msg=ge('lnkUrlMsg'); msg.style.color='var(--red)'; msg.textContent='❌ Not a valid Google Sheets link.'; return; }
+  activeLnkUrl  = url;
+  activeLnkName = name;
+  activeSrc     = 'lnk';
+  await _doLoadLnk(url, name);
+}
+
+async function _doLoadLnk(url, name) {
+  const btn = ge('lbtn');
+  if (btn) btn.disabled = true;
+  clrErr();
+  try {
+    await loadFromGDLink(url);
+    curSrc = { type: 'lnk', label: '📊 ' + name.slice(0, 24) };
+    setP(100, 'Done!');
+    onLoaded('lnk', '📊 ' + name.slice(0, 22));
+  } catch(e) {
+    showErr('❌ ' + e.message);
+    console.error('[GSheet]', e);
+  } finally {
+    if (btn) btn.disabled = false;
+  }
+}
+
+/** Render saved links in the modal */
+function renderSavedLinks() {
+  const links = getLinks();
+  const el    = ge('savedLinkList');
+  const cnt   = ge('savedLinkCount');
+  if (cnt) cnt.textContent = links.length;
+  if (!el) return;
+
+  if (!links.length) {
+    el.innerHTML = '<div style="font-size:.72rem;color:var(--txt3);padding:10px 6px;text-align:center">No saved links yet.</div>';
     return;
   }
-  if(tries>40){ console.warn('[GD] API scripts not loaded — check network'); cb(); return; }
-  setTimeout(()=>waitAPIs(cb, tries+1), 300);
+  el.innerHTML = links.map((l, i) => `
+    <div class="gd-saved-link-item" id="sli_${i}" onclick="selectSavedLink(${i})">
+      <span style="font-size:14px">📊</span>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:.76rem;font-weight:700;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escH(l.name)}</div>
+        <div style="font-size:.62rem;color:var(--txt3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escH(l.url)}</div>
+      </div>
+      <span class="gsli-del" onclick="event.stopPropagation();deleteSavedLink(${i})" title="Remove">✕</span>
+    </div>`).join('');
 }
 
-/* ════════════════════════════════════════════════════════════
-   GOOGLE SIGN-IN (GSI Token Client)
-════════════════════════════════════════════════════════════ */
-let tokenClient = null;
-
-function getClientId(){
-  return GD_CLIENT_ID;
+function selectSavedLink(i) {
+  const links = getLinks();
+  if (!links[i]) return;
+  ge('lnkUrl').value  = links[i].url;
+  ge('lnkName').value = links[i].name;
+  validateLnkUrl();
 }
 
-function initGoogleAuth(){
-  const btn = ge('gdSignInBtn');
-  if(btn){ btn.disabled=true; btn.innerHTML='<span class="spinning">⏳</span> Connecting…'; }
-
-  /* ── GSI Token Client ──────────────────────────────────────────
-     google.accounts.oauth2.initTokenClient uses a secure credential
-     picker overlay — no redirect_uri required, no implicit grant,
-     fully compliant with Google's current OAuth 2.0 policy.
-     Works from file://, localhost, and any deployed origin.
-  ──────────────────────────────────────────────────────────────── */
-  waitAPIs(()=>{
-    if(typeof google === 'undefined' || !google?.accounts?.oauth2){
-      if(btn){ btn.disabled=false; btn.innerHTML=origSignInHTML(); }
-      showGdErr('Google Identity Services did not load. Check your internet connection and refresh.');
-      return;
-    }
-    try{
-      tokenClient = google.accounts.oauth2.initTokenClient({
-        client_id : GD_CLIENT_ID,
-        scope     : GD_SCOPE,
-        /* No redirect_uri — GSI handles auth internally via overlay */
-        callback  : (resp)=>{
-          if(btn){ btn.disabled=false; btn.innerHTML=origSignInHTML(); }
-          if(resp.error){
-            let msg = resp.error_description || resp.error;
-            /* Translate common error codes into plain English */
-            if(resp.error === 'access_denied')
-              msg = 'Access was denied. Please allow Drive access when prompted.';
-            else if(resp.error === 'popup_blocked_by_browser')
-              msg = 'Popup blocked — allow popups for this page and try again.';
-            else if(resp.error === 'popup_closed_by_user')
-              msg = 'Sign-in cancelled. Click the button to try again.';
-            showGdErr('Sign-in error: ' + msg);
-            return;
-          }
-          gdToken = {
-            token    : resp.access_token,
-            expiresAt: Date.now() + (parseInt(resp.expires_in || 3600) - 60) * 1000
-          };
-          console.log('[GD] Token obtained via GSI, expires:', new Date(gdToken.expiresAt).toLocaleTimeString());
-          fetchUserProfile();
-        },
-        error_callback: (err)=>{
-          if(btn){ btn.disabled=false; btn.innerHTML=origSignInHTML(); }
-          const msg = err?.message || err?.type || JSON.stringify(err);
-          showGdErr('Sign-in failed: ' + msg);
-        }
-      });
-      tokenClient.requestAccessToken({ prompt: 'select_account' });
-    }catch(e){
-      if(btn){ btn.disabled=false; btn.innerHTML=origSignInHTML(); }
-      showGdErr('Could not initialise Google sign-in: ' + e.message);
-    }
-  });
+function deleteSavedLink(i) {
+  const links = getLinks();
+  links.splice(i, 1);
+  saveLinks(links);
+  renderSavedLinks();
 }
 
-function origSignInHTML(){
-  return `<svg viewBox="0 0 48 48" width="20" height="20" style="flex-shrink:0"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.29-8.16 2.29-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg> Sign in with Google`;
-}
 
-async function fetchUserProfile(){
-  try{
-    const res = await gdFetch('https://www.googleapis.com/oauth2/v3/userinfo');
-    gdUser = await res.json();
-    console.log('[GD] User:', gdUser.name, gdUser.email);
-    showGdConnected();
-  }catch(e){
-    console.warn('[GD] Could not fetch profile:', e);
-    gdUser = {name:'Google User', email:'', picture:''};
-    showGdConnected();
-  }
-}
 
-function showGdConnected(){
-  ge('gd_step_welcome').style.display = 'none';
-  ge('gd_step_connected').style.display = 'block';
-  const btn=ge('gdSignInBtn'); if(btn){btn.disabled=false;btn.innerHTML=origSignInHTML();}
-  /* Reset any previously selected file so user knows to pick again */
-  gdSelectedFile=null; gdPickedFile=null;
-  const pf=ge('gdPickedFile'); if(pf) pf.style.display='none';
-  clearGdErr();
+/** State vars for the Google Sheet link loader */
+let activeLnkUrl = '', activeLnkName = '';
 
-  /* Modal user card */
-  if(gdUser){
-    ge('gdModalName').textContent  = gdUser.name  || 'Google User';
-    ge('gdModalEmail').textContent = gdUser.email || '';
-    if(gdUser.picture){ ge('gdModalAvatar').src = gdUser.picture; }
-  }
-
-  /* Header badge */
-  const badge = ge('gdUserBadge');
-  badge.classList.add('show');
-  if(gdUser?.picture) ge('gdUserAvatar').src = gdUser.picture;
-  ge('gdUserName').textContent = (gdUser?.name||'Google').split(' ')[0];
-
-  /* Expiry warning */
-  const expIn = gdToken ? gdToken.expiresAt - Date.now() : 0;
-  setTimeout(()=>{ if(gdToken){ showGdErr('⚠️ Google session expires in 5 min. Click "Sign in" to renew.'); } }, Math.max(0, expIn - 5*60*1000));
-  setTimeout(()=>{ gdToken=null; gdUser=null; gdSignOut(); }, Math.max(0, expIn));
-}
-
-function gdSignOut(){
-  gdToken=null; gdUser=null; gdPickedFile=null; gdSelectedFile=null;
-  ge('gd_step_welcome').style.display='block';
-  ge('gd_step_connected').style.display='none';
-  ge('gdUserBadge').classList.remove('show');
-  ge('gdFileList').classList.remove('show');
-  ge('gdFileLabel').style.display='none';
-  ge('gdPickedFile').style.display='none';
-  if(ge('gdPickedFile')) ge('gdPickedFile').style.display='none';
-  clearGdErr();
-  if(ge('gdSignInBtn')){ ge('gdSignInBtn').disabled=false; ge('gdSignInBtn').innerHTML=origSignInHTML(); }
-  const btn = ge('gdSignInBtn'); if(btn){btn.disabled=false; btn.innerHTML=origSignInHTML();}
-  if(typeof google!=='undefined' && google.accounts && google.accounts.oauth2)
-    google.accounts.oauth2.revoke(gdToken?.token||'', ()=>{});
-}
-
-/* ════════════════════════════════════════════════════════════
-   GOOGLE PICKER API
-════════════════════════════════════════════════════════════ */
-function openDrivePicker(){
-  if(!gdToken){ showGdErr('Please sign in first.'); return; }
-  waitAPIs(()=>{
-    try{
-      const view = new google.picker.DocsView(google.picker.ViewId.DOCS)
-        .setIncludeFolders(false)
-        .setMimeTypes([
-          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-          'application/vnd.ms-excel',
-          'text/csv',
-          'application/vnd.google-apps.spreadsheet'
-        ].join(','));
-
-      const picker = new google.picker.PickerBuilder()
-        .addView(view)
-        .addView(new google.picker.DocsView().setIncludeFolders(true))
-        .setOAuthToken(gdToken.token)
-        .setAppId(GD_PROJECT_NUM)
-        .setCallback(pickerCallback)
-        .setTitle('Select Excel, CSV or Google Sheet')
-        .build();
-      picker.setVisible(true);
-    }catch(e){
-      console.warn('[GD] Picker error:', e);
-      showGdErr('Google Picker failed: '+e.message+'. Try "Browse Drive" instead.');
-    }
-  });
-}
-
-function pickerCallback(data){
-  if(data.action === google.picker.Action.PICKED){
-    const f = data.docs[0];
-    gdPickedFile = {id:f.id, name:f.name, mime:f.mimeType};
-    gdSelectedFile = gdPickedFile;
-    const pf = ge('gdPickedFile');
-    ge('gdPickedName').textContent = f.name;
-    pf.style.display='flex';
-    clearGdErr();
-    console.log('[GD] Picker selected:', f.name, f.mimeType);
-  }
-}
-
-/* ════════════════════════════════════════════════════════════
-   DRIVE INLINE BROWSER (fallback + folder nav)
-════════════════════════════════════════════════════════════ */
-async function gdBrowseFiles(folderId){
-  if(!gdToken){ showGdErr('Please sign in first.'); return; }
-  if(folderId !== undefined) gdCurrentFolder = folderId||'root';
-
-  const listEl = ge('gdFileList');
-  ge('gdFileLabel').style.display='flex';
-  listEl.classList.add('show');
-  listEl.innerHTML='<div style="padding:14px;text-align:center;color:var(--txt3);font-size:11px">⏳ Loading…</div>';
-
-  try{
-    const q = gdSearchQ
-      ? `name contains '${gdSearchQ.replace(/'/g,"\\'")}' and trashed=false and (mimeType contains 'sheet' or mimeType contains 'excel' or mimeType='text/csv' or mimeType='application/vnd.google-apps.spreadsheet')`
-      : `'${gdCurrentFolder}' in parents and trashed=false and (mimeType='application/vnd.google-apps.folder' or mimeType contains 'sheet' or mimeType contains 'excel' or mimeType='text/csv' or mimeType='application/vnd.google-apps.spreadsheet' or mimeType='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' or mimeType='application/vnd.ms-excel')`;
-
-    const res  = await gdFetch(`${GD_API_BASE}/files?q=${encodeURIComponent(q)}&fields=files(id,name,mimeType,size,modifiedTime)&pageSize=80&orderBy=folder,modifiedTime+desc`);
-    const data = await res.json();
-    const files = data.files||[];
-
-    /* Breadcrumb */
-    let bc = `<div class="gd-breadcrumb"><span class="gd-bc-item" onclick="gdNavRoot()">📁 My Drive</span>`;
-    gdFolderStack.forEach((f,i)=>{ bc+=`<span class="gd-bc-sep">›</span><span class="gd-bc-item" onclick="gdNavTo(${i})">${escH(f.name)}</span>`; });
-    bc+='</div>';
-
-    /* Search bar */
-    const sb=`<div class="gd-list-search">
-      <input type="text" placeholder="Search files…" value="${escH(gdSearchQ)}" id="gdSrchInp"
-        onkeydown="if(event.key==='Enter'){gdSearchQ=this.value;gdBrowseFiles()}" />
-      <button onclick="gdSearchQ=ge('gdSrchInp').value;gdBrowseFiles()">Search</button>
-      ${gdSearchQ?`<button onclick="gdSearchQ='';gdBrowseFiles()" style="background:var(--redl);color:var(--red)">✕</button>`:''}
-    </div>`;
-
-    if(!files.length){
-      listEl.innerHTML=bc+sb+'<div style="padding:14px;text-align:center;color:var(--txt3);font-size:11px">No files found</div>';
-      return;
-    }
-
-    const folders = files.filter(f=>f.mimeType.includes('folder'));
-    const docs    = files.filter(f=>!f.mimeType.includes('folder'));
-    ge('gdFileLabel').textContent = `${docs.length} file${docs.length!==1?'s':''} · ${folders.length} folder${folders.length!==1?'s':''}`;
-
-    const fHtml = folders.map(f=>`
-      <div class="gd-file-item" onclick="gdOpenDir('${escQ(f.id)}','${escQ(f.name)}')">
-        <span class="gd-file-ico">📂</span>
-        <span class="gd-file-name">${escH(f.name)}</span>
-        <span class="gd-file-tag">Folder</span>
-      </div>`).join('');
-
-    const dHtml = docs.map(f=>`
-      <div class="gd-file-item" id="gdf_${f.id}" onclick="gdPickInline('${escQ(f.id)}','${escQ(f.name)}','${escQ(f.mimeType)}')">
-        <span class="gd-file-ico">${gdIcon(f.mimeType)}</span>
-        <span class="gd-file-name" title="${escH(f.name)}">${escH(f.name)}</span>
-        <span class="gd-file-size">${f.size?fmtBytes(+f.size):(f.mimeType.includes('google-apps')?'Google Sheet':'')}</span>
-      </div>`).join('');
-
-    listEl.innerHTML = bc+sb+fHtml+dHtml;
-  }catch(e){
-    console.error('[GD] Browse error:', e);
-    listEl.innerHTML=`<div style="padding:12px;font-size:11px;color:var(--red)">❌ ${e.message}</div>`;
-  }
-}
-
-function gdNavRoot(){ gdFolderStack=[]; gdCurrentFolder='root'; gdSearchQ=''; gdBrowseFiles(); }
-function gdNavTo(i){ const f=gdFolderStack[i]; gdFolderStack=gdFolderStack.slice(0,i); gdCurrentFolder=f.id; gdBrowseFiles(); }
-function gdOpenDir(id,name){
-  gdFolderStack.push({id:gdCurrentFolder, name: gdFolderStack.length===0?'My Drive':name});
-  gdCurrentFolder=id; gdBrowseFiles();
-}
-function gdPickInline(id,name,mime){
-  gdSelectedFile={id,name,mime};
-  gdPickedFile={id,name,mime};  // keep both in sync
-  document.querySelectorAll('.gd-file-item').forEach(el=>el.classList.remove('sel'));
-  const el=ge('gdf_'+id); if(el) el.classList.add('sel');
-  const pf=ge('gdPickedFile'); ge('gdPickedName').textContent=name; pf.style.display='flex';
-  ge('lbtn').textContent='🚀 Load: '+name.slice(0,30);
-  clearGdErr();
-}
-
-/* ════════════════════════════════════════════════════════════
-   MANUAL / ADVANCED OAUTH (Custom Client ID)
-════════════════════════════════════════════════════════════ */
-function toggleAdv(){
-  const p=ge('gd_adv_panel');
-  if(p) p.classList.toggle('show');
-}
-
-/* ── Stub legacy functions — no-op since we use GSI-only now ── */
-function handleOAuthCallback(){ /* unused — GSI handles auth internally */ }
-function handleManualCallback(){ /* unused */ }
-function startManualOAuth(){
-  showGdErr('Manual OAuth not needed — click "Sign in with Google" above.');
-}
-
-/* ════════════════════════════════════════════════════════════
-   DRIVE API FETCH
-════════════════════════════════════════════════════════════ */
-async function gdFetch(url, opts={}){
-  if(!gdToken) throw new Error('Not signed in to Google Drive');
-  if(gdToken.expiresAt<Date.now()){gdToken=null;throw new Error('Session expired — please sign in again');}
-  const res=await fetch(url,{...opts,headers:{'Authorization':'Bearer '+gdToken.token,'Accept':'application/json',...(opts.headers||{})}});
-  if(!res.ok){
-    let msg=''; try{const j=await res.clone().json();msg=j?.error?.message||'';}catch(e){}
-    if(res.status===401){gdToken=null;throw new Error('Session expired (401) — please sign in again');}
-    if(res.status===403) throw new Error('Access denied (403). Ensure Google Drive API is enabled and Drive scope was granted.');
-    if(res.status===404) throw new Error('File not found (404).');
-    throw new Error(`Drive API ${res.status}: ${msg||res.statusText}`);
-  }
-  return res;
-}
-
-/* ════════════════════════════════════════════════════════════
-   LOAD DRIVE FILE
-════════════════════════════════════════════════════════════ */
-async function loadGDFile(){
-  const sel = gdSelectedFile || gdPickedFile;
-  if(!sel) throw new Error('Please select or pick a file from Google Drive first.');
-  const {id,name,mime}=sel;
-  console.log('[GD] Loading:', name, mime);
-  setP(20,'Fetching from Drive…');
-
-  let url, isCSV=false;
-  if(mime==='application/vnd.google-apps.spreadsheet'){
-    url=`${GD_API_BASE}/files/${id}/export?mimeType=text%2Fcsv`; isCSV=true;
-  } else {
-    url=`${GD_API_BASE}/files/${id}?alt=media`;
-    isCSV=name.toLowerCase().endsWith('.csv')||mime==='text/csv';
-  }
-
-  setP(50,'Downloading…');
-  const res=await gdFetch(url,{headers:{'Accept':'*/*'}});
-  setP(75,'Parsing…');
-
-  if(isCSV){
-    const text=await res.text();
-    const p=Papa.parse(text,{header:true,skipEmptyLines:'greedy',dynamicTyping:false,transformHeader:h=>h.trim()});
-    if(!p.data||!p.data.length) throw new Error('File is empty or could not be parsed.');
-    RAW = p.data.filter(row=>Object.values(row).some(v=>v!==''&&v!==null&&v!==undefined));
-  } else {
-    const buf=await res.arrayBuffer();
-    const wb=XLSX.read(new Uint8Array(buf),{type:'array',raw:false});
-    const raw=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{defval:'',raw:false});
-    RAW = raw.map(row=>{const o={};for(const k in row){o[k.trim()]=String(row[k]??'');}return o;});
-  }
-  if(!RAW.length) throw new Error('No data rows found.');
-  console.log('[GD] Loaded',RAW.length,'rows | Keys:',Object.keys(RAW[0]||{}).slice(0,8).join(', '));
-  setP(100,'Done!');
-  curSrc={type:'gd',label:'☁️ '+name.slice(0,24)};
-  onLoaded('gd','☁️ '+name.slice(0,22));
-}
-
-/* ════════════════════════════════════════════════════════════
-   GD UI HELPERS
-════════════════════════════════════════════════════════════ */
-function showGdErr(msg){const e=ge('gdErr');e.innerHTML=`<strong>⚠️ Error</strong>${msg}`;e.classList.add('show');console.error('[GD]',msg);}
-function clearGdErr(){const e=ge('gdErr');if(e){e.classList.remove('show');e.innerHTML='';}}
-function gdIcon(m){if(m.includes('spreadsheet')||m.includes('excel'))return'📊';if(m.includes('csv'))return'📄';if(m.includes('folder'))return'📂';return'📎';}
-function fmtBytes(b){if(b>1e6)return(b/1e6).toFixed(1)+'MB';if(b>1e3)return(b/1e3).toFixed(0)+'KB';return b+'B';}
 const escQ = s=>(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'&quot;');
 const escH = s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 
@@ -2623,22 +2532,20 @@ const openModal = () => {
   ge('modalOvl').style.display='flex';
   clrErr(); hideP();
   ge('savePrompt').classList.remove('show');
-  /* Restore sign-in state */
-  if(gdToken && gdUser){ showGdConnected(); }
   renderSavedLinks();
   renderDatasetList();
 };
 const closeModal = () => { ge('modalOvl').style.display='none'; };
 
 function sSrc(t){
-  activeSrc=t;
-  ['xl','gd','lnk'].forEach(s=>{
-    ge('stab_'+s)&&ge('stab_'+s).classList.toggle('on',s===t);
-    ge('sp_'+s)&&ge('sp_'+s).classList.toggle('on',s===t);
+  activeSrc = t;
+  ['xl','lnk'].forEach(s=>{
+    ge('stab_'+s) && ge('stab_'+s).classList.toggle('on', s===t);
+    ge('sp_'+s)   && ge('sp_'+s).classList.toggle('on',   s===t);
   });
   clrErr(); hideP();
-  const labels={gd:'📂 Load Selected Drive File',lnk:'🔗 Load from Drive Link',xl:'🚀 Load Dashboard'};
-  ge('lbtn').textContent = labels[t]||'🚀 Load Dashboard';
+  const labels = { lnk:'📊 Load from Google Sheet', xl:'🚀 Load Dashboard' };
+  ge('lbtn').textContent = labels[t] || '🚀 Load Dashboard';
   if(t==='lnk') renderSavedLinks();
 }
 
@@ -2672,26 +2579,26 @@ function procFile(file){
    TRIGGER LOAD
 ════════════════════════════════════════════════════════════ */
 async function triggerLoad(){
-  clrErr(); const btn=ge('lbtn'); btn.disabled=true;
+  clrErr();
+  const btn = ge('lbtn');
+  btn.disabled = true;
   try{
-    if(activeSrc==='gd'){
-      /* ── FIX: clear stale state, check both picking mechanisms ── */
-      const sel = gdSelectedFile || gdPickedFile;
-      if(!sel){
-        throw new Error('No file selected. Click "Open Picker" or "Browse Drive" to choose a file first, then click Load.');
-      }
-      await loadGDFile();
-    } else if(activeSrc==='lnk'){
-      if(!activeLnkUrl) throw new Error('No link set. Paste a Google Sheets URL first.');
-      await loadFromGDLink(activeLnkUrl);
-      curSrc={type:'lnk',label:'🔗 '+activeLnkName.slice(0,24)};
-      onLoaded('lnk','🔗 '+(activeLnkName||'Drive Link').slice(0,22));
+    if(activeSrc === 'lnk'){
+      const url  = (ge('lnkUrl').value || '').trim();
+      const name = (ge('lnkName').value || '').trim() || 'Google Sheet';
+      if(!url) throw new Error('Please paste a Google Sheets URL first.');
+      if(!isValidGDUrl(url)) throw new Error('Not a valid Google Sheets URL.');
+      activeLnkUrl  = url;
+      activeLnkName = name;
+      await loadFromGDLink(url);
+      curSrc = { type:'lnk', label:'📊 '+name.slice(0,24) };
+      onLoaded('lnk','📊 '+(name||'Google Sheet').slice(0,22));
     } else {
       if(!uplWB) throw new Error('Please select a file first.');
       await loadLocalFile();
     }
-  }catch(e){showErr('❌ '+e.message);console.error('[Load]',e);}
-  finally{btn.disabled=false;}
+  }catch(e){ showErr('❌ '+e.message); console.error('[Load]',e); }
+  finally{ btn.disabled=false; }
 }
 
 async function loadLocalFile(){
@@ -3095,305 +3002,361 @@ function goTab(n){
 }
 
 /* ════════════════════════════════════════════════════════════
-   PDF EXPORT — all 4 tabs
-════════════════════════════════════════════════════════════ */
-/* ════════════════════════════════════════════════════════════
-   UNIFIED EXPORT ENGINE  (PDF full / PDF current tab / PNG)
-   ─────────────────────────────────────────────────────────
-   Strategy: For each tab we CLONE the live .tpage node into
-   a temporary off-screen container that is:
-     • position:absolute; left:-9999px  (invisible)
-     • width:1380px (matches design target)
-     • overflow:visible; height:auto
-   We then rebuild Chart.js instances inside the clone at the
-   correct fixed heights, wait for them to paint, capture with
-   html2canvas at scale:2, then destroy the clone.
-   This means the live dashboard is NEVER disturbed — no layout
-   shifts, no scroll jumps, no chart resize artifacts.
+   EXPORT ENGINE  v3  — Live DOM capture (charts always visible)
+   ─────────────────────────────────────────────────────────────
+   ROOT CAUSE OF BLANK CHARTS IN PREVIOUS VERSIONS:
+     cloneNode(true) copies DOM structure but NOT canvas pixel data.
+     Chart.js configs contain function references that survive neither
+     JSON.stringify nor structural cloning — so rebuilt charts render
+     with missing formatters, empty datasets, or wrong colours.
+
+   CORRECT STRATEGY — capture from the LIVE DOM:
+     1. For each tab: switch it on, make #canvas temporarily static
+        so html2canvas sees the full height (not just viewport height).
+     2. Force every Chart.js instance to resize() + update() so pixels
+        fill the now-static container dimensions.
+     3. Wait: 2× requestAnimationFrame + 500 ms — guarantees all
+        async paint callbacks have fired before capture.
+     4. html2canvas snaps the live pixels — charts, tables, all colours
+        exactly as displayed on screen.
+     5. Restore position:fixed layout and switch back to original tab.
+
+   The live dashboard is never visible to the user during export
+   because we use transform:translateX(-9999px) on the body wrapper
+   while keeping layout geometry intact.
 ════════════════════════════════════════════════════════════ */
 
-/* ── dropdown helpers ── */
+/* ── Export dropdown helpers ── */
 function toggleExportMenu(e){
   e.stopPropagation();
-  const m=ge('exportMenu');
-  m.style.display = m.style.display==='block' ? 'none' : 'block';
+  const m = ge('exportMenu');
+  m.style.display = m.style.display === 'block' ? 'none' : 'block';
 }
-function closeExportMenu(){ const m=ge('exportMenu'); if(m) m.style.display='none'; }
+function closeExportMenu(){ const m = ge('exportMenu'); if(m) m.style.display='none'; }
 document.addEventListener('click', ()=>closeExportMenu());
 
-/* ── main entry point ── */
+/* ── Helpers ── */
+const waitFrames = (n=2) => new Promise(res=>{
+  let i=0; const tick=()=>{ if(++i>=n) res(); else requestAnimationFrame(tick); };
+  requestAnimationFrame(tick);
+});
+const sleep = ms => new Promise(r=>setTimeout(r, ms));
+
+/* ════════════════════════════════════════════
+   MAIN PDF EXPORT
+════════════════════════════════════════════ */
 async function doPDF(mode='all'){
   if(!RAW||!RAW.length){ alert('Please load a data source first.'); return; }
 
-  const btn = ge('exportMainBtn');
+  const btn      = ge('exportMainBtn');
   const origHTML = btn ? btn.innerHTML : '';
-  if(btn){ btn.disabled=true; btn.innerHTML='<span class="spinning">⏳</span> Preparing…'; }
+  const setLabel = txt => { if(btn) btn.innerHTML = `<span class="spinning">⏳</span> ${txt}`; };
+  if(btn) btn.disabled = true;
+  setLabel('Preparing…');
 
-  const RENDER_W = 1380;   // px — matches the dashboard design width
-  const SCALE    = 2;      // retina scale for crisp text & charts
-  const TAB_WAIT = 420;    // ms for Chart.js to finish painting
-
-  const allTabs = ['ov','st','pa','tr','dl','zn','tb'];
-  const tabNames = {
-    ov:'Overview', st:'State Analysis', pa:'Party Analysis',
-    tr:'Trend Analysis', dl:'Delivery Analysis', zn:'Zone Report', tb:'Top 20 Report'
+  /* ── Config ── */
+  const CAPTURE_W  = 1400;  // px width for capture (matches design target width)
+  const PDF_SCALE  = 2.0;   // html2canvas scale — 2× for retina sharpness
+  const CHART_WAIT = 500;   // ms after chart.resize() before capture
+  const ALL_TABS   = ['ov','st','pa','tr','dl','zn','tb'];
+  const TAB_LABELS = {
+    ov:'Overview',           st:'State Analysis',
+    pa:'Party Analysis',     tr:'Trend Analysis',
+    dl:'Delivery Analysis',  zn:'Zone Report',
+    tb:'Top 20 Report'
   };
-  const tabs = mode==='current' ? [curTab] : allTabs;
+  const TAB_DESC = {
+    ov:'High-level KPIs, top states & parties, trend line, delivery status and zone distribution.',
+    st:'Sales by state: bar chart ranking, donut share, month-on-month comparison and full state table.',
+    pa:'Party (customer) analysis: top-10 bar, donut, and full party performance table.',
+    tr:'Monthly trend: dual-axis units & value line, dispatch bar, TAT line and monthly summary table.',
+    dl:'Delivery health: status donut, TAT histogram, state-wise stacked bar, status-by-month trend and detail table.',
+    zn:'Zone performance: units bar, donut share, zone trend lines and zone summary table.',
+    tb:'Top-20 parties and states by units and value with detailed ranked tables.'
+  };
+  const tabs = (mode === 'current') ? [curTab] : ALL_TABS;
 
-  /* Hide overlays */
-  const OVERLAYS = ['authWall','adminPortal','modalOvl','userModalOvl'];
-  const ovPrev = {};
-  OVERLAYS.forEach(id=>{ const el=ge(id); if(el){ ovPrev[id]=el.style.display; el.style.display='none'; }});
+  /* ── Hide all UI overlays so they don't pollute the capture ── */
+  const OVERLAYS   = ['authWall','adminPortal','modalOvl','userModalOvl','exportMenu'];
+  const ovSave     = {};
+  OVERLAYS.forEach(id => {
+    const el = ge(id); if(!el) return;
+    ovSave[id] = el.style.display;
+    el.style.display = 'none';
+  });
 
-  /* ── Build a fresh jsPDF ── */
+  /* ── Save live layout state ── */
+  const savedTab      = curTab;
+  const cvs           = ge('canvas');
+  const hdr           = ge('hdr');
+  const tfb           = ge('tabFilterBar');
+  const origCvsStyle  = cvs.style.cssText;
+  const origHdrStyle  = hdr ? hdr.style.cssText : '';
+  const origTfbStyle  = tfb ? tfb.style.cssText : '';
+  const origBodyOF    = document.body.style.overflow;
+  const origHtmlOF    = document.documentElement.style.overflow;
+
+  /* ── jsPDF setup ── */
   const {jsPDF} = window.jspdf;
-  const pdf  = new jsPDF({orientation:'landscape', unit:'mm', format:'a3'});
-  const PW   = pdf.internal.pageSize.getWidth();
-  const PH   = pdf.internal.pageSize.getHeight();
-  const src  = ge('srcPill') ? ge('srcPill').textContent : 'SCM Data';
-  const now  = new Date().toLocaleString('en-IN');
-  let   first= true;
+  const pdf  = new jsPDF({ orientation:'landscape', unit:'mm', format:'a3' });
+  const PW   = pdf.internal.pageSize.getWidth();   // 420mm A3 landscape
+  const PH   = pdf.internal.pageSize.getHeight();  // 297mm A3 landscape
+  const src  = ge('srcPill') ? ge('srcPill').textContent.trim() : 'SCM Data';
+  const now  = new Date().toLocaleString('en-IN', {
+    day:'2-digit', month:'short', year:'numeric',
+    hour:'2-digit', minute:'2-digit'
+  });
+  let first = true;
 
-  /* ── off-screen host: all captures happen in here ── */
-  const host = document.createElement('div');
-  host.style.cssText = [
-    'position:fixed','left:-9999px','top:0',
-    `width:${RENDER_W}px`,'overflow:visible',
-    'background:#EEF2F7',
-    'background-image:radial-gradient(circle,rgba(30,64,175,.06) 1px,transparent 1px)',
-    'background-size:22px 22px',
-    'font-family:Inter,sans-serif',
-    'box-sizing:border-box',
-    'z-index:-1'
-  ].join(';');
-  document.body.appendChild(host);
+  /* Margin in mm */
+  const MX = 8, MY = 6;
+  const CW = PW - MX*2;   // content width
+  const CH_avail = PH - MY*2 - 28; // content height (28mm for header)
 
-  /* ── collect the CSS that defines the dashboard look ── */
-  // We inject a <style> clone into host so charts/cards render correctly
-  const styleTag = document.createElement('style');
-  styleTag.textContent = `
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{
-      --bg:#EEF2F7;--surf:#FFFFFF;--surf2:#F5F7FB;--surf3:#EBF4FF;
-      --card-a:#FFFDF7;--card-b:#F6FBF4;--card-c:#FDF6FF;--card-d:#FFF8F2;
-      --border:#DDE3EE;--border2:#BEC8DC;
-      --txt:#0D1B2E;--txt2:#3D5068;--txt3:#8A9BB5;
-      --b1:#1A3FAD;--b1d:#1535A0;--b1l:#D5E3FF;--b1ll:#EBF1FF;
-      --grn:#047857;--grnl:#C9F5E7;--amb:#B45309;--ambl:#FEF0C2;
-      --red:#C81E1E;--redl:#FDDFDF;--pur:#6D28D9;--purl:#EDE9FE;
-      --r:11px;--sha-card:0 2px 8px rgba(13,27,46,.07),0 0 0 1px rgba(13,27,46,.04);
-      --fn:'Inter',sans-serif;--mono:'IBM Plex Mono',monospace;
-    }
-    .tpage{display:flex;flex-direction:column;gap:8px;width:100%;padding:8px 10px 14px}
-    .row-h1{height:260px;flex-shrink:0;display:grid;gap:8px}
-    .row-h2{height:220px;flex-shrink:0;display:grid;gap:8px}
-    .row-h3{height:300px;flex-shrink:0;display:grid;gap:8px}
-    .row-h4{height:280px;flex-shrink:0;display:grid;gap:8px}
-    .row-tbl{min-height:220px;flex-shrink:0;display:grid;gap:8px}
-    .ggr{grid-template-columns:1fr 1.618fr}
-    .ggrr{grid-template-columns:1.618fr 1fr}
-    .g3{grid-template-columns:repeat(3,1fr)}
-    .g4{grid-template-columns:repeat(4,1fr)}
-    .card{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);
-          box-shadow:var(--sha-card);display:flex;flex-direction:column;overflow:hidden;min-height:0}
-    .card-a{background:var(--card-a)}.card-b{background:var(--card-b)}
-    .card-c{background:var(--card-c)}.card-d{background:var(--card-d)}
-    .chdr{display:flex;align-items:center;justify-content:space-between;
-          padding:7px 11px 6px;border-bottom:1px solid var(--border);flex-shrink:0;background:inherit}
-    .card-a .chdr{border-left:3px solid #D97706}.card-b .chdr{border-left:3px solid #059669}
-    .card-c .chdr{border-left:3px solid #7C3AED}.card-d .chdr{border-left:3px solid #DC2626}
-    .cico{display:inline-flex;align-items:center;justify-content:center;
-          width:26px;height:26px;border-radius:8px;font-size:14px;flex-shrink:0}
-    .ctitle{font-size:10px;font-weight:800;color:var(--txt);text-transform:uppercase;
-            letter-spacing:.5px;display:flex;align-items:center;gap:6px}
-    .cbadge{font-size:9px;font-weight:700;padding:2px 8px;border-radius:10px;
-            background:var(--b1l);color:var(--b1);font-family:monospace;letter-spacing:.2px}
-    .cbody{flex:1;min-height:0;padding:6px 8px;display:flex;flex-direction:column;overflow:hidden;height:100%}
-    .cw{flex:1;min-height:0;position:relative;width:100%;height:100%}
-    .tscroll{overflow-y:auto;flex:1;min-height:0;border-radius:0 0 11px 11px}
-    .dt{width:100%;border-collapse:collapse;font-size:10px}
-    .dt th{background:#F5F7FB;color:var(--txt2);font-size:9px;font-weight:700;padding:6px 8px;
-           text-align:left;border-bottom:1.5px solid var(--border);white-space:nowrap;
-           text-transform:uppercase;letter-spacing:.4px}
-    .dt td{padding:5px 8px;border-bottom:1px solid rgba(220,227,238,.4);color:var(--txt);vertical-align:middle}
-    .dt tr:nth-child(even) td{background:#F8FAFC}
-    .rk{color:var(--txt3);font-size:9px;font-weight:700;width:22px;text-align:center}
-    .vv{font-weight:700;font-family:monospace;color:var(--txt)}
-    .schip{font-size:9px;font-weight:700;padding:2px 6px;border-radius:6px}
-    .bmini{height:5px;border-radius:3px;max-width:70px}
-    .kpi{display:flex;align-items:center;gap:9px;padding:10px 12px;border-radius:9px;
-         background:var(--surf);border:1px solid var(--border)}
-    .kico{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;
-          justify-content:center;font-size:18px;flex-shrink:0}
-    .kinf{flex:1;min-width:0}
-    .klbl{font-size:9px;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.4px}
-    .kval{font-size:1.1rem;font-weight:800;color:var(--txt);line-height:1.1}
-    .ksub{font-size:9px;color:var(--txt3);margin-top:1px}
-    canvas{max-width:100%;max-height:100%}
-  `;
-  host.appendChild(styleTag);
-
-  /* ── Per-tab capture ── */
   try {
     for(let ti=0; ti<tabs.length; ti++){
       const tabId = tabs[ti];
-      if(btn) btn.innerHTML=`<span class="spinning">⏳</span> ${ti+1}/${tabs.length} ${tabNames[tabId]}…`;
+      setLabel(`Exporting ${ti+1}/${tabs.length}: ${TAB_LABELS[tabId]}…`);
 
-      /* --- 1. Deep-clone the live tab page --- */
-      const livePage = ge('pg_'+tabId);
-      if(!livePage) continue;
-      const clone = livePage.cloneNode(true);
-      clone.style.cssText = '';   // strip any inline display:none
-      clone.classList.add('tpage');
-      clone.classList.remove('on'); // we set display via CSS above
-
-      /* --- 2. Place into host and get natural height --- */
-      host.innerHTML = '';
-      host.appendChild(styleTag);
-      host.appendChild(clone);
-      document.body.offsetHeight; // force layout
-
-      /* --- 3. Rebuild Chart.js instances in clone --- */
-      // Find all <canvas> in clone, pair them with live CH entries by id
-      const cloneCanvases = clone.querySelectorAll('canvas');
-      const cloneCharts   = [];
-      cloneCanvases.forEach(cvs=>{
-        const id = cvs.id;
-        const liveChart = CH[id];
-        if(!liveChart) return;
-        // Resize canvas element to match its container
-        const parentH = cvs.closest('.cw') || cvs.parentElement;
-        const h = parentH ? parentH.getBoundingClientRect().height : 200;
-        cvs.style.width='100%'; cvs.style.height='100%';
-        // Clone the live chart config (no reference to live data)
-        const cfg = JSON.parse(JSON.stringify(liveChart.config));
-        // Rebuild with same data
-        try{
-          const c = new Chart(cvs, {
-            type: cfg.type,
-            data: JSON.parse(JSON.stringify(liveChart.data)),
-            options: {
-              ...cfg.options,
-              responsive: false,
-              maintainAspectRatio: false,
-              animation: false,
-              plugins: {
-                ...(cfg.options?.plugins||{}),
-                tooltip: {enabled:false},
-              }
-            }
-          });
-          cloneCharts.push(c);
-        }catch(e){ console.warn('[PDF] Chart clone failed:',id,e); }
+      /* ── 1. Show only this tab's page ── */
+      ALL_TABS.forEach(t => {
+        const pg = ge('pg_'+t);
+        if(pg) pg.classList.toggle('on', t===tabId);
+        const tn = ge('tn_'+t);
+        if(tn) tn.classList.toggle('on', t===tabId);
       });
 
-      /* --- 4. Wait for paint --- */
-      await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(()=>setTimeout(r, TAB_WAIT))));
+      /* ── 2. Temporarily unlock layout so full page height is measurable ── */
+      document.body.style.overflow            = 'visible';
+      document.documentElement.style.overflow = 'visible';
 
-      /* --- 5. Build page header banner --- */
-      const banner = document.createElement('div');
-      banner.style.cssText = [
-        'background:linear-gradient(135deg,#1e3a8a 0%,#1E40AF 55%,#0369A1 100%)',
-        'color:#fff','padding:12px 16px',
-        'display:flex','align-items:center','justify-content:space-between',
-        'font-family:Inter,sans-serif','flex-shrink:0',
-        'margin:-8px -10px 8px'  // bleed to edges
+      // Canvas: static flow, full height, fixed capture width
+      cvs.style.cssText = [
+        'position:static',
+        'display:block',
+        'overflow:visible',
+        'height:auto',
+        `width:${CAPTURE_W}px`,
+        'padding:8px 10px 20px',
+        'background:#EEF2F7',
+        'box-sizing:border-box'
       ].join(';');
-      banner.innerHTML = `
-        <div>
-          <div style="font-size:15px;font-weight:800;letter-spacing:-.3px">
-            📦 SCM Analytics — ${tabNames[tabId]}
-          </div>
-          <div style="font-size:9.5px;opacity:.68;margin-top:3px;letter-spacing:.1px">
-            ${src} &nbsp;·&nbsp; ${now} &nbsp;·&nbsp; ${fmt(FLT.length)} records
-            &nbsp;·&nbsp; Page ${ti+1} of ${tabs.length}
-          </div>
-        </div>
-        <div style="text-align:right">
-          <div style="font-size:9px;opacity:.55;font-weight:600">SCM ANALYTICS PORTAL</div>
-          <div style="font-size:18px;margin-top:2px">📊</div>
-        </div>`;
-      clone.insertBefore(banner, clone.firstChild);
 
-      /* --- 6. Capture --- */
-      const cap = await html2canvas(host, {
-        scale         : SCALE,
-        useCORS       : true,
-        allowTaint    : true,
-        backgroundColor: '#EEF2F7',
-        windowWidth   : RENDER_W,
-        width         : RENDER_W,
-        logging       : false,
-        onclone       : (doc) => {
-          // ensure fonts are loaded in the clone document
-          doc.querySelectorAll('canvas').forEach(c=>{
-            c.style.imageRendering='pixelated';
-          });
-        }
+      // Header & tab bar: static so they flow above canvas
+      if(hdr) hdr.style.cssText = 'position:static;width:100%;display:flex';
+      if(tfb) tfb.style.cssText = 'position:static;width:100%;display:flex';
+
+      /* ── 3. Force all charts in this tab to resize to new dimensions ── */
+      // First pass: browser layout
+      document.body.offsetHeight;  // force reflow
+      await waitFrames(2);
+
+      // Resize every chart — charts in visible tab will now have correct container dims
+      const resizePromises = Object.entries(CH).map(([id, chart]) => {
+        return new Promise(res => {
+          try {
+            // Re-enable animation briefly only for resize so canvas fills properly
+            chart.options.animation = false;
+            chart.resize();
+            chart.update('none');   // 'none' = no animation, instant repaint
+          } catch(e) { /* chart may not be in this tab, ignore */ }
+          res();
+        });
+      });
+      await Promise.all(resizePromises);
+
+      // Second reflow pass + wait for paint queue to flush
+      await waitFrames(3);
+      await sleep(CHART_WAIT);
+
+      /* ── 4. Capture the canvas element with all its rendered content ── */
+      const captureEl = cvs;
+      const cap = await html2canvas(captureEl, {
+        scale            : PDF_SCALE,
+        useCORS          : true,
+        allowTaint       : true,
+        backgroundColor  : '#EEF2F7',
+        logging          : false,
+        width            : CAPTURE_W,
+        windowWidth      : CAPTURE_W,
+        // Explicitly tell html2canvas the element's bounding box
+        x                : 0,
+        y                : 0,
+        scrollX          : 0,
+        scrollY          : 0,
+        imageTimeout     : 15000,
+        removeContainer  : true,
+        foreignObjectRendering: false,
       });
 
-      /* --- 7. Destroy temp charts --- */
-      cloneCharts.forEach(c=>{ try{c.destroy();}catch(e){} });
-
-      /* --- 8. Add to PDF --- */
-      const imgData = cap.toDataURL('image/jpeg', 0.94);
-      const ih      = PW * (cap.height / cap.width);
-
+      /* ── 5. Build the PDF page ── */
       if(!first) pdf.addPage();
+      first = false;
 
-      if(ih <= PH){
-        /* Fits on one page — vertically center it */
-        const yOffset = Math.max(0, (PH - ih) / 2);
-        pdf.addImage(imgData, 'JPEG', 0, yOffset, PW, ih);
+      /* -- 5a. Gradient header bar -- */
+      // Draw gradient manually (jsPDF supports linear gradient via GState)
+      pdf.setFillColor(30, 58, 138);   // deep blue
+      pdf.rect(0, 0, PW, 24, 'F');
+      // Lighter right portion
+      pdf.setFillColor(3, 105, 161);
+      pdf.rect(PW*0.55, 0, PW*0.45, 24, 'F');
+
+      // Title
+      pdf.setFont('helvetica','bold');
+      pdf.setFontSize(13);
+      pdf.setTextColor(255,255,255);
+      pdf.text(`SCM Analytics — ${TAB_LABELS[tabId]}`, MX, 9.5);
+
+      // Sub-line: description
+      pdf.setFont('helvetica','normal');
+      pdf.setFontSize(7);
+      pdf.setTextColor(200,220,255);
+      pdf.text(TAB_DESC[tabId] || '', MX, 15.5, { maxWidth: CW * 0.72 });
+
+      // Right-aligned meta
+      pdf.setFont('helvetica','bold');
+      pdf.setFontSize(6.5);
+      pdf.setTextColor(180, 210, 255);
+      const metaLines = [
+        `Source: ${src}`,
+        `${now}`,
+        `${fmt(FLT.length)} records · Page ${ti+1} / ${tabs.length}`
+      ];
+      const metaX = PW - MX;
+      metaLines.forEach((line, i) => {
+        pdf.text(line, metaX, 8 + i*4.5, { align:'right' });
+      });
+
+      /* -- 5b. Separator line -- */
+      pdf.setDrawColor(255,255,255);
+      pdf.setLineWidth(0.3);
+      pdf.line(MX, 24.5, PW-MX, 24.5);
+
+      /* -- 5c. Chart image -- */
+      const imgData = cap.toDataURL('image/jpeg', 0.93);
+      const imgH    = CW * (cap.height / cap.width);
+      const imgY    = MY + 22;   // below header
+
+      if(imgH <= CH_avail){
+        // Fits on single page
+        pdf.addImage(imgData, 'JPEG', MX, imgY, CW, imgH,
+          undefined, 'FAST');
       } else {
-        /* Tall page — slice into A3 page strips */
-        const phPx = Math.floor(cap.width * (PH / PW));
-        let sy = 0;
+        // Tall page: slice into strips, each on its own PDF page
+        const pxPerPage = Math.floor(cap.width * (CH_avail / CW));
+        let   sy        = 0;
+        let   stripPage = 0;
+
         while(sy < cap.height){
-          const slH = Math.min(phPx, cap.height - sy);
-          const sc  = document.createElement('canvas');
-          sc.width  = cap.width; sc.height = slH;
-          sc.getContext('2d').drawImage(cap, 0, sy, cap.width, slH, 0, 0, cap.width, slH);
-          if(sy > 0) pdf.addPage();
-          pdf.addImage(sc.toDataURL('image/jpeg', 0.93), 'JPEG', 0, 0, PW, slH*(PW/cap.width));
-          sy += slH;
+          const sliceH = Math.min(pxPerPage, cap.height - sy);
+          const sc     = document.createElement('canvas');
+          sc.width     = cap.width;
+          sc.height    = sliceH;
+          sc.getContext('2d').drawImage(cap, 0, sy, cap.width, sliceH, 0, 0, cap.width, sliceH);
+
+          const sliceData = sc.toDataURL('image/jpeg', 0.93);
+          const sliceMmH  = sliceH * (CW / cap.width);
+
+          if(stripPage > 0){ pdf.addPage(); }
+          // Repeat mini-header on continuation pages
+          if(stripPage > 0){
+            pdf.setFillColor(30,58,138);
+            pdf.rect(0,0,PW,10,'F');
+            pdf.setFont('helvetica','bold');
+            pdf.setFontSize(8);
+            pdf.setTextColor(255,255,255);
+            pdf.text(`${TAB_LABELS[tabId]} (cont.)`, MX, 7);
+          }
+
+          const startY = stripPage === 0 ? imgY : MY + 10;
+          pdf.addImage(sliceData,'JPEG', MX, startY, CW, sliceMmH, undefined,'FAST');
+
+          sy        += sliceH;
+          stripPage += 1;
         }
       }
-      first = false;
+
+      /* -- 5d. Footer line -- */
+      pdf.setDrawColor(200,210,230);
+      pdf.setLineWidth(0.2);
+      pdf.line(MX, PH-7, PW-MX, PH-7);
+      pdf.setFont('helvetica','normal');
+      pdf.setFontSize(6);
+      pdf.setTextColor(140,150,170);
+      pdf.text('SCM Analytics Dashboard — Confidential', MX, PH-4);
+      pdf.text(`Generated ${now}`, PW-MX, PH-4, { align:'right' });
     }
 
-    /* ── Save ── */
-    const suffix = mode==='current' ? `_${tabNames[curTab].replace(/ /g,'_')}` : '_All_Tabs';
-    pdf.save(`SCM_Report${suffix}_${new Date().toISOString().slice(0,10)}.pdf`);
+    /* ── 6. Save PDF ── */
+    const suffix = mode==='current'
+      ? `_${TAB_LABELS[curTab].replace(/ /g,'_')}`
+      : '_Complete_Report';
+    pdf.save(`SCM_Analytics${suffix}_${new Date().toISOString().slice(0,10)}.pdf`);
 
   } finally {
-    /* Clean up */
-    if(host.parentNode) host.parentNode.removeChild(host);
-    OVERLAYS.forEach(id=>{ const el=ge(id); if(el) el.style.display=ovPrev[id]||''; });
+    /* ── 7. Restore EVERYTHING ── */
+    cvs.style.cssText  = origCvsStyle;
+    if(hdr) hdr.style.cssText = origHdrStyle;
+    if(tfb) tfb.style.cssText = origTfbStyle;
+    document.body.style.overflow            = origBodyOF;
+    document.documentElement.style.overflow = origHtmlOF;
+
+    // Restore overlays
+    OVERLAYS.forEach(id => {
+      const el = ge(id); if(!el) return;
+      el.style.display = ovSave[id] !== undefined ? ovSave[id] : '';
+    });
+
+    // Restore original tab with full chart resize
+    ALL_TABS.forEach(t => {
+      const pg = ge('pg_'+t);
+      if(pg) pg.classList.toggle('on', t===savedTab);
+      const tn = ge('tn_'+t);
+      if(tn) tn.classList.toggle('on', t===savedTab);
+    });
+    await waitFrames(3);
+    Object.values(CH).forEach(c=>{ try{ c.resize(); c.update('none'); }catch(e){} });
+
     if(btn){ btn.disabled=false; btn.innerHTML=origHTML; }
   }
 }
 
-/* ── PNG Snapshot (current tab, full quality) ── */
+/* ════════════════════════════════════════════
+   PNG SNAPSHOT  (current tab, high-res)
+════════════════════════════════════════════ */
 async function doSnapshot(){
   if(!RAW||!RAW.length){ alert('Please load a data source first.'); return; }
-  const btn = ge('exportMainBtn');
+
+  const btn      = ge('exportMainBtn');
   const origHTML = btn ? btn.innerHTML : '';
   if(btn){ btn.disabled=true; btn.innerHTML='<span class="spinning">⏳</span> Capturing…'; }
-  const _names={ov:'Overview',st:'State_Analysis',pa:'Party_Analysis',
-                tr:'Trend_Analysis',dl:'Delivery_Analysis',zn:'Zone_Report',tb:'Top_20'};
-  try{
+
+  const TAB_LABELS = {
+    ov:'Overview', st:'State_Analysis', pa:'Party_Analysis',
+    tr:'Trend_Analysis', dl:'Delivery_Analysis', zn:'Zone_Report', tb:'Top_20'
+  };
+
+  try {
+    /* Resize all charts for current tab first */
+    Object.values(CH).forEach(c=>{ try{ c.resize(); c.update('none'); }catch(e){} });
+    await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(()=>setTimeout(r,300))));
+
     const cap = await html2canvas(ge('canvas'),{
-      scale:2.5, useCORS:true, allowTaint:true, backgroundColor:'#EEF2F7', logging:false
+      scale: 2.5, useCORS:true, allowTaint:true,
+      backgroundColor:'#EEF2F7', logging:false,
+      windowWidth: window.innerWidth,
+      scrollX:0, scrollY:0
     });
-    const a = document.createElement('a');
-    a.download = `SCM_Snap_${_names[curTab]||curTab}_${new Date().toISOString().slice(0,10)}.png`;
-    a.href = cap.toDataURL('image/png');
+
+    const a       = document.createElement('a');
+    a.download    = `SCM_Snap_${TAB_LABELS[curTab]||curTab}_${new Date().toISOString().slice(0,10)}.png`;
+    a.href        = cap.toDataURL('image/png');
     a.click();
-  }finally{
+  } finally {
     if(btn){ btn.disabled=false; btn.innerHTML=origHTML; }
   }
 }
+
 
 /* ════════════════════════════════════════════════════════════
    MODAL HELPERS
@@ -3403,11 +3366,7 @@ function hideP(){ge('mp').classList.remove('on');ge('mpf').style.width='0';}
 function showErr(m){const e=ge('me');e.textContent=m;e.classList.add('on');console.error('[SCM]',m);}
 function clrErr(){ge('me').classList.remove('on');}
 
-/* Load GAPI/GSI after DOM ready */
-window.addEventListener('load', ()=>{
-  const s1=document.createElement('script');s1.src='https://accounts.google.com/gsi/client';s1.onload=()=>{gsiReady=true;};document.head.appendChild(s1);
-  const s2=document.createElement('script');s2.src='https://apis.google.com/js/api.js';s2.onload=()=>{gapi.load('client:picker',()=>{gapi.client.init({}).then(()=>{gapiReady=true;});});};document.head.appendChild(s2);
-});
+
 
 window.addEventListener('resize',()=>{
   Object.values(CH).forEach(c=>{try{c.resize();}catch(e){}});
