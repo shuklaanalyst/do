@@ -392,6 +392,238 @@ html,body{height:100%;overflow:hidden;font-family:var(--fn);font-size:13px;
 ════════════════════════════════════ */
 @media(max-width:1100px){.g3{grid-template-columns:1fr 1fr}.g4{grid-template-columns:1fr 1fr}.ks6{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:800px){.g2,.g3,.g4,.g12,.g21{grid-template-columns:1fr}.ks6{grid-template-columns:repeat(2,1fr)}}
+/* ══════════════════════════════════════════════
+   AUTH LAYER
+══════════════════════════════════════════════ */
+#authWall{
+  position:fixed;inset:0;z-index:9999;
+  background:linear-gradient(135deg,#0f172a 0%,#1e3a8a 50%,#0369a1 100%);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--fn);
+}
+#authWall .auth-bg{
+  position:absolute;inset:0;overflow:hidden;
+}
+#authWall .auth-bg::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(59,130,246,.18) 0%,transparent 70%);
+}
+.auth-grid{position:absolute;inset:0;
+  background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+  background-size:44px 44px;
+}
+.auth-card{
+  position:relative;z-index:1;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.14);
+  backdrop-filter:blur(24px);
+  border-radius:20px;
+  padding:40px 44px 36px;
+  width:100%;max-width:420px;
+  box-shadow:0 32px 80px rgba(0,0,0,.45);
+}
+.auth-logo{
+  display:flex;align-items:center;gap:12px;margin-bottom:28px;justify-content:center;
+}
+.auth-logo-mark{
+  width:46px;height:46px;border-radius:14px;
+  background:linear-gradient(135deg,rgba(255,255,255,.25),rgba(255,255,255,.1));
+  border:1px solid rgba(255,255,255,.25);
+  display:flex;align-items:center;justify-content:center;font-size:22px;
+  box-shadow:0 4px 16px rgba(0,0,0,.3);
+}
+.auth-logo-txt{font-size:1.1rem;font-weight:800;color:#fff;letter-spacing:-.3px;line-height:1.2;}
+.auth-logo-sub{font-size:.65rem;color:rgba(255,255,255,.5);font-weight:500;margin-top:1px;}
+.auth-title{font-size:1.3rem;font-weight:800;color:#fff;margin-bottom:4px;text-align:center;}
+.auth-sub{font-size:.78rem;color:rgba(255,255,255,.55);text-align:center;margin-bottom:28px;line-height:1.5;}
+.auth-field{margin-bottom:14px;}
+.auth-field label{display:block;font-size:.72rem;font-weight:700;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+.auth-field input{
+  width:100%;padding:11px 14px;
+  background:rgba(255,255,255,.1);
+  border:1.5px solid rgba(255,255,255,.16);
+  border-radius:10px;color:#fff;
+  font-family:var(--fn);font-size:.88rem;outline:none;
+  transition:border .15s,background .15s;
+}
+.auth-field input::placeholder{color:rgba(255,255,255,.3);}
+.auth-field input:focus{border-color:rgba(255,255,255,.45);background:rgba(255,255,255,.15);}
+.auth-btn{
+  width:100%;padding:12px;margin-top:6px;
+  background:linear-gradient(135deg,#3b82f6,#1d4ed8);
+  border:none;border-radius:10px;color:#fff;
+  font-family:var(--fn);font-size:.9rem;font-weight:700;
+  cursor:pointer;transition:all .15s;
+  box-shadow:0 4px 16px rgba(59,130,246,.4);
+}
+.auth-btn:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(59,130,246,.5);}
+.auth-btn:active{transform:none;}
+.auth-btn:disabled{opacity:.6;cursor:not-allowed;transform:none;}
+.auth-err{
+  font-size:.75rem;color:#fca5a5;background:rgba(239,68,68,.15);
+  border:1px solid rgba(239,68,68,.3);border-radius:8px;
+  padding:8px 12px;margin-top:10px;display:none;
+}
+.auth-err.show{display:block;}
+.auth-footer{
+  text-align:center;font-size:.65rem;color:rgba(255,255,255,.3);
+  margin-top:24px;line-height:1.6;
+}
+.auth-role-chip{
+  display:inline-block;font-size:.62rem;font-weight:700;
+  padding:2px 7px;border-radius:8px;margin-top:10px;
+}
+
+/* ══════════════════════════════════════════════
+   ADMIN PORTAL
+══════════════════════════════════════════════ */
+#adminPortal{
+  position:fixed;inset:0;z-index:5000;
+  background:var(--bg);display:none;
+  background-image:radial-gradient(circle,rgba(30,64,175,.05) 1px,transparent 1px);
+  background-size:22px 22px;
+}
+#adminPortal.show{display:flex;flex-direction:column;}
+.adm-hdr{
+  height:var(--hh);flex-shrink:0;
+  background:linear-gradient(135deg,#7c3aed,#6d28d9,#4c1d95);
+  display:flex;align-items:center;padding:0 18px;gap:12px;
+  box-shadow:0 2px 16px rgba(109,40,217,.35);
+}
+.adm-hdr-title{font-size:14px;font-weight:800;color:#fff;display:flex;align-items:center;gap:8px;}
+.adm-hdr-pill{font-size:.6rem;font-weight:700;background:rgba(255,255,255,.2);color:#fff;padding:2px 8px;border-radius:10px;border:1px solid rgba(255,255,255,.25);}
+.adm-close{margin-left:auto;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:8px;padding:5px 12px;font-size:.78rem;font-weight:700;cursor:pointer;transition:.15s;}
+.adm-close:hover{background:rgba(255,255,255,.28);}
+.adm-layout{display:flex;flex:1;min-height:0;overflow:hidden;}
+.adm-sidebar{
+  width:200px;flex-shrink:0;background:#fff;
+  border-right:1px solid var(--border);
+  padding:14px 10px;display:flex;flex-direction:column;gap:3px;
+  overflow-y:auto;
+}
+.adm-nav-item{
+  display:flex;align-items:center;gap:9px;padding:9px 12px;
+  border-radius:9px;cursor:pointer;font-size:.82rem;font-weight:600;
+  color:var(--txt2);transition:.12s;border:none;background:none;width:100%;text-align:left;
+}
+.adm-nav-item:hover{background:var(--pur);color:#fff;}
+.adm-nav-item.on{background:linear-gradient(135deg,var(--pur),#5b21b6);color:#fff;box-shadow:0 2px 10px rgba(124,58,237,.35);}
+.adm-nav-item .adm-ico{font-size:15px;flex-shrink:0;}
+.adm-nav-sep{height:1px;background:var(--border);margin:6px 0;}
+.adm-content{flex:1;min-width:0;overflow-y:auto;padding:20px 22px;}
+
+/* Admin panels */
+.adm-panel{display:none;}
+.adm-panel.on{display:block;}
+.adm-section-hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:16px;
+}
+.adm-section-title{font-size:1rem;font-weight:800;color:var(--txt);display:flex;align-items:center;gap:8px;}
+.adm-section-sub{font-size:.72rem;color:var(--txt3);margin-top:2px;}
+.adm-btn{
+  display:inline-flex;align-items:center;gap:5px;
+  font-family:var(--fn);font-size:.76rem;font-weight:700;
+  padding:7px 14px;border-radius:8px;cursor:pointer;border:none;transition:.15s;
+}
+.adm-btn-primary{background:var(--pur);color:#fff;}
+.adm-btn-primary:hover{background:#5b21b6;}
+.adm-btn-danger{background:var(--redl);color:var(--red);border:1px solid rgba(200,30,30,.2);}
+.adm-btn-danger:hover{background:var(--red);color:#fff;}
+.adm-btn-ghost{background:var(--surf2);color:var(--txt2);border:1px solid var(--border);}
+.adm-btn-ghost:hover{background:var(--border);}
+
+/* User table */
+.adm-table-wrap{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.adm-table{width:100%;border-collapse:collapse;font-size:.8rem;}
+.adm-table th{background:rgba(124,58,237,.06);color:var(--txt2);font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:10px 14px;text-align:left;border-bottom:1.5px solid var(--border);white-space:nowrap;}
+.adm-table td{padding:10px 14px;border-bottom:1px solid rgba(220,227,238,.5);vertical-align:middle;}
+.adm-table tr:last-child td{border-bottom:none;}
+.adm-table tr:hover td{background:rgba(124,58,237,.03);}
+.role-chip{display:inline-flex;align-items:center;gap:4px;font-size:.65rem;font-weight:700;padding:2px 8px;border-radius:10px;}
+.role-admin{background:#ede9fe;color:#5b21b6;}
+.role-user{background:#dbeafe;color:#1e40af;}
+.role-viewer{background:#f0fdf4;color:#166534;}
+.status-chip{font-size:.62rem;font-weight:700;padding:2px 7px;border-radius:8px;}
+.status-active{background:#d1fae5;color:#065f46;}
+.status-inactive{background:#fef3c7;color:#92400e;}
+.adm-avatar{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.75rem;flex-shrink:0;}
+
+/* Admin modal for user create/edit */
+.adm-modal-ovl{
+  position:fixed;inset:0;z-index:6000;background:rgba(0,0,0,.45);
+  display:none;align-items:center;justify-content:center;
+}
+.adm-modal-ovl.show{display:flex;}
+.adm-modal{
+  background:#fff;border-radius:18px;padding:28px 30px;
+  width:100%;max-width:440px;box-shadow:0 24px 60px rgba(0,0,0,.22);
+  max-height:90vh;overflow-y:auto;
+}
+.adm-modal-title{font-size:1rem;font-weight:800;color:var(--txt);margin-bottom:18px;display:flex;align-items:center;gap:8px;}
+.adm-form-field{margin-bottom:14px;}
+.adm-form-field label{display:block;font-size:.72rem;font-weight:700;color:var(--txt2);text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px;}
+.adm-form-field input,.adm-form-field select{
+  width:100%;padding:9px 12px;
+  border:1.5px solid var(--border);border-radius:8px;
+  font-family:var(--fn);font-size:.84rem;color:var(--txt);
+  background:var(--surf2);outline:none;transition:border .15s;
+}
+.adm-form-field input:focus,.adm-form-field select:focus{border-color:var(--pur);}
+.adm-form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.adm-modal-actions{display:flex;gap:8px;margin-top:20px;justify-content:flex-end;}
+
+/* Stats cards */
+.adm-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+.adm-stat-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:12px;}
+.adm-stat-ico{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.adm-stat-lbl{font-size:.68rem;font-weight:600;color:var(--txt3);text-transform:uppercase;letter-spacing:.3px;}
+.adm-stat-val{font-size:1.3rem;font-weight:800;color:var(--txt);line-height:1.1;}
+
+/* GD Links panel */
+.gd-link-card{
+  background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px;
+  margin-bottom:10px;display:flex;align-items:center;gap:12px;
+  transition:box-shadow .15s;
+}
+.gd-link-card:hover{box-shadow:var(--sha2);}
+.gd-link-ico{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#e8f0fe,#c5d7fb);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.gd-link-info{flex:1;min-width:0;}
+.gd-link-name{font-size:.84rem;font-weight:700;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.gd-link-url{font-size:.68rem;color:var(--txt3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px;}
+.gd-link-meta{font-size:.62rem;color:var(--txt3);margin-top:3px;}
+
+/* Upload tab styling in modal */
+.upl-tabs{display:flex;gap:0;border-bottom:1.5px solid var(--border);margin-bottom:14px;}
+.upl-tab{flex:1;padding:9px 12px;font-size:.78rem;font-weight:600;color:var(--txt2);border:none;background:none;cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-2px;transition:.15s;display:flex;align-items:center;justify-content:center;gap:5px;}
+.upl-tab:hover{color:var(--b1);background:var(--b1ll);}
+.upl-tab.on{color:var(--b1);border-bottom-color:var(--b1);font-weight:700;background:var(--b1ll);}
+.upl-tab-pane{display:none;}
+.upl-tab-pane.on{display:block;}
+
+/* GD Link input */
+.gd-link-input-wrap{
+  border:1.5px solid var(--border);border-radius:10px;
+  background:var(--surf2);padding:10px 12px;
+  display:flex;align-items:center;gap:8px;margin-bottom:10px;
+  transition:border .15s;
+}
+.gd-link-input-wrap:focus-within{border-color:var(--b1);}
+.gd-link-input-wrap input{flex:1;border:none;background:none;font-family:var(--fn);font-size:.84rem;color:var(--txt);outline:none;}
+.gd-link-note{font-size:.67rem;color:var(--txt3);line-height:1.6;padding:8px 10px;background:var(--b1ll);border:1px solid var(--b1l);border-radius:8px;margin-bottom:10px;}
+.gd-saved-links{max-height:160px;overflow-y:auto;}
+.gd-saved-link-item{
+  display:flex;align-items:center;gap:8px;padding:8px 10px;
+  background:#fff;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;cursor:pointer;
+  transition:.12s;
+}
+.gd-saved-link-item:hover{border-color:var(--b1);background:var(--b1ll);}
+.gd-saved-link-item.selected{border-color:var(--grn);background:var(--grnl);}
+.gd-saved-link-item .gsli-name{font-size:.78rem;font-weight:700;color:var(--txt);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.gd-saved-link-item .gsli-del{font-size:11px;color:var(--txt3);cursor:pointer;padding:2px 5px;border-radius:4px;flex-shrink:0;}
+.gd-saved-link-item .gsli-del:hover{background:var(--redl);color:var(--red);}
+
 </style>
 </head>
 <body>
@@ -421,6 +653,12 @@ html,body{height:100%;overflow:hidden;font-family:var(--fn);font-size:13px;
     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
     Snapshot
   </button>
+  <button class="hbtn" id="adminBtn" onclick="openAdmin()" style="display:none;background:#7C3AED;color:#fff">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/></svg>
+    Admin
+  </button>
+  <span id="hdrUserPill" style="display:none;font-size:.7rem;font-weight:700;color:rgba(255,255,255,.8);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:14px;padding:3px 10px;white-space:nowrap"></span>
+  <button class="hbtn" onclick="doLogout()" style="background:rgba(239,68,68,.22);color:#fca5a5;border:1px solid rgba(239,68,68,.3);font-size:10px;padding:5px 10px" title="Sign Out">🔓</button>
   <button class="hbtn btn-pdf" onclick="doPDF()">
     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
     PDF
@@ -432,7 +670,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--fn);font-size:13px;
 </header>
 
 <!-- ══ COMBINED TAB + FILTER BAR ══ -->
-<div id="tabFilterBar">
+<div id="tabFilterBar" style="display:none">
   <!-- Tabs left side -->
   <button class="tnb on" onclick="goTab('ov')" id="tn_ov">📊 Overview</button>
   <button class="tnb" onclick="goTab('st')" id="tn_st">🗺️ State</button>
@@ -474,7 +712,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--fn);font-size:13px;
 </div>
 
 <!-- ══ CANVAS ══ -->
-<div id="canvas">
+<div id="canvas" style="display:none">
 
   <!-- PAGE: OVERVIEW -->
   <div class="tpage on" id="pg_ov">
@@ -692,8 +930,208 @@ html,body{height:100%;overflow:hidden;font-family:var(--fn);font-size:13px;
 
 </div><!-- /canvas -->
 
+<!-- ══ AUTH WALL ══ -->
+<div id="authWall">
+  <div class="auth-bg"><div class="auth-grid"></div></div>
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="auth-logo-mark">📦</div>
+      <div>
+        <div class="auth-logo-txt">SCM Analytics</div>
+        <div class="auth-logo-sub">Supply Chain Management Portal</div>
+      </div>
+    </div>
+    <div class="auth-title">Welcome back</div>
+    <div class="auth-sub">Sign in to access your analytics dashboard</div>
+
+    <div class="auth-field">
+      <label>Username</label>
+      <input type="text" id="authUser" placeholder="Enter your username" autocomplete="username"
+             onkeydown="if(event.key==='Enter')doLogin()"/>
+    </div>
+    <div class="auth-field">
+      <label>Password</label>
+      <input type="password" id="authPass" placeholder="Enter your password" autocomplete="current-password"
+             onkeydown="if(event.key==='Enter')doLogin()"/>
+    </div>
+    <button class="auth-btn" id="authBtn" onclick="doLogin()">
+      Sign In
+    </button>
+    <div class="auth-err" id="authErr"></div>
+    <div class="auth-footer">
+      Secured · Session-managed · Role-based access control<br>
+      <span style="opacity:.5">dodashboard · SCM Analytics v10</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ADMIN PORTAL ══ -->
+<div id="adminPortal">
+  <div class="adm-hdr">
+    <div class="adm-hdr-title">
+      <span style="font-size:18px">⚙️</span>
+      Admin Portal
+      <span class="adm-hdr-pill">ADMIN</span>
+    </div>
+    <div style="flex:1"></div>
+    <span style="font-size:.72rem;color:rgba(255,255,255,.5);margin-right:8px" id="admCurrentUser"></span>
+    <button class="adm-close" onclick="closeAdmin()">← Back to Dashboard</button>
+    <button class="adm-close" style="background:rgba(239,68,68,.3);border-color:rgba(239,68,68,.4);margin-left:6px" onclick="doLogout()">🔓 Logout</button>
+  </div>
+  <div class="adm-layout">
+    <!-- Sidebar -->
+    <div class="adm-sidebar">
+      <div style="font-size:.65rem;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.5px;padding:4px 12px 8px">Navigation</div>
+      <button class="adm-nav-item on" onclick="admNav('dashboard')" id="adm_n_dashboard"><span class="adm-ico">📊</span> Dashboard</button>
+      <button class="adm-nav-item" onclick="admNav('users')" id="adm_n_users"><span class="adm-ico">👥</span> User Management</button>
+      <button class="adm-nav-item" onclick="admNav('links')" id="adm_n_links"><span class="adm-ico">🔗</span> Drive Links</button>
+      <div class="adm-nav-sep"></div>
+      <div style="font-size:.65rem;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.5px;padding:4px 12px 8px">Account</div>
+      <button class="adm-nav-item" onclick="admNav('settings')" id="adm_n_settings"><span class="adm-ico">🔧</span> Settings</button>
+      <button class="adm-nav-item" onclick="doLogout()" style="color:var(--red)"><span class="adm-ico">🔓</span> Logout</button>
+    </div>
+
+    <!-- Content -->
+    <div class="adm-content">
+
+      <!-- Panel: Dashboard -->
+      <div class="adm-panel on" id="adm_p_dashboard">
+        <div class="adm-section-hdr">
+          <div>
+            <div class="adm-section-title">📊 System Overview</div>
+            <div class="adm-section-sub">Real-time stats across all users and data sources</div>
+          </div>
+        </div>
+        <div class="adm-stats" id="admStats">
+          <!-- Filled by JS -->
+        </div>
+        <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px">
+          <div style="font-size:.8rem;font-weight:800;color:var(--txt);margin-bottom:12px;display:flex;align-items:center;gap:6px">
+            📋 Recent Activity
+          </div>
+          <div id="admActivity" style="font-size:.76rem;color:var(--txt2);line-height:1.9"></div>
+        </div>
+      </div>
+
+      <!-- Panel: Users -->
+      <div class="adm-panel" id="adm_p_users">
+        <div class="adm-section-hdr">
+          <div>
+            <div class="adm-section-title">👥 User Management</div>
+            <div class="adm-section-sub">Create, edit, assign roles and reset passwords</div>
+          </div>
+          <button class="adm-btn adm-btn-primary" onclick="openUserModal()">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add User
+          </button>
+        </div>
+        <div class="adm-table-wrap">
+          <table class="adm-table">
+            <thead>
+              <tr>
+                <th>User</th><th>Username</th><th>Role</th><th>Status</th><th>Last Login</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admUserTbody">
+              <!-- Filled by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Panel: Drive Links -->
+      <div class="adm-panel" id="adm_p_links">
+        <div class="adm-section-hdr">
+          <div>
+            <div class="adm-section-title">🔗 Google Drive Links</div>
+            <div class="adm-section-sub">Manage saved spreadsheet links for the portal</div>
+          </div>
+        </div>
+        <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:14px">
+          <div style="font-size:.8rem;font-weight:700;color:var(--txt);margin-bottom:10px">Add New Link</div>
+          <div class="adm-form-field"><label>Display Name</label><input type="text" id="admLinkName" placeholder="e.g. Sales Data 2024" /></div>
+          <div class="adm-form-field"><label>Google Sheets / Drive URL</label><input type="url" id="admLinkUrl" placeholder="https://docs.google.com/spreadsheets/d/..." /></div>
+          <button class="adm-btn adm-btn-primary" onclick="admSaveLink()">💾 Save Link</button>
+          <span id="admLinkMsg" style="font-size:.72rem;margin-left:10px"></span>
+        </div>
+        <div id="admLinkList">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+
+      <!-- Panel: Settings -->
+      <div class="adm-panel" id="adm_p_settings">
+        <div class="adm-section-hdr">
+          <div>
+            <div class="adm-section-title">🔧 System Settings</div>
+            <div class="adm-section-sub">Portal configuration and preferences</div>
+          </div>
+        </div>
+        <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px">
+          <div style="font-size:.85rem;font-weight:700;color:var(--txt);margin-bottom:14px">Session & Security</div>
+          <div class="adm-form-field">
+            <label>Session Timeout (minutes)</label>
+            <input type="number" id="settTimeout" value="30" min="5" max="480" style="max-width:160px"/>
+          </div>
+          <div class="adm-form-field">
+            <label>Max Login Attempts</label>
+            <input type="number" id="settMaxAttempts" value="5" min="3" max="20" style="max-width:160px"/>
+          </div>
+          <div style="border-top:1px solid var(--border);padding-top:16px;margin-top:16px">
+            <div style="font-size:.85rem;font-weight:700;color:var(--txt);margin-bottom:14px">Default Credentials (Demo)</div>
+            <div style="font-size:.75rem;color:var(--txt2);line-height:2;background:var(--surf2);padding:10px 14px;border-radius:8px;font-family:var(--mono)">
+              Admin / Dermis@12345678 → Admin role<br>
+              manager / mgr456 → User role (full access)<br>
+              viewer / view789 → Viewer role (read-only)<br>
+            </div>
+            <div style="font-size:.68rem;color:var(--txt3);margin-top:8px">⚠️ Change these in production via the User Management panel.</div>
+          </div>
+          <button class="adm-btn adm-btn-primary" onclick="admSaveSettings()" style="margin-top:14px">💾 Save Settings</button>
+        </div>
+      </div>
+
+    </div><!-- /adm-content -->
+  </div><!-- /adm-layout -->
+</div>
+
+<!-- ══ USER EDIT MODAL ══ -->
+<div class="adm-modal-ovl" id="userModalOvl">
+  <div class="adm-modal">
+    <div class="adm-modal-title" id="userModalTitle">➕ Add User</div>
+    <div class="adm-form-row">
+      <div class="adm-form-field"><label>First Name</label><input type="text" id="umFname" placeholder="John"/></div>
+      <div class="adm-form-field"><label>Last Name</label><input type="text" id="umLname" placeholder="Smith"/></div>
+    </div>
+    <div class="adm-form-field"><label>Username <span style="color:var(--red)">*</span></label><input type="text" id="umUsername" placeholder="johnsmith"/></div>
+    <div class="adm-form-field"><label>Password <span style="color:var(--red)">*</span></label><input type="password" id="umPassword" placeholder="Min 6 characters"/></div>
+    <div class="adm-form-row">
+      <div class="adm-form-field">
+        <label>Role</label>
+        <select id="umRole">
+          <option value="admin">Admin</option>
+          <option value="user" selected>User</option>
+          <option value="viewer">Viewer</option>
+        </select>
+      </div>
+      <div class="adm-form-field">
+        <label>Status</label>
+        <select id="umStatus">
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+      </div>
+    </div>
+    <div id="umErr" style="font-size:.74rem;color:var(--red);margin-top:4px"></div>
+    <div class="adm-modal-actions">
+      <button class="adm-btn adm-btn-ghost" onclick="closeUserModal()">Cancel</button>
+      <button class="adm-btn adm-btn-primary" onclick="saveUser()">💾 Save User</button>
+    </div>
+  </div>
+</div>
+
+
 <!-- ══ SPLASH ══ -->
-<div id="splash">
+<div id="splash" style="display:none">
   <div class="spl-card">
     <div class="spl-ico">📦</div>
     <div class="spl-h">SCM Analytics Dashboard</div>
@@ -711,6 +1149,11 @@ html,body{height:100%;overflow:hidden;font-family:var(--fn);font-size:13px;
         <div class="stit">Google Drive</div>
         <div class="sdesc">Sign in with Google &amp; pick any Excel/CSV from Drive</div>
       </div>
+      <div class="spl-src" onclick="openModal();sSrc('lnk')">
+        <div class="sico">🔗</div>
+        <div class="stit">Drive Link</div>
+        <div class="sdesc">Paste a public Google Sheets link to load data instantly</div>
+      </div>
     </div>
   </div>
 </div>
@@ -719,26 +1162,20 @@ html,body{height:100%;overflow:hidden;font-family:var(--fn);font-size:13px;
 <div class="ovl" id="modalOvl" style="display:none" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <div class="mhd">
-      <h3>📊 Connect Data Source</h3>
-      <p>Upload Excel/CSV or sign in with Google to pick a file from Drive</p>
+      <h3>📂 Data Source</h3>
+      <p>Upload a file or connect from Google Drive</p>
       <button class="mclose" onclick="closeModal()">✕</button>
     </div>
     <div class="mbd">
 
-      <!-- Tab switcher -->
+      <!-- Source type tabs -->
       <div class="src-tabs">
-        <div class="stab on" id="stab_xl" onclick="sSrc('xl')">
-          <span class="si">📁</span>Excel / CSV
-        </div>
-        <div class="stab" id="stab_gd" onclick="sSrc('gd')">
-          <span class="si">
-            <svg width="24" height="24" viewBox="0 0 87.3 78"><path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8h-27.5c0 1.55.4 3.1 1.2 4.5z" fill="#0066da"/><path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0 -1.2 4.5h27.5z" fill="#00ac47"/><path d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5h-27.502l5.852 11.5z" fill="#ea4335"/><path d="m43.65 25 13.75-23.8c-1.35-.8-2.9-1.2-4.5-1.2h-18.5c-1.6 0-3.15.45-4.5 1.2z" fill="#00832d"/><path d="m59.8 53h-32.3l-13.75 23.8c1.35.8 2.9 1.2 4.5 1.2h50.8c1.6 0 3.15-.45 4.5-1.2z" fill="#2684fc"/><path d="m73.4 26.5-12.7-22c-.8-1.4-1.95-2.5-3.3-3.3l-13.75 23.8 16.15 27h27.45c0-1.55-.4-3.1-1.2-4.5z" fill="#ffba00"/></svg>
-          </span>
-          Google Drive
-        </div>
+        <div class="stab on" id="stab_xl" onclick="sSrc('xl')"><span class="si">📁</span>File Upload</div>
+        <div class="stab" id="stab_gd" onclick="sSrc('gd')"><span class="si">☁️</span>Drive Picker</div>
+        <div class="stab" id="stab_lnk" onclick="sSrc('lnk')"><span class="si">🔗</span>Drive Link</div>
       </div>
 
-      <!-- ── EXCEL PANEL ── -->
+      <!-- ── TAB: FILE UPLOAD ── -->
       <div class="srcp on" id="sp_xl">
         <div class="upz" id="upz" ondragover="onDg(event,1)" ondragleave="onDg(event,0)" ondrop="onDp(event)">
           <input type="file" id="fi" accept=".xlsx,.xls,.csv" onchange="onFs(event)"/>
@@ -747,123 +1184,106 @@ html,body{height:100%;overflow:hidden;font-family:var(--fn);font-size:13px;
           <div class="upz-s">.xlsx · .xls · .csv — processed in your browser, never uploaded</div>
         </div>
         <div class="fc" id="fc"><span>📄</span><span id="fcn"></span></div>
-        <div class="shw" id="shw">
-          <label>Select Sheet Tab</label>
-          <select id="shsel"></select>
-        </div>
+        <div class="shw" id="shw"><label>Select Sheet Tab</label><select id="shsel"></select></div>
       </div>
 
-      <!-- ── GOOGLE DRIVE PANEL ── -->
+      <!-- ── TAB: DRIVE PICKER ── -->
       <div class="srcp" id="sp_gd">
 
-        <!-- STEP A: Welcome / Sign-in -->
         <div id="gd_step_welcome" style="display:block">
-
-          <!-- Branding header -->
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
             <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#e8f0fe,#c5d7fb);display:flex;align-items:center;justify-content:center;flex-shrink:0">
               <svg width="22" height="22" viewBox="0 0 87.3 78"><path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8h-27.5c0 1.55.4 3.1 1.2 4.5z" fill="#0066da"/><path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0 -1.2 4.5h27.5z" fill="#00ac47"/><path d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5h-27.502l5.852 11.5z" fill="#ea4335"/><path d="m43.65 25 13.75-23.8c-1.35-.8-2.9-1.2-4.5-1.2h-18.5c-1.6 0-3.15.45-4.5 1.2z" fill="#00832d"/><path d="m59.8 53h-32.3l-13.75 23.8c1.35.8 2.9 1.2 4.5 1.2h50.8c1.6 0 3.15-.45 4.5-1.2z" fill="#2684fc"/><path d="m73.4 26.5-12.7-22c-.8-1.4-1.95-2.5-3.3-3.3l-13.75 23.8 16.15 27h27.45c0-1.55-.4-3.1-1.2-4.5z" fill="#ffba00"/></svg>
             </div>
             <div>
               <div style="font-size:.92rem;font-weight:800;color:var(--txt)">Google Drive</div>
-              <div style="font-size:.73rem;color:var(--txt3);margin-top:1px">Browse &amp; load Excel/CSV files from your Drive</div>
+              <div style="font-size:.73rem;color:var(--txt3);margin-top:1px">Sign in to browse and pick files</div>
             </div>
           </div>
-
-          <!-- Feature chips -->
           <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px">
             <span style="font-size:.7rem;font-weight:600;padding:3px 9px;border-radius:10px;background:var(--grnl);color:var(--grn)">🔒 Secure OAuth 2.0</span>
             <span style="font-size:.7rem;font-weight:600;padding:3px 9px;border-radius:10px;background:var(--b1ll);color:var(--b1)">📂 Browse all folders</span>
-            <span style="font-size:.7rem;font-weight:600;padding:3px 9px;border-radius:10px;background:var(--ambl);color:var(--amb)">⚡ No setup needed</span>
           </div>
-
-          <!-- Google sign-in button — styled per Google brand guidelines -->
           <div style="margin-bottom:12px">
-            <button id="gdSignInBtn" onclick="initGoogleAuth()" style="
-              display:flex;align-items:center;gap:10px;
-              background:#fff;color:#3c4043;
-              border:1.5px solid #dadce0;border-radius:8px;
-              padding:9px 18px 9px 12px;width:100%;
-              font-family:var(--fn);font-size:.84rem;font-weight:600;
-              cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.08);
-              transition:box-shadow .15s,border-color .15s;
-              justify-content:center;
-            " onmouseover="this.style.boxShadow='0 2px 8px rgba(0,0,0,.14)';this.style.borderColor='#bbb'"
-               onmouseout="this.style.boxShadow='0 1px 3px rgba(0,0,0,.08)';this.style.borderColor='#dadce0'">
-              <svg viewBox="0 0 48 48" width="20" height="20" style="flex-shrink:0">
-                <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
-                <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-                <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-                <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.29-8.16 2.29-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-              </svg>
+            <button id="gdSignInBtn" onclick="initGoogleAuth()" style="display:flex;align-items:center;gap:10px;background:#fff;color:#3c4043;border:1.5px solid #dadce0;border-radius:8px;padding:9px 18px 9px 12px;width:100%;font-family:var(--fn);font-size:.84rem;font-weight:600;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.08);transition:box-shadow .15s;justify-content:center;" onmouseover="this.style.boxShadow='0 2px 8px rgba(0,0,0,.14)'" onmouseout="this.style.boxShadow='0 1px 3px rgba(0,0,0,.08)'">
+              <svg viewBox="0 0 48 48" width="20" height="20" style="flex-shrink:0"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.29-8.16 2.29-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
               Sign in with Google
             </button>
           </div>
-
-          <!-- How it works note -->
-          <div style="font-size:.68rem;color:var(--txt3);line-height:1.6;background:var(--b1ll);border:1px solid var(--b1l);border-radius:8px;padding:8px 10px;margin-top:2px">
-            <strong style="color:var(--b1)">How it works:</strong> A Google account-picker window will open. Choose your account and approve Drive read access. Your files never leave your browser.
+          <div style="font-size:.68rem;color:var(--txt3);line-height:1.6;background:var(--b1ll);border:1px solid var(--b1l);border-radius:8px;padding:8px 10px">
+            <strong style="color:var(--b1)">How it works:</strong> A Google account-picker will open. Choose your account, approve Drive read access, then pick your file.
           </div>
-
-          <!-- Hidden stubs so JS doesn't error -->
           <input id="gd_client_id" type="hidden" value=""/>
           <span id="gd_redirect_display" style="display:none"></span>
           <div id="gd_adv_panel" style="display:none"></div>
         </div>
 
-        <!-- STEP B: Connected — show user + file browser -->
         <div id="gd_step_connected" style="display:none">
-
-          <!-- User card -->
-          <div class="gd-user-card" id="gdUserCard" style="
-            display:flex;align-items:center;gap:10px;
-            background:linear-gradient(135deg,var(--grnl),#d1fae5);
-            border:1.5px solid #a7f3d0;border-radius:12px;
-            padding:10px 14px;margin-bottom:12px;
-          ">
-            <img class="gd-user-avatar" id="gdModalAvatar" src="" alt=""
-              style="width:38px;height:38px;border-radius:50%;border:2px solid #6ee7b7;object-fit:cover;flex-shrink:0"/>
+          <div style="display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--grnl),#d1fae5);border:1.5px solid #a7f3d0;border-radius:12px;padding:10px 14px;margin-bottom:12px;">
+            <img id="gdModalAvatar" src="" alt="" style="width:38px;height:38px;border-radius:50%;border:2px solid #6ee7b7;object-fit:cover;flex-shrink:0"/>
             <div style="flex:1;min-width:0">
               <div style="font-size:.83rem;font-weight:800;color:#065f46;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="gdModalName">Google User</div>
               <div style="font-size:.7rem;color:#047857;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="gdModalEmail"></div>
             </div>
-            <div style="font-size:.68rem;font-weight:700;background:#059669;color:#fff;padding:3px 8px;border-radius:8px;flex-shrink:0">
-              ✓ Connected
-            </div>
+            <div style="font-size:.68rem;font-weight:700;background:#059669;color:#fff;padding:3px 8px;border-radius:8px;flex-shrink:0">✓ Connected</div>
           </div>
-
-          <!-- Action buttons -->
+          <!-- Step 2 prompt -->
+          <div style="font-size:.76rem;font-weight:600;color:var(--txt2);margin-bottom:8px;display:flex;align-items:center;gap:5px">
+            <span style="font-size:16px">2️⃣</span> Now pick your file:
+          </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:10px">
-            <button class="gd-action-btn" onclick="openDrivePicker()" style="display:flex;align-items:center;justify-content:center;gap:5px;padding:8px;font-size:.78rem;font-weight:700;border-radius:8px;border:1.5px solid var(--b1l);background:var(--b1ll);color:var(--b1);cursor:pointer">
+            <button onclick="openDrivePicker()" style="display:flex;align-items:center;justify-content:center;gap:5px;padding:9px;font-size:.78rem;font-weight:700;border-radius:8px;border:1.5px solid var(--b1l);background:var(--b1ll);color:var(--b1);cursor:pointer">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-              Picker
+              Open Picker
             </button>
-            <button class="gd-action-btn" onclick="gdBrowseFiles()" style="display:flex;align-items:center;justify-content:center;gap:5px;padding:8px;font-size:.78rem;font-weight:700;border-radius:8px;border:1.5px solid var(--border);background:var(--surf2);color:var(--txt);cursor:pointer">
+            <button onclick="gdBrowseFiles()" style="display:flex;align-items:center;justify-content:center;gap:5px;padding:9px;font-size:.78rem;font-weight:700;border-radius:8px;border:1.5px solid var(--border);background:var(--surf2);color:var(--txt);cursor:pointer">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-              Browse
+              Browse Drive
             </button>
           </div>
-          <button onclick="gdSignOut()" style="width:100%;padding:7px;font-size:.74rem;font-weight:700;border-radius:8px;border:1.5px solid var(--redl);background:var(--redl);color:var(--red);cursor:pointer;margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:5px">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-            Sign Out
-          </button>
-
-          <!-- Selected file pill -->
-          <div id="gdPickedFile" style="display:none;background:var(--grnl);border:1px solid #a7f3d0;border-radius:9px;padding:7px 12px;font-size:.78rem;color:#065f46;font-weight:600;margin-bottom:10px;align-items:center;gap:7px">
-            <span>📄</span><span id="gdPickedName"></span>
+          <div id="gdPickedFile" style="display:none;background:var(--grnl);border:1px solid #a7f3d0;border-radius:9px;padding:8px 12px;font-size:.78rem;color:#065f46;font-weight:600;margin-bottom:8px;align-items:center;gap:7px">
+            <span>✅</span><span id="gdPickedName"></span>
+            <span style="font-size:.66rem;color:#047857;margin-left:auto">Ready to load</span>
           </div>
-
-          <!-- File list label + container -->
-          <div class="gd-file-label" id="gdFileLabel" style="display:none;font-size:.72rem;font-weight:700;color:var(--txt2);margin-bottom:5px">
-            Files in your Drive:
-          </div>
+          <div class="gd-file-label" id="gdFileLabel" style="display:none;font-size:.72rem;font-weight:700;color:var(--txt2);margin-bottom:5px">Files in your Drive:</div>
           <div class="gd-file-list" id="gdFileList"></div>
+          <button onclick="gdSignOut()" style="width:100%;padding:6px;font-size:.72rem;font-weight:700;border-radius:7px;border:1px solid var(--border);background:none;color:var(--txt3);cursor:pointer;margin-top:8px">Sign out of Google</button>
         </div>
 
-        <!-- Error display -->
         <div class="gd-err" id="gdErr"></div>
-
       </div><!-- /sp_gd -->
+
+      <!-- ── TAB: DRIVE LINK ── -->
+      <div class="srcp" id="sp_lnk">
+        <div style="margin-bottom:12px">
+          <div style="font-size:.8rem;font-weight:700;color:var(--txt);margin-bottom:4px;display:flex;align-items:center;gap:6px">
+            🔗 Paste a Google Sheets Link
+          </div>
+          <div class="gd-link-note">
+            Paste a <strong>public</strong> Google Sheets or Drive CSV link. The sheet must be shared as "Anyone with the link can view". The link will be saved to your portal for future use.
+          </div>
+          <div class="gd-link-input-wrap">
+            <span style="font-size:15px;flex-shrink:0">🔗</span>
+            <input type="url" id="lnkUrl" placeholder="https://docs.google.com/spreadsheets/d/..." oninput="validateLnkUrl()"/>
+          </div>
+          <div id="lnkUrlMsg" style="font-size:.69rem;margin-bottom:8px"></div>
+          <div class="adm-form-field">
+            <label style="font-size:.7rem;font-weight:700;color:var(--txt2);text-transform:uppercase;letter-spacing:.4px;display:block;margin-bottom:5px">Display Name (optional)</label>
+            <input type="text" id="lnkName" placeholder="e.g. Monthly Sales Report" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:var(--fn);font-size:.84rem;color:var(--txt);background:var(--surf2);outline:none;"/>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button onclick="saveLnkAndLoad()" style="flex:1;padding:9px;font-size:.8rem;font-weight:700;border-radius:8px;background:var(--b1);color:#fff;border:none;cursor:pointer">💾 Save &amp; Load</button>
+            <button onclick="loadLnkNow()" style="flex:1;padding:9px;font-size:.8rem;font-weight:700;border-radius:8px;background:var(--surf2);color:var(--txt);border:1px solid var(--border);cursor:pointer">⚡ Load Only</button>
+          </div>
+        </div>
+        <!-- Saved links -->
+        <div style="border-top:1px solid var(--border);padding-top:12px;margin-top:4px">
+          <div style="font-size:.72rem;font-weight:700;color:var(--txt2);margin-bottom:8px;display:flex;align-items:center;justify-content:space-between">
+            Saved Links <span id="savedLinkCount" style="font-family:var(--mono);background:var(--b1l);color:var(--b1);padding:1px 6px;border-radius:6px;font-size:.62rem">0</span>
+          </div>
+          <div class="gd-saved-links" id="savedLinkList"></div>
+        </div>
+      </div><!-- /sp_lnk -->
 
       <!-- Progress + Error + CTA -->
       <div class="mp" id="mp"><div class="mpt"><div class="mpf" id="mpf"></div></div><div class="mpm" id="mpm"></div></div>
@@ -875,6 +1295,517 @@ html,body{height:100%;overflow:hidden;font-family:var(--fn);font-size:13px;
 </div><!-- /ovl -->
 
 <script>
+
+
+/* ════════════════════════════════════════════════════════════
+   ██████╗ AUTH & SESSION SYSTEM
+════════════════════════════════════════════════════════════ */
+
+/* ── User database (localStorage-backed, seeded with defaults) ── */
+const AUTH_KEY   = 'scm_users_v2';
+const SESS_KEY   = 'scm_session_v1';
+const LINKS_KEY  = 'scm_gdlinks_v1';
+const SETT_KEY   = 'scm_settings_v1';
+
+function defaultUsers(){
+  return [
+    {id:'u1',fname:'Admin',lname:'',username:'Admin',password:'Dermis@12345678',role:'admin',status:'active',lastLogin:null,created:new Date().toISOString()},
+    {id:'u2',fname:'Manager',lname:'Singh',username:'manager',password:'mgr456',role:'user',status:'active',lastLogin:null,created:new Date().toISOString()},
+    {id:'u3',fname:'Viewer',lname:'Kumar',username:'viewer',password:'view789',role:'viewer',status:'active',lastLogin:null,created:new Date().toISOString()},
+  ];
+}
+
+function getUsers(){ try{return JSON.parse(localStorage.getItem(AUTH_KEY))||defaultUsers();}catch{return defaultUsers();} }
+function saveUsers(u){ localStorage.setItem(AUTH_KEY,JSON.stringify(u)); }
+function getLinks(){ try{return JSON.parse(localStorage.getItem(LINKS_KEY))||[];}catch{return[];} }
+function saveLinks(l){ localStorage.setItem(LINKS_KEY,JSON.stringify(l)); }
+function getSettings(){ try{return JSON.parse(localStorage.getItem(SETT_KEY))||{timeout:30,maxAttempts:5};}catch{return{timeout:30,maxAttempts:5};} }
+function saveSettings(s){ localStorage.setItem(SETT_KEY,JSON.stringify(s)); }
+
+/* Seed users if first run */
+if(!localStorage.getItem(AUTH_KEY)) saveUsers(defaultUsers());
+
+/* ── Session ── */
+let SESSION = null;
+let sessionTimer = null;
+let loginAttempts = 0;
+
+function loadSession(){
+  try{
+    const s = JSON.parse(sessionStorage.getItem(SESS_KEY));
+    if(s && s.expiresAt > Date.now()) return s;
+  }catch{}
+  return null;
+}
+
+function createSession(user){
+  const sett = getSettings();
+  const timeout = (sett.timeout || 30) * 60 * 1000;
+  const s = {
+    userId: user.id, username: user.username,
+    name: user.fname + ' ' + user.lname,
+    role: user.role,
+    expiresAt: Date.now() + timeout
+  };
+  sessionStorage.setItem(SESS_KEY, JSON.stringify(s));
+  SESSION = s;
+  startSessionTimer(timeout);
+  // Update lastLogin
+  const users = getUsers();
+  const idx = users.findIndex(u=>u.id===user.id);
+  if(idx>=0){ users[idx].lastLogin = new Date().toISOString(); saveUsers(users); }
+  return s;
+}
+
+function startSessionTimer(ms){
+  if(sessionTimer) clearTimeout(sessionTimer);
+  sessionTimer = setTimeout(()=>{
+    SESSION = null; sessionStorage.removeItem(SESS_KEY);
+    showAuthWall(); alert('⏰ Session expired. Please sign in again.');
+  }, ms);
+}
+
+function clearSession(){
+  SESSION = null;
+  sessionStorage.removeItem(SESS_KEY);
+  if(sessionTimer) clearTimeout(sessionTimer);
+}
+
+/* ── Auth Wall ── */
+function showAuthWall(){
+  ge('authWall').style.display = 'flex';
+  ge('adminPortal').classList.remove('show');
+  ge('hdr').style.display = 'none';
+  ge('tabFilterBar').style.display = 'none';
+  ge('canvas').style.display = 'none';
+  ge('splash').style.display = 'none';
+  setTimeout(()=>{ try{ge('authUser').focus();}catch{} }, 100);
+}
+
+function hideAuthWall(){
+  ge('authWall').style.display = 'none';
+  ge('hdr').style.display = 'flex';
+}
+
+function doLogin(){
+  const uname = (ge('authUser').value||'').trim().toLowerCase();
+  const pass  = ge('authPass').value||'';
+  const btn   = ge('authBtn');
+  const err   = ge('authErr');
+  const sett  = getSettings();
+
+  err.classList.remove('show');
+  if(!uname||!pass){ err.textContent='Please enter username and password.'; err.classList.add('show'); return; }
+
+  const maxAttempts = sett.maxAttempts || 5;
+  if(loginAttempts >= maxAttempts){
+    err.textContent=`Too many failed attempts. Refresh the page to try again.`; err.classList.add('show'); return;
+  }
+
+  btn.disabled=true; btn.textContent='Signing in…';
+
+  setTimeout(()=>{
+    const users = getUsers();
+    const user = users.find(u=>u.username.toLowerCase()===uname && u.password===pass);
+
+    if(!user){
+      loginAttempts++;
+      const left = maxAttempts - loginAttempts;
+      err.textContent = `Invalid credentials.${left>0?' '+left+' attempt(s) remaining.':' Account locked.'}`;
+      err.classList.add('show');
+      btn.disabled=false; btn.textContent='Sign In';
+      ge('authPass').value=''; ge('authPass').focus();
+      return;
+    }
+    if(user.status==='inactive'){
+      err.textContent='Your account is inactive. Contact the administrator.';
+      err.classList.add('show');
+      btn.disabled=false; btn.textContent='Sign In';
+      return;
+    }
+
+    loginAttempts = 0;
+    createSession(user);
+    btn.textContent='✅ Welcome, '+user.fname+'!';
+    logActivity(`${user.fname} ${user.lname} signed in`);
+
+    setTimeout(()=>{
+      hideAuthWall();
+      applyRoleUI(user.role);
+      ge('hdrUserPill').textContent = '👤 '+user.fname+' · '+user.role;
+      ge('hdrUserPill').style.display = 'block';
+      ge('splash').style.display = 'block'; // show splash to pick data source
+      btn.disabled=false; btn.textContent='Sign In';
+    }, 600);
+  }, 300);
+}
+
+function doLogout(){
+  if(!confirm('Sign out of SCM Dashboard?')) return;
+  if(SESSION) logActivity((SESSION.name||'User')+' signed out');
+  clearSession();
+  ge('adminPortal').classList.remove('show');
+  ge('hdrUserPill').style.display='none';
+  ge('adminBtn').style.display='none';
+  ge('authUser').value=''; ge('authPass').value='';
+  ge('authErr').classList.remove('show');
+  showAuthWall();
+}
+
+function applyRoleUI(role){
+  // Admin gets admin button
+  if(role==='admin') ge('adminBtn').style.display='flex';
+  else ge('adminBtn').style.display='none';
+  // Viewer: hide PDF/Snapshot
+  if(role==='viewer'){
+    ['hdr .btn-snap','hdr .btn-pdf'].forEach(sel=>{
+      document.querySelectorAll(sel).forEach(el=>el.style.display='none');
+    });
+  }
+}
+
+/* ── Activity log ── */
+const ACTIVITY_KEY = 'scm_activity_v1';
+function logActivity(msg){
+  try{
+    const log = JSON.parse(localStorage.getItem(ACTIVITY_KEY)||'[]');
+    log.unshift({msg,ts:new Date().toLocaleString()});
+    localStorage.setItem(ACTIVITY_KEY, JSON.stringify(log.slice(0,50)));
+  }catch{}
+}
+function getActivity(){
+  try{return JSON.parse(localStorage.getItem(ACTIVITY_KEY)||'[]');}catch{return[];}
+}
+
+/* ── Boot: check existing session ── */
+window.addEventListener('DOMContentLoaded', ()=>{
+  SESSION = loadSession();
+  if(SESSION){
+    const user = getUsers().find(u=>u.id===SESSION.userId);
+    if(user && user.status==='active'){
+      hideAuthWall();
+      applyRoleUI(SESSION.role);
+      ge('hdrUserPill').textContent = '👤 '+SESSION.name+' · '+SESSION.role;
+      ge('hdrUserPill').style.display = 'block';
+      ge('splash').style.display = 'block';
+      const remaining = SESSION.expiresAt - Date.now();
+      startSessionTimer(Math.max(remaining, 0));
+    } else {
+      clearSession();
+      showAuthWall();
+    }
+  } else {
+    showAuthWall();
+  }
+  renderSavedLinks();
+});
+
+/* ════════════════════════════════════════════════════════════
+   ██████╗ ADMIN PORTAL
+════════════════════════════════════════════════════════════ */
+function openAdmin(){
+  if(!SESSION || SESSION.role!=='admin'){ alert('Admin access required.'); return; }
+  ge('adminPortal').classList.add('show');
+  ge('admCurrentUser').textContent = SESSION.name;
+  admNav('dashboard');
+  renderAdmStats();
+  renderAdmUsers();
+  renderAdmLinks();
+  renderAdmActivity();
+}
+
+function closeAdmin(){ ge('adminPortal').classList.remove('show'); }
+
+function admNav(panel){
+  ['dashboard','users','links','settings'].forEach(p=>{
+    ge('adm_n_'+p).classList.toggle('on', p===panel);
+    ge('adm_p_'+p).classList.toggle('on', p===panel);
+  });
+}
+
+function renderAdmStats(){
+  const users = getUsers();
+  const links = getLinks();
+  ge('admStats').innerHTML = [
+    {ico:'👥',bg:'#ede9fe',col:'#6d28d9',lbl:'Total Users',val:users.length},
+    {ico:'✅',bg:'#d1fae5',col:'#065f46',lbl:'Active',val:users.filter(u=>u.status==='active').length},
+    {ico:'🔗',bg:'#dbeafe',col:'#1e40af',lbl:'Drive Links',val:links.length},
+    {ico:'📋',bg:'#fef3c7',col:'#92400e',lbl:'Activity Logs',val:getActivity().length},
+  ].map(s=>`
+    <div class="adm-stat-card">
+      <div class="adm-stat-ico" style="background:${s.bg};color:${s.col}">${s.ico}</div>
+      <div><div class="adm-stat-lbl">${s.lbl}</div><div class="adm-stat-val" style="color:${s.col}">${s.val}</div></div>
+    </div>`).join('');
+}
+
+function renderAdmActivity(){
+  const log = getActivity().slice(0,10);
+  ge('admActivity').innerHTML = log.length
+    ? log.map(e=>`<div style="display:flex;gap:10px;padding:3px 0;border-bottom:1px solid var(--border)"><span style="color:var(--txt3);flex-shrink:0;font-family:var(--mono);font-size:.67rem">${e.ts}</span><span>${e.msg}</span></div>`).join('')
+    : '<span style="color:var(--txt3)">No activity yet</span>';
+}
+
+function renderAdmUsers(){
+  const users = getUsers();
+  const roleColors = {admin:'role-admin',user:'role-user',viewer:'role-viewer'};
+  ge('admUserTbody').innerHTML = users.map(u=>{
+    const initials = (u.fname[0]||'')+(u.lname[0]||'');
+    const bgColors = ['#ede9fe','#dbeafe','#d1fae5','#fef3c7'];
+    const bg = bgColors[Math.abs(u.id.charCodeAt(1))%bgColors.length];
+    return `<tr>
+      <td style="display:flex;align-items:center;gap:9px">
+        <div class="adm-avatar" style="background:${bg}">${initials}</div>
+        <div>
+          <div style="font-weight:700;font-size:.82rem">${u.fname} ${u.lname}</div>
+        </div>
+      </td>
+      <td style="font-family:var(--mono);font-size:.75rem">${u.username}</td>
+      <td><span class="role-chip ${roleColors[u.role]||'role-user'}">${u.role}</span></td>
+      <td><span class="status-chip ${u.status==='active'?'status-active':'status-inactive'}">${u.status}</span></td>
+      <td style="font-size:.72rem;color:var(--txt3)">${u.lastLogin?new Date(u.lastLogin).toLocaleString():'Never'}</td>
+      <td>
+        <div style="display:flex;gap:5px">
+          <button class="adm-btn adm-btn-ghost" style="padding:4px 9px;font-size:.68rem" onclick="editUser('${u.id}')">✏️ Edit</button>
+          <button class="adm-btn adm-btn-ghost" style="padding:4px 9px;font-size:.68rem" onclick="resetPw('${u.id}')">🔑 Reset PW</button>
+          ${u.username!=='admin'?`<button class="adm-btn adm-btn-danger" style="padding:4px 9px;font-size:.68rem" onclick="deleteUser('${u.id}')">🗑️</button>`:''}
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+let editingUserId = null;
+function openUserModal(id=null){
+  editingUserId = id;
+  ge('userModalTitle').textContent = id ? '✏️ Edit User' : '➕ Add User';
+  ge('umErr').textContent = '';
+  if(id){
+    const u = getUsers().find(u=>u.id===id);
+    if(u){
+      ge('umFname').value=u.fname; ge('umLname').value=u.lname;
+      ge('umUsername').value=u.username; ge('umPassword').value='';
+      ge('umRole').value=u.role; ge('umStatus').value=u.status;
+    }
+  } else {
+    ['umFname','umLname','umUsername','umPassword'].forEach(id=>ge(id).value='');
+    ge('umRole').value='user'; ge('umStatus').value='active';
+  }
+  ge('userModalOvl').classList.add('show');
+}
+function closeUserModal(){ ge('userModalOvl').classList.remove('show'); editingUserId=null; }
+
+function editUser(id){ openUserModal(id); }
+
+function saveUser(){
+  const fname=ge('umFname').value.trim(),lname=ge('umLname').value.trim();
+  const uname=ge('umUsername').value.trim().toLowerCase(),pass=ge('umPassword').value;
+  const role=ge('umRole').value,status=ge('umStatus').value;
+  const err=ge('umErr');
+  if(!uname){err.textContent='Username is required.';return;}
+  const users=getUsers();
+  if(editingUserId){
+    const idx=users.findIndex(u=>u.id===editingUserId);
+    if(idx>=0){
+      users[idx]={...users[idx],fname:fname||users[idx].fname,lname:lname||users[idx].lname,username:uname,role,status};
+      if(pass.length>=6) users[idx].password=pass;
+      else if(pass && pass.length<6){err.textContent='Password must be at least 6 characters.';return;}
+    }
+    logActivity(`User '${uname}' updated by ${SESSION?.name||'admin'}`);
+  } else {
+    if(!pass||pass.length<6){err.textContent='Password must be at least 6 characters.';return;}
+    if(users.find(u=>u.username===uname)){err.textContent='Username already exists.';return;}
+    const newId='u'+Date.now();
+    users.push({id:newId,fname,lname,username:uname,password:pass,role,status,lastLogin:null,created:new Date().toISOString()});
+    logActivity(`User '${uname}' created by ${SESSION?.name||'admin'}`);
+  }
+  saveUsers(users);
+  closeUserModal();
+  renderAdmUsers();
+  renderAdmStats();
+}
+
+function deleteUser(id){
+  if(!confirm('Delete this user?')) return;
+  const users=getUsers().filter(u=>u.id!==id);
+  saveUsers(users);
+  logActivity(`User deleted by ${SESSION?.name||'admin'}`);
+  renderAdmUsers();
+  renderAdmStats();
+}
+
+function resetPw(id){
+  const newPw=prompt('Enter new password (min 6 chars):');
+  if(!newPw) return;
+  if(newPw.length<6){alert('Password must be at least 6 characters.');return;}
+  const users=getUsers();
+  const idx=users.findIndex(u=>u.id===id);
+  if(idx>=0){ users[idx].password=newPw; saveUsers(users); logActivity(`Password reset for '${users[idx].username}'`); alert('✅ Password updated.'); }
+}
+
+function admSaveSettings(){
+  saveSettings({timeout:parseInt(ge('settTimeout').value)||30,maxAttempts:parseInt(ge('settMaxAttempts').value)||5});
+  alert('✅ Settings saved.');
+}
+
+/* Admin drive links */
+function renderAdmLinks(){
+  const links=getLinks();
+  ge('admLinkList').innerHTML=links.length
+    ? links.map((l,i)=>`
+      <div class="gd-link-card">
+        <div class="gd-link-ico"><svg width="18" height="18" viewBox="0 0 87.3 78"><path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8h-27.5c0 1.55.4 3.1 1.2 4.5z" fill="#0066da"/><path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0-1.2 4.5h27.5z" fill="#00ac47"/><path d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5h-27.502l5.852 11.5z" fill="#ea4335"/><path d="m43.65 25 13.75-23.8c-1.35-.8-2.9-1.2-4.5-1.2h-18.5c-1.6 0-3.15.45-4.5 1.2z" fill="#00832d"/><path d="m59.8 53h-32.3l-13.75 23.8c1.35.8 2.9 1.2 4.5 1.2h50.8c1.6 0 3.15-.45 4.5-1.2z" fill="#2684fc"/><path d="m73.4 26.5-12.7-22c-.8-1.4-1.95-2.5-3.3-3.3l-13.75 23.8 16.15 27h27.45c0-1.55-.4-3.1-1.2-4.5z" fill="#ffba00"/></svg></div>
+        <div class="gd-link-info">
+          <div class="gd-link-name">${escH(l.name)}</div>
+          <div class="gd-link-url">${escH(l.url)}</div>
+          <div class="gd-link-meta">Added ${new Date(l.added).toLocaleDateString()}</div>
+        </div>
+        <div style="display:flex;gap:6px;flex-shrink:0">
+          <a href="${escH(l.url)}" target="_blank" class="adm-btn adm-btn-ghost" style="text-decoration:none;padding:4px 9px;font-size:.68rem">🔗 Open</a>
+          <button class="adm-btn adm-btn-danger" style="padding:4px 9px;font-size:.68rem" onclick="admDeleteLink(${i})">🗑️</button>
+        </div>
+      </div>`).join('')
+    : '<div style="color:var(--txt3);font-size:.8rem;padding:16px;text-align:center">No saved links yet. Add one above.</div>';
+}
+
+function admSaveLink(){
+  const name=(ge('admLinkName').value||'').trim();
+  const url=(ge('admLinkUrl').value||'').trim();
+  const msg=ge('admLinkMsg');
+  if(!url){msg.style.color='var(--red)';msg.textContent='URL is required.';return;}
+  if(!isValidGDUrl(url)){msg.style.color='var(--red)';msg.textContent='Must be a Google Docs/Drive URL.';return;}
+  const links=getLinks();
+  links.push({name:name||'Untitled Link',url,added:new Date().toISOString()});
+  saveLinks(links);
+  msg.style.color='var(--grn)';msg.textContent='✅ Saved!';
+  ge('admLinkName').value='';ge('admLinkUrl').value='';
+  renderAdmLinks();
+  renderSavedLinks();
+  renderAdmStats();
+  logActivity(`Drive link saved: ${name||url}`);
+  setTimeout(()=>msg.textContent='',3000);
+}
+
+function admDeleteLink(i){
+  if(!confirm('Remove this link?'))return;
+  const links=getLinks();links.splice(i,1);saveLinks(links);
+  renderAdmLinks();renderSavedLinks();renderAdmStats();
+}
+
+/* ════════════════════════════════════════════════════════════
+   DRIVE LINK TAB — load from pasted URL
+════════════════════════════════════════════════════════════ */
+let selectedSavedLink = null;
+
+function isValidGDUrl(url){
+  if(!url) return false;
+  try{
+    const u=new URL(url);
+    return u.hostname.includes('google.com') || u.hostname.includes('drive.google.com');
+  }catch{return false;}
+}
+
+function extractCSVUrl(rawUrl){
+  /* Convert various Google Sheets share URLs to CSV export URLs */
+  try{
+    const u = new URL(rawUrl);
+    // Already a CSV export
+    if(rawUrl.includes('/export') && rawUrl.includes('csv')) return rawUrl;
+    // Google Sheets URL
+    const m = rawUrl.match(/\/spreadsheets\/d\/([a-zA-Z0-9_-]+)/);
+    if(m){
+      const id = m[1];
+      // Extract gid if present
+      const gid = (rawUrl.match(/[?&]gid=(\d+)/)||[])[1]||'0';
+      return `https://docs.google.com/spreadsheets/d/${id}/export?format=csv&gid=${gid}`;
+    }
+    // Direct CSV / file link — return as-is
+    return rawUrl;
+  }catch{return rawUrl;}
+}
+
+function validateLnkUrl(){
+  const url=(ge('lnkUrl').value||'').trim();
+  const msg=ge('lnkUrlMsg');
+  if(!url){msg.textContent='';return;}
+  if(isValidGDUrl(url)){
+    msg.style.color='var(--grn)';msg.textContent='✅ Valid Google URL';
+  } else {
+    msg.style.color='var(--red)';msg.textContent='⚠️ Must be a Google Docs or Drive URL';
+  }
+}
+
+function renderSavedLinks(){
+  const links=getLinks();
+  ge('savedLinkCount').textContent=links.length;
+  ge('savedLinkList').innerHTML=links.length
+    ? links.map((l,i)=>`
+      <div class="gd-saved-link-item" id="sli_${i}" onclick="selectSavedLink(${i})">
+        <span style="font-size:14px;flex-shrink:0">📊</span>
+        <span class="gsli-name">${escH(l.name)}</span>
+        <span class="gsli-del" onclick="event.stopPropagation();deleteSavedLink(${i})" title="Remove">✕</span>
+      </div>`).join('')
+    : '<div style="font-size:.73rem;color:var(--txt3);padding:8px">No saved links. Paste a URL above and click Save &amp; Load.</div>';
+}
+
+function selectSavedLink(i){
+  const links=getLinks();
+  selectedSavedLink=links[i];
+  document.querySelectorAll('.gd-saved-link-item').forEach((el,idx)=>el.classList.toggle('selected',idx===i));
+  ge('lnkUrl').value=links[i].url;
+  ge('lnkName').value=links[i].name;
+  validateLnkUrl();
+}
+
+function deleteSavedLink(i){
+  const links=getLinks();links.splice(i,1);saveLinks(links);
+  selectedSavedLink=null;
+  renderSavedLinks();
+}
+
+async function loadFromGDLink(url){
+  const csvUrl = extractCSVUrl(url);
+  setP(20,'Fetching spreadsheet…');
+  let res;
+  try{
+    res = await fetch(csvUrl);
+    if(!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+  }catch(e){
+    throw new Error('Could not fetch the spreadsheet. Make sure it is publicly shared ("Anyone with the link can view"). Details: '+e.message);
+  }
+  setP(60,'Parsing CSV…');
+  const text = await res.text();
+  if(!text || text.trim().length<10) throw new Error('The spreadsheet appears empty or returned no data.');
+  const p = Papa.parse(text,{header:true,skipEmptyLines:'greedy',dynamicTyping:false,transformHeader:h=>h?h.trim():h});
+  if(!p.data||!p.data.length) throw new Error('Could not parse spreadsheet. Ensure it has a header row and data.');
+  RAW = p.data.filter(row=>Object.values(row).some(v=>v!==''&&v!==null&&v!==undefined));
+  if(!RAW.length) throw new Error('No data rows found in spreadsheet.');
+  setP(100,'Done!');
+}
+
+async function saveLnkAndLoad(){
+  const url=(ge('lnkUrl').value||'').trim();
+  const name=(ge('lnkName').value||'').trim()||'Saved Link '+(getLinks().length+1);
+  if(!url){showErr('Paste a Google Sheets URL first.');return;}
+  if(!isValidGDUrl(url)){showErr('Must be a valid Google Sheets URL.');return;}
+  // Save
+  const links=getLinks();
+  if(!links.find(l=>l.url===url)) links.push({name,url,added:new Date().toISOString()});
+  saveLinks(links);
+  renderSavedLinks();
+  // Load
+  activeSrc='lnk'; activeLnkUrl=url; activeLnkName=name;
+  await triggerLoad();
+}
+
+async function loadLnkNow(){
+  const url=(ge('lnkUrl').value||'').trim();
+  if(!url){showErr('Paste a Google Sheets URL first.');return;}
+  if(!isValidGDUrl(url)){showErr('Must be a valid Google Sheets URL.');return;}
+  activeSrc='lnk'; activeLnkUrl=url; activeLnkName='🔗 '+url.slice(0,30)+'…';
+  await triggerLoad();
+}
+
+let activeLnkUrl='', activeLnkName='';
 
 /* ════════════════════════════════════════════════════════════
    CHART.JS GLOBAL DEFAULTS  (set after DOM ready)
@@ -1024,6 +1955,9 @@ function showGdConnected(){
   ge('gd_step_welcome').style.display = 'none';
   ge('gd_step_connected').style.display = 'block';
   const btn=ge('gdSignInBtn'); if(btn){btn.disabled=false;btn.innerHTML=origSignInHTML();}
+  /* Reset any previously selected file so user knows to pick again */
+  gdSelectedFile=null; gdPickedFile=null;
+  const pf=ge('gdPickedFile'); if(pf) pf.style.display='none';
   clearGdErr();
 
   /* Modal user card */
@@ -1178,9 +2112,12 @@ function gdOpenDir(id,name){
 }
 function gdPickInline(id,name,mime){
   gdSelectedFile={id,name,mime};
+  gdPickedFile={id,name,mime};  // keep both in sync
   document.querySelectorAll('.gd-file-item').forEach(el=>el.classList.remove('sel'));
   const el=ge('gdf_'+id); if(el) el.classList.add('sel');
   const pf=ge('gdPickedFile'); ge('gdPickedName').textContent=name; pf.style.display='flex';
+  ge('lbtn').textContent='🚀 Load: '+name.slice(0,30);
+  clearGdErr();
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -1269,21 +2206,25 @@ const escH = s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,
    MODAL
 ════════════════════════════════════════════════════════════ */
 const openModal = () => {
+  if(!SESSION){ alert('Please sign in first.'); return; }
   ge('modalOvl').style.display='flex';
   clrErr(); hideP();
   /* Restore sign-in state */
   if(gdToken && gdUser){ showGdConnected(); }
+  renderSavedLinks();
 };
 const closeModal = () => { ge('modalOvl').style.display='none'; };
 
 function sSrc(t){
   activeSrc=t;
-  ['xl','gd'].forEach(s=>{
-    ge('stab_'+s).classList.toggle('on',s===t);
-    ge('sp_'+s).classList.toggle('on',s===t);
+  ['xl','gd','lnk'].forEach(s=>{
+    ge('stab_'+s)&&ge('stab_'+s).classList.toggle('on',s===t);
+    ge('sp_'+s)&&ge('sp_'+s).classList.toggle('on',s===t);
   });
   clrErr(); hideP();
-  ge('lbtn').textContent = t==='gd' ? '📂 Load Selected Drive File' : '🚀 Load Dashboard';
+  const labels={gd:'📂 Load Selected Drive File',lnk:'🔗 Load from Drive Link',xl:'🚀 Load Dashboard'};
+  ge('lbtn').textContent = labels[t]||'🚀 Load Dashboard';
+  if(t==='lnk') renderSavedLinks();
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -1318,8 +2259,19 @@ function procFile(file){
 async function triggerLoad(){
   clrErr(); const btn=ge('lbtn'); btn.disabled=true;
   try{
-    if(activeSrc==='gd') await loadGDFile();
-    else{
+    if(activeSrc==='gd'){
+      /* ── FIX: clear stale state, check both picking mechanisms ── */
+      const sel = gdSelectedFile || gdPickedFile;
+      if(!sel){
+        throw new Error('No file selected. Click "Open Picker" or "Browse Drive" to choose a file first, then click Load.');
+      }
+      await loadGDFile();
+    } else if(activeSrc==='lnk'){
+      if(!activeLnkUrl) throw new Error('No link set. Paste a Google Sheets URL first.');
+      await loadFromGDLink(activeLnkUrl);
+      curSrc={type:'lnk',label:'🔗 '+activeLnkName.slice(0,24)};
+      onLoaded('lnk','🔗 '+(activeLnkName||'Drive Link').slice(0,22));
+    } else {
       if(!uplWB) throw new Error('Please select a file first.');
       await loadLocalFile();
     }
