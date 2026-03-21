@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Secondary Sales Entry Portal</title>
+<title>Secondary Sales Entry Portal v14</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
 :root{
@@ -25,30 +25,51 @@ button{font-family:inherit;font-size:13px;}
 
 /* LAYOUT */
 .layout{display:flex;min-height:100vh;}
-.sidebar{width:var(--sw);background:var(--pr);position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:100;display:flex;flex-direction:column;}
-.main{margin-left:var(--sw);flex:1;display:flex;flex-direction:column;min-height:100vh;}
+.sidebar{width:var(--sw);background:var(--pr);position:fixed;top:0;left:0;height:100vh;overflow-y:auto;overflow-x:hidden;z-index:100;display:flex;flex-direction:column;transition:width .22s cubic-bezier(.4,0,.2,1);box-shadow:2px 0 12px rgba(0,0,0,.15);}
+.sidebar.sb-col{width:56px;}
+.main{margin-left:var(--sw);flex:1;display:flex;flex-direction:column;min-height:100vh;transition:margin-left .22s cubic-bezier(.4,0,.2,1);}
+.main.sb-col{margin-left:56px;}
 .topbar{height:var(--sh);background:var(--sf);border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:50;display:flex;align-items:center;padding:0 20px;gap:12px;box-shadow:var(--s1);}
 .content{flex:1;padding:12px 16px;}
 
+/* SIDEBAR TOGGLE BUTTON — floats on the edge of the sidebar */
+.sb-tog{position:fixed;top:16px;left:calc(var(--sw) - 14px);z-index:200;width:28px;height:28px;border-radius:50%;background:#fff;border:2px solid var(--bd);box-shadow:0 2px 8px rgba(0,0,0,.14);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:left .22s cubic-bezier(.4,0,.2,1),background .12s;color:var(--pr);}
+.sb-tog:hover{background:var(--pl);border-color:var(--pm);}
+.sb-tog.sb-col{left:42px;}
+.sb-tog svg{width:14px;height:14px;transition:transform .22s;}
+.sb-tog.sb-col svg{transform:rotate(180deg);}
+
 /* SIDEBAR */
-.s-logo{padding:14px 12px;border-bottom:1px solid rgba(255,255,255,.1);display:flex;align-items:center;gap:9px;}
+.s-logo{padding:14px 12px;border-bottom:1px solid rgba(255,255,255,.1);display:flex;align-items:center;gap:9px;overflow:hidden;white-space:nowrap;}
 .s-li{width:32px;height:32px;background:var(--ac);border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.s-logo h2{color:#fff;font-size:12.5px;font-weight:700;line-height:1.2;}
-.s-logo p{color:rgba(255,255,255,.45);font-size:10px;}
+.s-logo h2{color:#fff;font-size:12.5px;font-weight:700;line-height:1.2;transition:opacity .18s,width .18s;overflow:hidden;}
+.s-logo p{color:rgba(255,255,255,.45);font-size:10px;transition:opacity .18s;overflow:hidden;}
+.sidebar.sb-col .s-logo h2,.sidebar.sb-col .s-logo p{opacity:0;width:0;}
 .s-nav{padding:6px 0;flex:1;}
-.s-sec{color:rgba(255,255,255,.28);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:10px 12px 2px;}
-.ni{display:flex;align-items:center;gap:8px;padding:8px 12px;color:rgba(255,255,255,.7);cursor:pointer;transition:all .12s;font-size:12.5px;border-left:3px solid transparent;}
+.s-sec{color:rgba(255,255,255,.28);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:10px 12px 2px;white-space:nowrap;overflow:hidden;transition:opacity .18s;}
+.sidebar.sb-col .s-sec{opacity:0;padding:10px 0 2px;}
+.ni{display:flex;align-items:center;gap:8px;padding:8px 12px;color:rgba(255,255,255,.7);cursor:pointer;transition:all .12s;font-size:12.5px;border-left:3px solid transparent;white-space:nowrap;overflow:hidden;position:relative;}
 .ni:hover{background:rgba(255,255,255,.07);color:#fff;}
 .ni.on{background:rgba(255,255,255,.13);color:#fff;border-left-color:var(--ac);}
-.ni svg{width:14px;height:14px;flex-shrink:0;opacity:.75;}.ni.on svg{opacity:1;}
+.ni svg{width:14px;height:14px;flex-shrink:0;opacity:.75;transition:width .18s,height .18s;}.ni.on svg{opacity:1;}
+.ni span{transition:opacity .18s;overflow:hidden;}
+.sidebar.sb-col .ni{padding:10px 0;justify-content:center;border-left-color:transparent!important;}
+.sidebar.sb-col .ni.on{border-left:none;border-right:3px solid var(--ac);}
+.sidebar.sb-col .ni span{opacity:0;width:0;overflow:hidden;}
+.sidebar.sb-col .ni svg{width:18px;height:18px;}
+/* Tooltip on hover when collapsed */
+.sidebar.sb-col .ni:hover::after{content:attr(data-tip);position:absolute;left:62px;top:50%;transform:translateY(-50%);background:#1e293b;color:#fff;font-size:12px;font-weight:600;padding:4px 10px;border-radius:6px;white-space:nowrap;z-index:9999;box-shadow:0 3px 10px rgba(0,0,0,.2);pointer-events:none;}
 .ni.highlight{background:rgba(14,165,233,.15);border-left-color:#38bdf8;}
 .s-foot{padding:8px;border-top:1px solid rgba(255,255,255,.1);}
-.s-usr{display:flex;align-items:center;gap:7px;padding:6px 8px;border-radius:6px;cursor:pointer;}
+.s-usr{display:flex;align-items:center;gap:7px;padding:6px 8px;border-radius:6px;cursor:pointer;white-space:nowrap;overflow:hidden;}
 .s-usr:hover{background:rgba(255,255,255,.07);}
+.sidebar.sb-col .s-usr{justify-content:center;padding:8px 0;}
 .av{width:28px;height:28px;border-radius:50%;background:var(--ac);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:11px;flex-shrink:0;overflow:hidden;}
 .av img{width:100%;height:100%;object-fit:cover;}
-.s-un{color:#fff;font-size:11.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:130px;}
-.s-ur{color:rgba(255,255,255,.4);font-size:10px;}
+.s-un{color:#fff;font-size:11.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:130px;transition:opacity .18s;}
+.s-ur{color:rgba(255,255,255,.4);font-size:10px;transition:opacity .18s;}
+.sidebar.sb-col .s-un,.sidebar.sb-col .s-ur{opacity:0;width:0;}
+.sidebar.sb-col .s-usr svg{display:none;}
 
 /* TOPBAR */
 .tb-t{font-weight:700;font-size:15px;}.tb-s{font-size:11px;color:var(--tmu);}
@@ -241,7 +262,26 @@ select.fc{cursor:pointer;-webkit-appearance:none;appearance:none;background-imag
 .err-log{max-height:180px;overflow-y:auto;border:1px solid #fecaca;border-radius:var(--rd);background:#fef2f2;padding:10px 12px;}
 .err-log li{font-size:12px;color:#991b1b;margin-bottom:3px;list-style:disc;margin-left:14px;}
 
-/* MISC */
+/* AUDIT LOG */
+.al-tbl{width:100%;border-collapse:collapse;font-size:12px;}
+.al-tbl th{background:#1e3a8a;color:#fff;padding:8px 10px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;text-align:left;white-space:nowrap;position:sticky;top:0;z-index:2;}
+.al-tbl td{padding:7px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top;}
+.al-tbl tbody tr:hover td{background:#f8faff;}
+.al-tbl tr.al-sales td{border-left:3px solid #2563eb;}
+.al-tbl tr.al-stk td{border-left:3px solid #16a34a;}
+.al-badge{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:4px;font-size:10.5px;font-weight:700;}
+.al-badge.create{background:#dcfce7;color:#166534;}
+.al-badge.update{background:#dbeafe;color:#1d4ed8;}
+.al-badge.delete{background:#fee2e2;color:#991b1b;}
+.al-badge.submit{background:#fef9c3;color:#854d0e;}
+.al-badge.reset{background:#fdf4ff;color:#6b21a8;}
+.al-badge.draft{background:#f1f5f9;color:#475569;}
+.al-chg{background:#f8fafc;border:1px solid #e2e8f0;border-radius:4px;padding:5px 8px;font-size:11px;font-family:monospace;max-width:320px;line-height:1.6;}
+.al-chg span.old{color:#dc2626;text-decoration:line-through;}
+.al-chg span.new{color:#16a34a;font-weight:700;}
+.al-filter{display:flex;gap:8px;flex-wrap:wrap;padding:10px 14px;background:#f8fafc;border-bottom:1px solid var(--bd);align-items:center;}
+.al-filter select,.al-filter input{padding:5px 9px;border:1px solid var(--bd);border-radius:var(--rd);font-size:12px;background:#fff;font-family:inherit;}
+
 .mt2{margin-top:8px;}.mt3{margin-top:12px;}.mt4{margin-top:16px;}
 .fw7{font-weight:700;}.fw8{font-weight:800;}
 .tc{text-align:center;}.tr{text-align:right;}
@@ -260,20 +300,20 @@ const STK_F=['Opening','Purchase','Gross Sales','Free','Return','NetSales','Clos
 const MON=['January','February','March','April','May','June','July','August','September','October','November','December'];
 const MOS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const PAGE_SIZE=15;
-const APP_VERSION='v10.0';
+const APP_VERSION='v14.0';
 const PARTY_TYPES=['Dermis','Entero','eCommerce','MT','Other'];
 
 // Default seed — used only when state is fresh
 const DEF_PROD_GROUPS=[
-  {id:1,name:'Derma',color:'#2563eb'},
-  {id:2,name:'Pharma',color:'#16a34a'},
+  {id:1,name:'Anable',color:'#2563eb'},
+  {id:2,name:'Seekcaus',color:'#16a34a'},
 ];
 const DEF_PRODUCTS=[
-  {id:1,name:'Anable',  group:'Derma', status:'Active'},
-  {id:2,name:'Hydra',   group:'Derma', status:'Active'},
-  {id:3,name:'Silicon', group:'Derma', status:'Active'},
-  {id:4,name:'Tinted',  group:'Derma', status:'Active'},
-  {id:5,name:'CeraQuell',group:'Pharma',status:'Active'},
+  {id:1,name:'Anable',  group:'Anable',   status:'Active'},
+  {id:2,name:'Hydra',   group:'Anable',   status:'Active'},
+  {id:3,name:'Silicon', group:'Anable',   status:'Active'},
+  {id:4,name:'Tinted',  group:'Anable',   status:'Active'},
+  {id:5,name:'CeraQuell',group:'Seekcaus',status:'Active'},
 ];
 
 // Channel Master seeds
@@ -294,7 +334,7 @@ const getChannels=()=>(S.channels||DEF_CHANNELS_LIST).filter(c=>c.status==='Acti
 /* ======================================================
    STATE  — v8
    ====================================================== */
-const SK='ssp_v10';
+const SK='ssp_v14';
 function lsLoad(){
   try{ const s=localStorage.getItem(SK); if(s){ const p=JSON.parse(s); if(p.cu&&!p.cu.ec) p.cu=null; return p; } }catch(e){}
   return null;
@@ -331,6 +371,9 @@ let S=lsLoad()||{
   srY:null, srM:null,
   selHQFilter:'',
   mmTab:'mapped', cmTab:'channels', stTab:'branding',
+  sbCol:false,
+  auditLog:[], auditIdx:0,
+  alFMod:'', alFAct:'', alFUser:'', alFPrd:'', alFSearch:'',
   settings:{
     portalName:'Sales Portal',
     portalTagline:'Secondary Sales Mgmt',
@@ -343,6 +386,60 @@ let S=lsLoad()||{
   tState:{},
 };
 const P=()=>lsSave();
+
+/* ======================================================
+   AUDIT LOG ENGINE
+   ====================================================== */
+function auditTs(){ return new Date().toISOString(); }
+function auditFmt(ts){ const d=new Date(ts); return d.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'})+' '+d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true}); }
+
+function addAudit(module, action, entity, changes, meta={}){
+  if(!S.auditLog) S.auditLog=[];
+  if(!S.auditIdx) S.auditIdx=0;
+  const u=S.cu;
+  S.auditLog.unshift({
+    id: ++S.auditIdx,
+    ts: auditTs(),
+    user: u?.ec||'System',
+    userName: u?.name||'System',
+    userRole: u?.role||'',
+    module,       // 'sales' | 'stk'
+    action,       // 'SAVE_DRAFT'|'FINAL_SUBMIT'|'UPDATE'|'RESET'|'SAVE'
+    entity,       // HQ name, Stockist name, etc.
+    period: meta.period||'',
+    changes,      // array of {field, oldVal, newVal}
+    meta,
+  });
+  // Keep last 500 entries
+  if(S.auditLog.length>500) S.auditLog=S.auditLog.slice(0,500);
+  P();
+}
+
+/* Debounce cell-level changes — batch per (module+entity+period), flush after 2.5s */
+const _auditPending={};
+function auditCellChange(module, entity, period, field, oldVal, newVal){
+  const key=`${module}|${entity}|${period}`;
+  if(!_auditPending[key]) _auditPending[key]={module,entity,period,changes:[],timer:null};
+  const buf=_auditPending[key];
+  // Remove existing entry for same field (keep latest)
+  buf.changes=buf.changes.filter(c=>c.field!==field);
+  if(String(oldVal)!==String(newVal)) buf.changes.push({field,oldVal,newVal});
+  clearTimeout(buf.timer);
+  buf.timer=setTimeout(()=>{
+    if(buf.changes.length>0){
+      addAudit(module,'UPDATE',entity,buf.changes,{period});
+    }
+    delete _auditPending[key];
+  },2500);
+}
+/* Flush all pending debounced audits immediately (call before save/submit) */
+function flushAudit(){
+  Object.values(_auditPending).forEach(buf=>{
+    clearTimeout(buf.timer);
+    if(buf.changes.length>0) addAudit(buf.module,'UPDATE',buf.entity,buf.changes,{period:buf.period});
+    delete _auditPending[`${buf.module}|${buf.entity}|${buf.period}`];
+  });
+}
 
 /* ======================================================
    CORE HELPERS
@@ -479,8 +576,21 @@ const siN=(k,s)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none
 function render(){
   const app=el('app');
   if(!S.cu){ app.innerHTML=renderLogin(); bindLogin(); return; }
-  app.innerHTML=`<div class="layout">${renderSidebar()}<div class="main">${renderTopbar()}<div class="content" id="ca">${renderPage()}</div></div></div><div id="mc"></div>`;
+  const col=S.sbCol?'sb-col':'';
+  app.innerHTML=`<div class="layout">${renderSidebar()}<div class="main ${col}" id="main-wrap">${renderTopbar()}<div class="content" id="ca">${renderPage()}</div></div></div><div id="mc"></div>
+  <button class="sb-tog ${col}" id="sb-toggle-btn" title="${S.sbCol?'Expand sidebar':'Collapse sidebar'}">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>`;
   bindNav(); bindPage();
+  // Bind toggle button
+  el('sb-toggle-btn')?.addEventListener('click',()=>{
+    S.sbCol=!S.sbCol; P();
+    const sb=document.querySelector('.sidebar');
+    const main=el('main-wrap');
+    const btn=el('sb-toggle-btn');
+    if(S.sbCol){ sb?.classList.add('sb-col'); main?.classList.add('sb-col'); btn?.classList.add('sb-col'); btn.title='Expand sidebar'; }
+    else{ sb?.classList.remove('sb-col'); main?.classList.remove('sb-col'); btn?.classList.remove('sb-col'); btn.title='Collapse sidebar'; }
+  });
 }
 
 /* ======================================================
@@ -565,14 +675,14 @@ function renderSidebar(){
   const pTag=st.portalTagline||'Secondary Sales Mgmt';
   const pEmoji=st.logoEmoji||'📊';
   const av=u.pic?`<img src="${u.pic}">`:`${inits(u.name)}`;
-  return `<div class="sidebar">
+  return `<div class="sidebar${S.sbCol?' sb-col':''}">
   <div class="s-logo">
     <div class="s-li" style="font-size:17px">${pEmoji}</div>
     <div><h2>${pName}</h2><p>${pTag}</p></div>
   </div>
   <nav class="s-nav">
     <div class="s-sec">${roleLbl} Panel</div>
-    ${nav.map(n=>n.sec?`<div class="s-sec">${n.sec}</div>`:`<div class="ni${S.tab===n.k?' on':''}${n.hl?' highlight':''}" data-tab="${n.k}">${IC[n.ic].replace('viewBox','width="14" height="14" viewBox')}<span>${n.l}</span>${n.hl?'<span style="margin-left:auto;background:rgba(56,189,248,.25);color:#7dd3fc;font-size:9px;padding:1px 5px;border-radius:9px">PRIMARY</span>':''}</div>`).join('')}
+    ${nav.map(n=>n.sec?`<div class="s-sec">${n.sec}</div>`:`<div class="ni${S.tab===n.k?' on':''}${n.hl?' highlight':''}" data-tab="${n.k}" data-tip="${n.l}">${IC[n.ic].replace('viewBox','width="14" height="14" viewBox')}<span>${n.l}</span>${n.hl&&!S.sbCol?'<span style="margin-left:auto;background:rgba(56,189,248,.25);color:#7dd3fc;font-size:9px;padding:1px 5px;border-radius:9px">PRIMARY</span>':''}</div>`).join('')}
   </nav>
   <div class="s-foot">
     <div class="s-usr" id="lgbtn" title="Logout">
@@ -1337,7 +1447,8 @@ function renderProductMaster(){
       <div class="ph-s">Manage products and groups — new products auto-appear in all inputs & reports</div></div>
     <div class="ph-r">
       ${at==='products'
-        ? `<button class="btn b-pr b-sm" id="add-prod-btn">${si('plus')} Add Product</button>`
+        ? `<button class="btn b-gh b-sm" onclick="dlTpl('products')">${si('dl')} Template</button>
+           <button class="btn b-pr b-sm" id="add-prod-btn">${si('plus')} Add Product</button>`
         : `<button class="btn b-mg b-sm" id="add-grp-btn">${si('plus')} Add Group</button>`}
     </div>
   </div>
@@ -1379,7 +1490,11 @@ function renderProductsTable(prods,groups){
         <tr style="background:#1e3a8a;color:#fff">
           <th style="padding:9px 12px;text-align:center;border-right:1px solid #2d4fa0;width:46px;font-size:11px;font-weight:700;letter-spacing:.05em">SR</th>
           <th style="padding:9px 12px;text-align:left;border-right:1px solid #2d4fa0;font-size:11px;font-weight:700;letter-spacing:.05em;min-width:180px">PRODUCT NAME</th>
-          <th style="padding:9px 12px;text-align:left;border-right:1px solid #2d4fa0;font-size:11px;font-weight:700;letter-spacing:.05em;min-width:140px">GROUP</th>
+          <th style="padding:9px 12px;text-align:left;border-right:1px solid #2d4fa0;font-size:11px;font-weight:700;letter-spacing:.05em;min-width:120px">GROUP</th>
+          <th style="padding:9px 12px;text-align:right;border-right:1px solid #2d4fa0;font-size:11px;font-weight:700;letter-spacing:.05em;min-width:80px">MRP (₹)</th>
+          <th style="padding:9px 12px;text-align:right;border-right:1px solid #2d4fa0;font-size:11px;font-weight:700;letter-spacing:.05em;min-width:80px">PTR (₹)</th>
+          <th style="padding:9px 12px;text-align:right;border-right:1px solid #2d4fa0;font-size:11px;font-weight:700;letter-spacing:.05em;min-width:80px">PTS (₹)</th>
+          <th style="padding:9px 12px;text-align:right;border-right:1px solid #2d4fa0;font-size:11px;font-weight:700;letter-spacing:.05em;min-width:80px">NET RATE (₹)</th>
           <th style="padding:9px 12px;text-align:center;border-right:1px solid #2d4fa0;font-size:11px;font-weight:700;letter-spacing:.05em;width:90px">STATUS</th>
           <th style="padding:9px 12px;text-align:left;border-right:1px solid #2d4fa0;font-size:11px;font-weight:700;letter-spacing:.05em">USED IN INPUTS</th>
           <th style="padding:9px 12px;text-align:center;font-size:11px;font-weight:700;letter-spacing:.05em;width:110px">ACTIONS</th>
@@ -1400,6 +1515,18 @@ function renderProductsTable(prods,groups){
             </td>
             <td style="padding:9px 12px;border-right:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0">
               <span style="display:inline-block;padding:3px 10px;background:${gc}18;color:${gc};border:1.5px solid ${gc}40;border-radius:4px;font-size:12px;font-weight:700">${p.group||'—'}</span>
+            </td>
+            <td style="padding:9px 12px;text-align:right;border-right:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;font-variant-numeric:tabular-nums">
+              ${p.mrp!=null&&p.mrp!==''?`<span style="font-weight:600;color:#0f172a">₹${parseFloat(p.mrp).toFixed(2)}</span>`:`<span style="color:#cbd5e1;font-size:11px">—</span>`}
+            </td>
+            <td style="padding:9px 12px;text-align:right;border-right:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;font-variant-numeric:tabular-nums">
+              ${p.ptr!=null&&p.ptr!==''?`<span style="font-weight:600;color:#1d4ed8">₹${parseFloat(p.ptr).toFixed(2)}</span>`:`<span style="color:#cbd5e1;font-size:11px">—</span>`}
+            </td>
+            <td style="padding:9px 12px;text-align:right;border-right:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;font-variant-numeric:tabular-nums">
+              ${p.pts!=null&&p.pts!==''?`<span style="font-weight:600;color:#7c3aed">₹${parseFloat(p.pts).toFixed(2)}</span>`:`<span style="color:#cbd5e1;font-size:11px">—</span>`}
+            </td>
+            <td style="padding:9px 12px;text-align:right;border-right:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;font-variant-numeric:tabular-nums">
+              ${p.netRate!=null&&p.netRate!==''?`<span style="font-weight:700;color:#15803d;background:#f0fdf4;padding:2px 7px;border-radius:3px">₹${parseFloat(p.netRate).toFixed(2)}</span>`:`<span style="color:#cbd5e1;font-size:11px">—</span>`}
             </td>
             <td style="padding:9px 12px;text-align:center;border-right:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0">
               <span style="display:inline-block;padding:3px 10px;border-radius:4px;font-size:12px;font-weight:700;background:${isActive?'#dcfce7':'#fee2e2'};color:${isActive?'#166534':'#991b1b'}">
@@ -1434,7 +1561,7 @@ function renderProductsTable(prods,groups){
             </td>
           </tr>`;
         }).join('')}
-        ${!prods.length?`<tr><td colspan="6" style="text-align:center;padding:48px;color:#94a3b8">No products yet. Click "Add Product" to create one.</td></tr>`:''}
+        ${!prods.length?`<tr><td colspan="10" style="text-align:center;padding:48px;color:#94a3b8">No products yet. Click "Add Product" to create one.</td></tr>`:''}
       </tbody>
     </table>
   </div>`;
@@ -1702,7 +1829,7 @@ const cfg=()=>S.settings||(S.settings={portalName:'Sales Portal',portalTagline:'
 
 function renderSettings(){
   const st=cfg(); const at=S.stTab||'branding';
-  const TABS=[{k:'branding',l:'🎨 Branding & Theme'},{k:'menus',l:'📋 Menu Control'},{k:'subadmin',l:'👤 Sub-Admin'}];
+  const TABS=[{k:'branding',l:'🎨 Branding & Theme'},{k:'menus',l:'📋 Menu Control'},{k:'subadmin',l:'👤 Sub-Admin'},{k:'audit',l:'📋 Audit Log'}];
   return `
   <div class="ph">
     <div class="ph-l"><div class="ph-t">Settings</div><div class="ph-s">Portal configuration — changes apply instantly across all sessions</div></div>
@@ -1716,6 +1843,7 @@ function renderSettingsTab(at){
   if(at==='branding') return renderSettingsBranding(st);
   if(at==='menus')    return renderSettingsMenus(st);
   if(at==='subadmin') return renderSettingsSubAdmin(st);
+  if(at==='audit')    return renderAuditLog();
   return '';
 }
 
@@ -1823,6 +1951,171 @@ function renderSettingsSubAdmin(st){
   </div>`;
 }
 
+/* ======================================================
+   AUDIT LOG — Render
+   ====================================================== */
+function renderAuditLog(){
+  const log=S.auditLog||[];
+  const afMod=S.alFMod||'', afAct=S.alFAct||'', afUser=S.alFUser||'', afPrd=S.alFPrd||'', afSearch=S.alFSearch||'';
+
+  // Build filter dropdowns from actual data
+  const allUsers=[...new Set(log.map(e=>e.user))].sort();
+  const allPeriods=[...new Set(log.map(e=>e.period).filter(Boolean))].sort().reverse();
+
+  // Apply filters
+  let rows=log;
+  if(afMod)    rows=rows.filter(e=>e.module===afMod);
+  if(afAct)    rows=rows.filter(e=>e.action===afAct);
+  if(afUser)   rows=rows.filter(e=>e.user===afUser);
+  if(afPrd)    rows=rows.filter(e=>e.period===afPrd);
+  if(afSearch) rows=rows.filter(e=>(e.entity+e.user+e.userName+e.period+e.action).toLowerCase().includes(afSearch.toLowerCase()));
+
+  // Action display config
+  const ACT_CFG={
+    'UPDATE':     {cls:'update', lbl:'✏️ Update'},
+    'SAVE_DRAFT': {cls:'draft',  lbl:'💾 Save Draft'},
+    'SAVE':       {cls:'draft',  lbl:'💾 Save'},
+    'FINAL_SUBMIT':{cls:'submit',lbl:'🔒 Final Submit'},
+    'RESET':      {cls:'reset',  lbl:'↩️ Reset'},
+    'DELETE':     {cls:'delete', lbl:'🗑️ Delete'},
+    'CREATE':     {cls:'create', lbl:'✅ Create'},
+  };
+  const MOD_CFG={
+    'sales':{lbl:'Secondary Sales',color:'#2563eb',bg:'#eff6ff'},
+    'stk':  {lbl:'Stockiest Input', color:'#16a34a',bg:'#f0fdf4'},
+  };
+
+  const statCards=[
+    {v:log.length,           l:'Total Events',  c:'#1d4ed8',bg:'#eff6ff'},
+    {v:log.filter(e=>e.module==='sales').length, l:'Sales Events',   c:'#2563eb',bg:'#dbeafe'},
+    {v:log.filter(e=>e.module==='stk').length,   l:'Stockiest Events',c:'#16a34a',bg:'#dcfce7'},
+    {v:log.filter(e=>e.action==='FINAL_SUBMIT').length, l:'Final Submits', c:'#92400e',bg:'#fef9c3'},
+    {v:log.filter(e=>e.action==='UPDATE').length, l:'Cell Updates', c:'#7c3aed',bg:'#f5f3ff'},
+    {v:[...new Set(log.map(e=>e.user))].length,  l:'Active Users',  c:'#0891b2',bg:'#ecfeff'},
+  ];
+
+  return `
+  <!-- Header -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+    <div>
+      <div style="font-size:15px;font-weight:800">📋 Audit Log</div>
+      <div style="font-size:11px;color:var(--tmu);margin-top:1px">All create, update &amp; submit actions for Sales and Stockiest Input</div>
+    </div>
+    <div style="display:flex;gap:7px;flex-wrap:wrap">
+      <button class="btn b-gh b-sm" id="al-export">${si('dl')} Export CSV</button>
+      <button class="btn b-er b-sm" id="al-clear" style="opacity:.75">🗑️ Clear Log</button>
+    </div>
+  </div>
+
+  <!-- KPI Strip -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:14px">
+    ${statCards.map(s=>`<div style="background:${s.bg};border-radius:7px;padding:10px 12px;border:1px solid ${s.c}22">
+      <div style="font-size:20px;font-weight:800;color:${s.c};line-height:1">${s.v}</div>
+      <div style="font-size:10.5px;color:var(--tmu);font-weight:600;margin-top:3px">${s.l}</div>
+    </div>`).join('')}
+  </div>
+
+  <!-- Filter Bar -->
+  <div class="card" style="margin-bottom:10px">
+    <div class="al-filter">
+      <span style="font-size:11px;font-weight:700;color:var(--tm);white-space:nowrap">🔍 Filters:</span>
+      <select id="al-f-mod" style="min-width:130px">
+        <option value="">All Modules</option>
+        <option value="sales" ${afMod==='sales'?'selected':''}>Secondary Sales</option>
+        <option value="stk"   ${afMod==='stk'  ?'selected':''}>Stockiest Input</option>
+      </select>
+      <select id="al-f-act" style="min-width:130px">
+        <option value="">All Actions</option>
+        ${Object.entries(ACT_CFG).map(([k,v])=>`<option value="${k}" ${afAct===k?'selected':''}>${v.lbl.replace(/^\S+\s/,'')}</option>`).join('')}
+      </select>
+      <select id="al-f-user" style="min-width:110px">
+        <option value="">All Users</option>
+        ${allUsers.map(u=>`<option ${afUser===u?'selected':''}>${u}</option>`).join('')}
+      </select>
+      <select id="al-f-prd" style="min-width:110px">
+        <option value="">All Periods</option>
+        ${allPeriods.map(p=>`<option ${afPrd===p?'selected':''}>${p}</option>`).join('')}
+      </select>
+      <input id="al-f-search" placeholder="Search entity / user…" value="${afSearch}" style="min-width:160px;flex:1">
+      <button class="btn b-ol b-sm" id="al-f-apply">Apply</button>
+      <button class="btn b-gh b-sm" id="al-f-clear">Reset</button>
+      <span style="margin-left:auto;font-size:11px;color:var(--tmu);white-space:nowrap">${rows.length} of ${log.length} entries</span>
+    </div>
+  </div>
+
+  <!-- Log Table -->
+  <div class="card" style="overflow:hidden">
+    <div style="overflow:auto;max-height:calc(100vh - 310px)">
+    ${rows.length===0?`<div style="padding:48px;text-align:center;color:#94a3b8">
+        <div style="font-size:40px;margin-bottom:12px">📭</div>
+        <div style="font-weight:700;font-size:14px;margin-bottom:6px">${log.length===0?'No audit events yet':'No results match your filters'}</div>
+        <div style="font-size:12px">${log.length===0?'Events will appear here once users start entering or submitting data.':'Try adjusting the filters above.'}</div>
+      </div>`:`
+    <table class="al-tbl">
+      <thead><tr>
+        <th style="width:32px">#</th>
+        <th style="min-width:150px">Timestamp</th>
+        <th style="min-width:90px">Module</th>
+        <th style="min-width:90px">Action</th>
+        <th style="min-width:130px">User</th>
+        <th style="min-width:140px">Entity / Period</th>
+        <th>Change Details</th>
+      </tr></thead>
+      <tbody>
+        ${rows.slice(0,200).map((e,i)=>{
+          const ac=ACT_CFG[e.action]||{cls:'update',lbl:e.action};
+          const mc=MOD_CFG[e.module]||{lbl:e.module,color:'#64748b',bg:'#f1f5f9'};
+          const roleBadge={admin:'#e0e7ff',manager:'#ede9fe',user:'#e0f2fe'}[e.userRole]||'#f1f5f9';
+          const roleCol={admin:'#3730a3',manager:'#5b21b6',user:'#0369a1'}[e.userRole]||'#475569';
+
+          // Build change details HTML
+          let chgHtml='';
+          if(e.changes&&e.changes.length>0){
+            const MAX_SHOW=6;
+            const visible=e.changes.slice(0,MAX_SHOW);
+            const hidden=e.changes.length-MAX_SHOW;
+            chgHtml=`<div class="al-chg">`+visible.map(c=>{
+              if(c.oldVal!==undefined&&c.newVal!==undefined&&c.oldVal!==c.newVal&&c.oldVal!=='—'){
+                return `<div><span style="color:#64748b;font-size:10.5px">${c.field}:</span> <span class="old">${c.oldVal}</span> → <span class="new">${c.newVal}</span></div>`;
+              }
+              return `<div><span style="color:#64748b;font-size:10.5px">${c.field}:</span> <span class="new">${c.newVal}</span></div>`;
+            }).join('')+(hidden>0?`<div style="color:#94a3b8;font-size:10px;margin-top:2px">+${hidden} more field${hidden>1?'s':''}…</div>`:'')+`</div>`;
+          } else {
+            chgHtml='<span style="color:#cbd5e1;font-size:11px;font-style:italic">—</span>';
+          }
+
+          return `<tr class="al-${e.module}">
+            <td style="color:#94a3b8;font-size:11px;text-align:right">${e.id}</td>
+            <td>
+              <div style="font-size:12px;font-weight:600;color:var(--tx)">${auditFmt(e.ts).split(' ').slice(0,3).join(' ')}</div>
+              <div style="font-size:10.5px;color:var(--tmu)">${auditFmt(e.ts).split(' ').slice(3).join(' ')}</div>
+            </td>
+            <td>
+              <span style="display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;background:${mc.bg};color:${mc.color};border:1px solid ${mc.color}30">${mc.lbl}</span>
+            </td>
+            <td><span class="al-badge ${ac.cls}">${ac.lbl}</span></td>
+            <td>
+              <div style="font-weight:700;font-size:12px">${e.userName||e.user}</div>
+              <div style="display:flex;align-items:center;gap:4px;margin-top:2px">
+                <span style="background:${roleBadge};color:${roleCol};padding:1px 5px;border-radius:3px;font-size:10px;font-weight:700">${e.user}</span>
+                <span style="font-size:10px;color:var(--tmu)">${e.userRole||''}</span>
+              </div>
+            </td>
+            <td>
+              <div style="font-weight:600;font-size:12px;color:var(--tx)">${e.entity||'—'}</div>
+              ${e.period?`<div style="font-size:10.5px;color:var(--tmu);margin-top:1px">📅 ${e.period}</div>`:''}
+              ${e.meta?.hq&&e.meta.hq!=='All HQs'?`<div style="font-size:10.5px;color:var(--tmu)">HQ: ${e.meta.hq}</div>`:''}
+            </td>
+            <td>${chgHtml}</td>
+          </tr>`;
+        }).join('')}
+        ${rows.length>200?`<tr><td colspan="7" style="text-align:center;padding:12px;color:#94a3b8;font-size:12px">Showing first 200 entries. Use filters to narrow results.</td></tr>`:''}
+      </tbody>
+    </table>`}
+    </div>
+  </div>`;
+}
+
 function bindSettings(){
   document.querySelectorAll('[data-stab]').forEach(t=>t.addEventListener('click',()=>{ S.stTab=t.dataset.stab; P(); render(); }));
 
@@ -1872,6 +2165,37 @@ function bindSettings(){
     if(S.cu.ec===mec) S.cu=S.users[i];
     P(); render(); toast(hq+' assigned!');
   }));
+
+  // Audit Log filters
+  el('al-f-apply')?.addEventListener('click',()=>{
+    S.alFMod=val('al-f-mod'); S.alFAct=val('al-f-act');
+    S.alFUser=val('al-f-user'); S.alFPrd=val('al-f-prd');
+    S.alFSearch=el('al-f-search')?.value||'';
+    P(); render();
+  });
+  el('al-f-clear')?.addEventListener('click',()=>{
+    S.alFMod=''; S.alFAct=''; S.alFUser=''; S.alFPrd=''; S.alFSearch=''; P(); render();
+  });
+  el('al-f-search')?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ el('al-f-apply')?.click(); } });
+  el('al-clear')?.addEventListener('click',()=>showConfirm('Clear Audit Log','This will permanently delete all audit log entries. This cannot be undone.','danger',()=>{
+    S.auditLog=[]; S.auditIdx=0; S.alFMod=''; S.alFAct=''; S.alFUser=''; S.alFPrd=''; S.alFSearch='';
+    P(); render(); toast('Audit log cleared!');
+  }));
+  el('al-export')?.addEventListener('click',()=>{
+    const log=S.auditLog||[];
+    const hdrs=['#','Timestamp','Module','Action','User ID','User Name','Role','Entity','Period','Change Details'];
+    const rows=[hdrs,...log.map(e=>[
+      e.id, auditFmt(e.ts),
+      e.module==='sales'?'Secondary Sales':'Stockiest Input',
+      e.action, e.user, e.userName||e.user, e.userRole||'',
+      e.entity||'', e.period||'',
+      (e.changes||[]).map(c=>c.oldVal!==undefined&&c.oldVal!==c.newVal&&c.oldVal!=='—'?`${c.field}: ${c.oldVal}→${c.newVal}`:`${c.field}: ${c.newVal}`).join(' | ')
+    ])];
+    const csv=rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+    const a=document.createElement('a'); a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+    a.download=`AuditLog_${new Date().toISOString().slice(0,10)}.csv`; a.click();
+    toast('Audit log exported!');
+  });
 }
 
 function applyTheme(){
@@ -1978,6 +2302,7 @@ function showChGroupModal(g){
 function showProductModal(p){
   const isNew=!p;
   const groups=getGroups();
+  const fv=f=>(p&&p[f]!=null&&p[f]!=='')?p[f]:'';
   showModal('prodmod',`${isNew?'Add New':'Edit'} Product`,`
   <div class="al al-i">${si('warn')} New active products automatically appear in Sales Input, Stockiest Input, all Reports, and Excel exports instantly.</div>
   <div class="fr">
@@ -1987,6 +2312,43 @@ function showProductModal(p){
         <option value="">— Select Group —</option>
         ${groups.map(g=>`<option value="${g.name}" ${p?.group===g.name?'selected':''}>${g.name}</option>`).join('')}
       </select>
+    </div>
+  </div>
+  <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:7px;padding:12px 14px;margin-bottom:12px">
+    <div style="font-size:11px;font-weight:800;color:#334155;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">💰 Pricing Details <span style="font-weight:500;color:#94a3b8;text-transform:none;letter-spacing:0">(float values, optional)</span></div>
+    <div class="fr" style="grid-template-columns:1fr 1fr;gap:10px">
+      <div class="fg" style="margin-bottom:0">
+        <label class="fl">MRP (₹)</label>
+        <div style="position:relative">
+          <span style="position:absolute;left:9px;top:50%;transform:translateY(-50%);color:#94a3b8;font-size:13px;pointer-events:none">₹</span>
+          <input class="fc" type="number" step="0.01" min="0" id="pn-mrp" value="${fv('mrp')}" placeholder="0.00" style="padding-left:22px">
+        </div>
+        <span style="font-size:10px;color:#94a3b8;margin-top:2px;display:block">Maximum Retail Price</span>
+      </div>
+      <div class="fg" style="margin-bottom:0">
+        <label class="fl">PTR (₹)</label>
+        <div style="position:relative">
+          <span style="position:absolute;left:9px;top:50%;transform:translateY(-50%);color:#94a3b8;font-size:13px;pointer-events:none">₹</span>
+          <input class="fc" type="number" step="0.01" min="0" id="pn-ptr" value="${fv('ptr')}" placeholder="0.00" style="padding-left:22px">
+        </div>
+        <span style="font-size:10px;color:#94a3b8;margin-top:2px;display:block">Price To Retailer</span>
+      </div>
+      <div class="fg" style="margin-bottom:0">
+        <label class="fl">PTS (₹)</label>
+        <div style="position:relative">
+          <span style="position:absolute;left:9px;top:50%;transform:translateY(-50%);color:#94a3b8;font-size:13px;pointer-events:none">₹</span>
+          <input class="fc" type="number" step="0.01" min="0" id="pn-pts" value="${fv('pts')}" placeholder="0.00" style="padding-left:22px">
+        </div>
+        <span style="font-size:10px;color:#94a3b8;margin-top:2px;display:block">Price To Stockist</span>
+      </div>
+      <div class="fg" style="margin-bottom:0">
+        <label class="fl">Net Rate (₹)</label>
+        <div style="position:relative">
+          <span style="position:absolute;left:9px;top:50%;transform:translateY(-50%);color:#94a3b8;font-size:13px;pointer-events:none">₹</span>
+          <input class="fc" type="number" step="0.01" min="0" id="pn-net" value="${fv('netRate')}" placeholder="0.00" style="padding-left:22px">
+        </div>
+        <span style="font-size:10px;color:#94a3b8;margin-top:2px;display:block">Net Rate (after discounts)</span>
+      </div>
     </div>
   </div>
   <div class="fg"><label class="fl">Status</label>
@@ -2000,12 +2362,14 @@ function showProductModal(p){
     if(!name){toast('Product Name required','er');return false;}
     if(!grp){toast('Product Group required','er');return false;}
     if(isNew&&(S.products||[]).find(x=>x.name.toLowerCase()===name.toLowerCase())){toast(`Product "${name}" already exists`,'er');return false;}
+    const parsePrice=id=>{ const v=val(id).trim(); return v===''?'':parseFloat(v); };
+    const mrp=parsePrice('pn-mrp'), ptr=parsePrice('pn-ptr'), pts=parsePrice('pn-pts'), netRate=parsePrice('pn-net');
     if(!S.products) S.products=DEF_PRODUCTS.map(x=>({...x}));
     if(p){
       const i=S.products.findIndex(x=>x.id===p.id);
-      S.products[i]={...S.products[i],name,group:grp,status:st};
+      S.products[i]={...S.products[i],name,group:grp,status:st,mrp,ptr,pts,netRate};
     } else {
-      S.products.push({id:S.prodIdx++,name,group:grp,status:st});
+      S.products.push({id:S.prodIdx++,name,group:grp,status:st,mrp,ptr,pts,netRate});
     }
     P(); closeModal('prodmod'); render(); toast(p?`"${name}" updated!`:`"${name}" added — now active across all inputs & reports!`);
   });
@@ -2016,7 +2380,7 @@ function showGroupModal(g){
   const isNew=!g;
   showModal('grpmod',`${isNew?'Add New':'Edit'} Product Group`,`
   <div class="fr">
-    <div class="fg"><label class="fl">Group Name *</label><input class="fc" id="gn-name" value="${g?.name||''}" placeholder="e.g. Derma, Pharma, OTC"></div>
+    <div class="fg"><label class="fl">Group Name *</label><input class="fc" id="gn-name" value="${g?.name||''}" placeholder="e.g. Anable, Seekcaus, OTC"></div>
     <div class="fg"><label class="fl">Group Color</label>
       <div style="display:flex;align-items:center;gap:8px">
         <input type="color" id="gn-color" value="${g?.color||'#2563eb'}" style="width:44px;height:38px;border:1px solid var(--bd);border-radius:var(--rd);cursor:pointer;padding:2px">
@@ -2414,21 +2778,35 @@ function bindUserSalesGrid(){
   const u=S.cu, ym=S.selMonth, entry=initSale(u.ec,ym), ch='Stockiest';
   el('hq-go')?.addEventListener('click',()=>{ S.selMonth=`${val('hq-yr')}-${val('hq-mo')}`; render(); });
   getProds().forEach(p=>{ el(`ui-${p}`)?.addEventListener('input',e=>{
+    const oldVal=entry.ch[ch][p]||0;
     entry.ch[ch][p]=parseInt(e.target.value)||0;
+    auditCellChange('sales',`HQ: ${u.hq}`,ym,`${ch} › ${p}`,oldVal,entry.ch[ch][p]);
     const tot=getProds().reduce((s,pr)=>s+(entry.ch[ch][pr]||0),0);
     if(el('ui-tot')) el('ui-tot').textContent=tot||'';
     if(el(`us-${p}`)) el(`us-${p}`).textContent=entry.ch[ch][p]||'';
     if(el('us-tot')) el('us-tot').innerHTML=`<b>${tot||''}</b>`;
     P();
   }); });
-  el('sv-dr')?.addEventListener('click',()=>{ entry.status='draft'; P(); toast('Draft saved!'); });
-  el('fn-sb')?.addEventListener('click',()=>showConfirm('Final Submit','Data will be <b>locked</b> after final submission.<br><b>No further edits will be allowed for this month.</b><br><br>Proceed only if you are <b>fully sure</b>.','wa',()=>{ entry.status='final'; P(); render(); }));
+  el('sv-dr')?.addEventListener('click',()=>{
+    flushAudit();
+    const snapshot=getProds().map(p=>({field:p,newVal:entry.ch[ch][p]||0}));
+    entry.status='draft'; P();
+    addAudit('sales','SAVE_DRAFT',`HQ: ${u.hq}`,snapshot,{period:ym,channel:ch});
+    toast('Draft saved!');
+  });
+  el('fn-sb')?.addEventListener('click',()=>showConfirm('Final Submit','Data will be <b>locked</b> after final submission.<br><b>No further edits will be allowed for this month.</b><br><br>Proceed only if you are <b>fully sure</b>.','wa',()=>{
+    flushAudit();
+    entry.status='final'; P();
+    const grand=getProds().reduce((s,p)=>s+(entry.ch[ch][p]||0),0);
+    addAudit('sales','FINAL_SUBMIT',`HQ: ${u.hq}`,[{field:'Status',oldVal:'draft',newVal:'final'},{field:'Total Units',oldVal:'—',newVal:grand}],{period:ym,channel:ch});
+    render();
+  }));
 }
 function renderBroadSalesGrid(){
   const u=S.cu, ym=S.selMonth;
   const [selY,selM]=ym.split('-');
   const hqUsers=getMyHQUsers(u); hqUsers.forEach(x=>initSale(x.ec,ym));
-  const fHQ=S.sfHQ||'', fCh=S.sfCh||'';
+  const fHQ=S.sfHQ||'', fCh=S.sfCh!==undefined&&S.sfCh!==null ? S.sfCh : (u.role!=='admin'?'Stockiest':'');
   const hqs=getMyHQs(u);
   let filtered=hqUsers; if(fHQ) filtered=filtered.filter(x=>x.hq===fHQ);
   const visCh=fCh?[fCh]:getChannels();
@@ -2446,7 +2824,7 @@ function renderBroadSalesGrid(){
     <button class="btn b-ol b-xs" id="as-go">Go</button>
     <div class="tcb-sep"></div>
     <select class="mys-sel" id="af-hq" style="font-size:11px;padding:3px 4px;min-width:80px"><option value="">All HQs</option>${hqs.map(h=>`<option ${h===fHQ?'selected':''}>${h}</option>`).join('')}</select>
-    <select class="mys-sel" id="af-ch" style="font-size:11px;padding:3px 4px;min-width:90px"><option value="">All Ch</option>${getChannels().map(c=>`<option ${c===fCh?'selected':''}>${c}</option>`).join('')}</select>
+    <select class="mys-sel" id="af-ch" style="font-size:11px;padding:3px 4px;min-width:90px"><option value="" ${!fCh?'selected':''}>All Ch</option>${getChannels().map(c=>`<option ${c===fCh?'selected':''}>${c}</option>`).join('')}</select>
     <button class="btn b-ol b-xs" id="af-ok">✓</button>
     <button class="btn b-gh b-xs" id="af-cl">✕</button>
     <button class="btn b-gh b-xs" onclick="S.selMonth=null;render()">←</button>
@@ -2507,15 +2885,18 @@ function renderBSRow(x,ym,n,visCh,LS,LW){
 function bindBroadSalesGrid(){
   el('as-go')?.addEventListener('click',()=>{ S.selMonth=`${val('as-yr')}-${val('as-mo')}`; render(); });
   el('af-ok')?.addEventListener('click',()=>{ S.sfHQ=val('af-hq'); S.sfCh=val('af-ch'); render(); });
-  el('af-cl')?.addEventListener('click',()=>{ S.sfHQ=''; S.sfCh=''; render(); });
-  el('sv-all')?.addEventListener('click',()=>{ P(); toast('All data saved!'); });
+  el('af-cl')?.addEventListener('click',()=>{ S.sfHQ=''; S.sfCh=S.cu.role!=='admin'?'Stockiest':''; render(); });
+  el('sv-all')?.addEventListener('click',()=>{ flushAudit(); P(); toast('All data saved!'); });
   el('adl')?.addEventListener('click',()=>dlTpl('admin-sales'));
   el('imp-as')?.addEventListener('click',()=>showImportModal('admin-sales'));
   document.querySelectorAll('.as-inp').forEach(inp=>{
     inp.addEventListener('input',()=>{
       const ec=inp.dataset.ec, c=decodeURIComponent(inp.dataset.ch), p=inp.dataset.p;
       const k=sk(ec,S.selMonth); if(!S.sales[k]) return;
+      const oldVal=S.sales[k].ch[c][p]||0;
       S.sales[k].ch[c][p]=parseInt(inp.value)||0;
+      const hqName=S.users.find(u=>u.ec===ec)?.hq||ec;
+      auditCellChange('sales',`HQ: ${hqName}`,S.selMonth,`${c} › ${p}`,oldVal,S.sales[k].ch[c][p]);
       const entry=S.sales[k], se=ec.replace(/[^a-z0-9]/gi,'_');
       getProds().forEach(pr=>{ const t=getChannels().reduce((s,c)=>s+(entry.ch[c][pr]||0),0); const te=el(`at-${se}-${pr}`); if(te) te.textContent=t||''; });
       const grand=getChannels().reduce((s,c)=>s+getProds().reduce((ss,p)=>ss+(entry.ch[c][p]||0),0),0);
@@ -2566,7 +2947,13 @@ function bindAdminStkPage(){
     el('mys-go')?.addEventListener('click',()=>{ S.selMonth=`${val('mys-y')}-${val('mys-m')}`; render(); });
     el('si-fok')?.addEventListener('click',()=>{ S.siHQ=val('si-fhq'); render(); });
     el('si-fcl')?.addEventListener('click',()=>{ S.siHQ=''; render(); });
-    el('si-sv')?.addEventListener('click',()=>{ P(); toast('Saved!'); });
+    el('si-sv')?.addEventListener('click',()=>{
+      flushAudit();
+      const ym=S.selMonth, parties=getMyParties(S.cu);
+      const totals=parties.map(p=>{ const k=stkK(p.id,ym); const d=S.stk[k]||{}; const gs=getProds().reduce((s,pr)=>s+(d[pr]?.['Gross Sales']||0),0); return {field:`${p.sname} — Gross Sales`,newVal:gs}; });
+      addAudit('stk','SAVE','All Parties',totals,{period:ym,hq:S.siHQ||'All HQs'});
+      P(); toast('Saved!');
+    });
     el('si-dl')?.addEventListener('click',()=>dlTpl('stk'));
     el('imp-si')?.addEventListener('click',()=>showImportModal('stk'));
     bindStkInputs(S.selMonth);
@@ -2607,18 +2994,32 @@ function bindUserStkPage(){
     el('mys-go')?.addEventListener('click',()=>{ S.uStkMonth=`${val('mys-y')}-${val('mys-m')}`; render(); });
     const u=S.cu, ym=S.uStkMonth, locked=isStkLocked(u.ec,ym);
     if(!locked) bindStkInputs(ym);
-    el('usi-dr')?.addEventListener('click',()=>{ P(); toast('Draft saved!'); });
-    el('usi-fn')?.addEventListener('click',()=>showConfirm('Final Submit','Stockiest data will be <b>locked</b> for this month.<br><b>No further edits will be allowed.</b><br><br>Proceed only if you are <b>fully sure</b>.','wa',()=>{ if(!S.stkSt[sSK(u.ec,ym)]) S.stkSt[sSK(u.ec,ym)]={status:'final'}; else S.stkSt[sSK(u.ec,ym)].status='final'; P(); render(); }));
+    el('usi-dr')?.addEventListener('click',()=>{
+      flushAudit();
+      const parties=getMyParties(u), ym=S.uStkMonth;
+      const snapshot=parties.map(p=>{ const k=stkK(p.id,ym); const d=S.stk[k]||{}; const gs=getProds().reduce((s,pr)=>s+(d[pr]?.['Gross Sales']||0),0); return {field:`${p.sname} — Gross Sales`,newVal:gs}; });
+      addAudit('stk','SAVE_DRAFT',`HQ: ${u.hq}`,snapshot,{period:ym});
+      P(); toast('Draft saved!');
+    });
+    el('usi-fn')?.addEventListener('click',()=>showConfirm('Final Submit','Stockiest data will be <b>locked</b> for this month.<br><b>No further edits will be allowed.</b><br><br>Proceed only if you are <b>fully sure</b>.','wa',()=>{
+      flushAudit();
+      const ym=S.uStkMonth;
+      if(!S.stkSt[sSK(u.ec,ym)]) S.stkSt[sSK(u.ec,ym)]={status:'final'}; else S.stkSt[sSK(u.ec,ym)].status='final';
+      addAudit('stk','FINAL_SUBMIT',`HQ: ${u.hq}`,[{field:'Status',oldVal:'draft',newVal:'final'}],{period:ym});
+      P(); render();
+    }));
   }
 }
 function renderStkTable(parties,ym,locked=false){
   const th1='position:sticky;top:0;z-index:6;background:#1e3a8a;color:#fff;padding:6px 8px;font-size:11px;font-weight:700;border-right:1px solid #2d4fa0;border-bottom:2px solid #1e40af;white-space:nowrap;text-align:center';
+  /* Freeze sentinel — right-shadow on the last frozen col (#, DBM HQ, Stockist Name) */
+  const freezeShadow='box-shadow:3px 0 6px -1px rgba(0,0,0,0.18)';
   const PRODS=getProds();
   return `<table class="xt" style="border-collapse:separate;border-spacing:0"><thead>
     <tr>
       <th style="${th1};position:sticky;top:0;left:0;min-width:36px;z-index:9" rowspan="2">#</th>
       <th style="${th1};position:sticky;top:0;left:36px;min-width:110px;z-index:9;text-align:left" rowspan="2">DBM HQ</th>
-      <th style="${th1};position:sticky;top:0;left:146px;min-width:150px;z-index:9;text-align:left;border-right:2px solid #374151" rowspan="2">Stockist</th>
+      <th style="${th1};position:sticky;top:0;left:146px;min-width:150px;z-index:9;text-align:left;border-right:2px solid #374151;${freezeShadow}" rowspan="2">Stockist Name</th>
       ${PRODS.map(p=>`<th style="${th1};z-index:5" colspan="7">${p}</th>`).join('')}
       <th style="${th1};background:#713f12;z-index:5" colspan="7">Total</th>
     </tr><tr>
@@ -2646,7 +3047,7 @@ function renderStkRow(party,ym,n,locked=false){
   return `<tr class="${locked?'lk':''}">
     <td style="${fcSt};left:0;min-width:36px;background:#f0f4fa;text-align:center;color:#64748b;border-right:1px solid #cbd5e1">${n}</td>
     <td style="${fcSt};left:36px;min-width:110px;background:${rowBg};border-right:1px solid #cbd5e1">${party.dbm}</td>
-    <td style="${fcSt};left:146px;min-width:150px;background:${rowBg};font-weight:700;border-right:2px solid #374151">${party.sname}</td>
+    <td style="${fcSt};left:146px;min-width:150px;background:${rowBg};font-weight:700;border-right:2px solid #374151;box-shadow:3px 0 6px -1px rgba(0,0,0,0.13)">${party.sname}</td>
     ${cells}
   </tr>`;
 }
@@ -2657,7 +3058,10 @@ function bindStkInputs(ym){
       const pid=parseInt(inp.dataset.pid), pr=inp.dataset.pr, f=inp.dataset.f;
       const k=stkK(pid,ym); if(!S.stk[k]) return;
       if(!S.stk[k][pr]) S.stk[k][pr]={Opening:0,Purchase:0,'Gross Sales':0,Free:0,Return:0};
+      const oldVal=S.stk[k][pr][f]||0;
       S.stk[k][pr][f]=parseInt(inp.value)||0;
+      const party=S.parties.find(p=>p.id===pid);
+      if(party) auditCellChange('stk',`${party.sname} (${party.hq})`,ym,`${pr} › ${f}`,oldVal,S.stk[k][pr][f]);
       const pd=S.stk[k][pr], ns=calcNS(pd), cl=calcCL(pd);
       if(el(`sns-${pid}-${pr}`)) el(`sns-${pid}-${pr}`).textContent=dv(ns);
       if(el(`scl-${pid}-${pr}`)) el(`scl-${pid}-${pr}`).textContent=dv(cl);
@@ -3123,9 +3527,10 @@ function dlTpl(type){
     'admin-sales':['HQ','Login ID',...getChannels().flatMap(c=>getProds().map(p=>`${c}-${p}`)),...getProds().map(p=>`Total-${p}`),'Total'],
     stk:['Sr','DBM','Stockist','HQ',...getProds().flatMap(p=>STK_F.map(f=>`${p}-${f}`)),...STK_F.map(f=>`Total-${f}`)],
     mgrs:['Login ID *','Manager Name *','Mapped HQs (comma-separated)','Status','Date of Joining'],
+    products:['Product Name *','Product Group *','MRP (₹)','PTR (₹)','PTS (₹)','Net Rate (₹)','Status (Active/Inactive)'],
   };
   const ws=XLSX.utils.aoa_to_sheet([hdrs[type]||[]]);
-  ws['!cols']=(hdrs[type]||[]).map(()=>({wch:20}));
+  ws['!cols']=(hdrs[type]||[]).map(()=>({wch:22}));
   XLSX.utils.book_append_sheet(wb,ws,'Template');
   XLSX.writeFile(wb,`${type}_Template.xlsx`);
 }
@@ -3183,7 +3588,7 @@ const W={
   deleteMgr:ec=>showConfirm('Delete Manager','Delete this manager and remove all HQ mappings?','danger',()=>{ S.users=S.users.filter(u=>u.ec!==ec); P(); render(); toast('Manager deleted!'); }),
   editParty:id=>showPartyModal(S.parties.find(p=>p.id===id)),
   deleteParty:id=>showConfirm('Delete Party','Delete?','danger',()=>{ S.parties=S.parties.filter(p=>p.id!==id); P(); render(); toast('Deleted!'); }),
-  resetSales:(ec,ym)=>{ const k=sk(ec,ym); if(S.sales[k]){S.sales[k].status='draft'; P(); render(); toast('Reset to draft!'); } },
+  resetSales:(ec,ym)=>{ const k=sk(ec,ym); if(S.sales[k]){ const hqName=S.users.find(u=>u.ec===ec)?.hq||ec; S.sales[k].status='draft'; addAudit('sales','RESET',`HQ: ${hqName}`,[{field:'Status',oldVal:'final',newVal:'draft'}],{period:ym}); P(); render(); toast('Reset to draft!'); } },
   quickAssignHQ:hq=>{
     const mec=val(`qa-${CSS.escape(hq)}`);
     if(!mec){toast('Select a manager first','er');return;}
