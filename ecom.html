@@ -781,10 +781,10 @@ body{font-family:'Plus Jakarta Sans',sans-serif;font-size:11.5px;line-height:1.4
 <!-- TAB BAR -->
 <div class="tab-bar" id="tabBar" style="display:none">
   <button class="tab-btn active" id="tabDash" onclick="switchTab('dashboard')">📊 Dashboard</button>
-  <button class="tab-btn" id="tabInsights" onclick="switchTab('insights')">💡 Insights</button>
   <button class="tab-btn" id="tabSales" onclick="switchTab('sales')">📈 Sales Performance</button>
   <button class="tab-btn" id="tabProducts" onclick="switchTab('products')">🛒 Product Analytics</button>
   <button class="tab-btn" id="tabReturns" onclick="switchTab('returns')">↩️ Returns &amp; Quality</button>
+  <button class="tab-btn" id="tabInsights" onclick="switchTab('insights')">💡 Insights</button>
   <div class="tab-bar-right">
     <div class="tab-title">
       <h1>e-commerce Sales Analytics Dashboard</h1>
@@ -1023,7 +1023,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;font-size:11.5px;line-height:1.4
                   <th>Cancelled</th>
                   <th>Total Exc</th>
                   <th>Exc %</th>
-                  <th>Quality</th>
+                  <th style="text-align:left">Quality</th>
                 </tr>
               </thead>
               <tbody></tbody>
@@ -1294,7 +1294,7 @@ function hideGSheetErr() {
 // ============================================================
 let ALL_DATA=[], currentVendor='all', selectedMonths=new Set(), selectedPlatforms=new Set();
 let revenueChart, platformChart, productChart, insightMomChart;
-let insightVendorDonut, insightVendorBar, insightVendorMonthly, insightPlatRevChart, insightProdUnitsChart;
+let insightVendorBar, insightVendorMonthly, insightPlatRevChart, insightProdUnitsChart;
 let salesStackedChart, salesGrowthChart, prodDonutChart, prodRevQtyChart, retTrendChart, retTypeChart;
 let rawRows=[], sheetHeaders=[], currentTab='dashboard';
 const MONTH_ORDER={january:0,february:1,march:2,april:3,may:4,june:5,july:6,august:7,september:8,october:9,november:10,december:11};
@@ -1343,7 +1343,7 @@ function parseMonthValue(raw) {
   return {label:s,monthIdx:99,year:0};
 }
 
-const ALL_TABS = ['dashboard','insights','sales','products','returns'];
+const ALL_TABS = ['dashboard','sales','products','returns','insights'];
 function switchTab(t) {
   currentTab = t;
   ALL_TABS.forEach(id => {
@@ -1451,7 +1451,7 @@ async function exportPDF() {
 
     const pages = [
       { id:'dashPane',     label:'Sales Analytics Dashboard', renderFn: ()=>{ [revenueChart,platformChart,productChart].forEach(c=>{if(c)c.resize();}); render(); }, wait:700 },
-      { id:'insightsPane', label:'Insights & Analysis', renderFn: ()=>{ if(insightMomChart) insightMomChart.resize(); if(insightVendorDonut) insightVendorDonut.resize(); if(insightVendorBar) insightVendorBar.resize(); if(insightPlatRevChart) insightPlatRevChart.resize(); renderInsights(); }, wait:900 },
+      { id:'insightsPane', label:'Insights & Analysis', renderFn: ()=>{ if(insightMomChart) insightMomChart.resize(); if(insightVendorBar) insightVendorBar.resize(); if(insightPlatRevChart) insightPlatRevChart.resize(); renderInsights(); }, wait:900 },
       { id:'salesPane',    label:'Sales Performance Report',  renderFn: renderSalesReport,    wait:800 },
       { id:'productsPane', label:'Product Analytics Report',  renderFn: renderProductAnalytics, wait:800 },
       { id:'returnsPane',  label:'Returns & Quality Report',  renderFn: renderReturnsQuality, wait:800 },
@@ -1943,7 +1943,7 @@ function renderInsights() {
           <div class="insight-stat"><div class="insight-stat-lbl">Top by Units</div><div class="insight-stat-val">${prodsByQty[0]?.[0]?.substring(0,22)||'—'}</div><div class="insight-stat-sub">${prodsByQty[0]?fmtNum(prodsByQty[0][1].qty)+' units':''}</div></div>
         </div>
         <div style="overflow-y:auto;max-height:130px">
-          <table class="insight-table"><thead><tr><th>#</th><th>Product</th><th>Units</th><th>Revenue</th><th>Share</th></tr></thead>
+          <table class="insight-table"><thead><tr><th>#</th><th>Product</th><th style="text-align:right">Units</th><th style="text-align:right">Revenue</th><th style="text-align:right">Share</th></tr></thead>
           <tbody>${prodsByRev.slice(0,8).map(([name,v],i)=>{
             const rc=['#C97B2A','#94a3b8','#CD7F32'];
             return `<tr><td><span class="rank-badge" style="background:${rc[i]||'var(--bg2)'};color:${i<3?'#fff':'var(--text2)'}">${i+1}</span></td><td>${name.substring(0,26)}</td><td style="text-align:right;color:var(--text2)">${v.qty.toLocaleString()}</td><td style="text-align:right;font-family:Bricolage Grotesque,sans-serif;font-weight:700">${fmt(v.rev)}</td><td style="text-align:right;color:var(--muted);font-size:9px">${(v.rev/totalRev*100).toFixed(1)}%</td></tr>`;
@@ -1956,12 +1956,8 @@ function renderInsights() {
       <div class="insight-hdr"><div class="insight-icon" style="background:var(--accent-lt);color:var(--accent)">🏭</div>
         <div><div class="insight-title">Units Sold by Vendor — % Contribution to Total</div>
           <div class="insight-sub">Total units: <strong>${totalQty.toLocaleString()}</strong> · contribution breakdown per vendor</div></div></div>
-      <div class="vendor-units-grid">
+      <div class="vendor-units-grid" style="grid-template-columns:1fr;">
         <div class="vendor-units-left"><div class="vendor-bar-list" id="vendorBarList"></div></div>
-        <div class="vendor-units-right">
-          <div class="vendor-donut-wrap"><canvas id="insightVendorDonutCanvas"></canvas></div>
-          <div class="vendor-legend-grid" id="vendorLegendGrid"></div>
-        </div>
       </div>
     </div>
 
@@ -2009,21 +2005,10 @@ function renderInsights() {
     </div>`;
   }).join('');
 
-  document.getElementById('vendorLegendGrid').innerHTML = vendorsSorted.slice(0,8).map(([name],i)=>
-    `<div class="vendor-legend-item"><span class="vendor-legend-dot" style="background:${vColor(name,i)}"></span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${name.substring(0,14)}</span></div>`).join('');
-
   document.getElementById('vendorMonthlyLegend').innerHTML = vendorsSorted.slice(0,6).map(([name],i)=>
     `<div style="display:flex;align-items:center;gap:3px;font-size:8.5px;font-weight:600;color:var(--text2)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${vColor(name,i)}"></span>${name.substring(0,10)}</div>`).join('');
 
   const tipStyle = {backgroundColor:'#fff',borderColor:'#DDE2EA',borderWidth:1,titleColor:'#1A1F2E',bodyColor:'#424B60',padding:9,cornerRadius:8};
-
-  // Chart 1: Vendor units donut
-  if (insightVendorDonut) insightVendorDonut.destroy();
-  insightVendorDonut = new Chart(document.getElementById('insightVendorDonutCanvas'),{
-    type:'doughnut',
-    data:{labels:vendorsSorted.map(([n])=>n),datasets:[{data:vendorsSorted.map(([,v])=>v.qty),backgroundColor:vendorsSorted.map(([n],i)=>vColor(n,i)+'CC'),borderColor:vendorsSorted.map(([n],i)=>vColor(n,i)),borderWidth:2,hoverOffset:6}]},
-    options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false},tooltip:{...tipStyle,callbacks:{label:ctx=>` ${ctx.label}: ${ctx.parsed.toLocaleString()} units (${(ctx.parsed/totalQty*100).toFixed(1)}%)`}}}}
-  });
 
   // Chart 2: Platform revenue horizontal bar
   if (insightPlatRevChart) insightPlatRevChart.destroy();
